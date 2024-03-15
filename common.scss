@@ -351,9 +351,9 @@ body {
   @media screen and (max-width: 768px) {
     .menu {
       display: flex;
-      width: 100%;
-      height: 100vh;
-      margin-top: 5%;
+      width: 100vw;
+      height: 100%;
+      // margin-top: 5%;
       .menu_lf_cls {
         display: none;
       }
