@@ -3,54 +3,505 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/74454cb6c5.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./Event.css" />
     <script defer src="./Event.js"></script>
     <title>Document</title>
   </head>
   <body>
-    <div id="header">
-      <div id="header_popup">
-        <img src="../Index/0.image/close button.png" alt="close" />
-        <span>아닐로X아메스 샤워타임 리미티드 세트 25% 할인</span>
-        <img src="../Index/0.image/inceto widget close icon.png" alt="close" />
-      </div>
-      <div id="header_contents">
-        <button class="header_menu">
-          <div></div>
-          <div></div>
-          <div></div>
-        </button>
-        <a href="./index.html" class="header_logo">
-          <img src="../Index/0.image/logo.png" alt="logo" />
-        </a>
-        <div class="header_right">
-          <button class="header_search">
-            <img src="../Index/0.image/ico-search-m01.png" alt="search" />
-          </button>
-          <a href="../Mypage/0.Login/Login.html" class="header_mypage">
-            <img src="../Index/0.image/mo_ico-mypg-m01.png" alt="mypage" />
-          </a>
-          <a href="../Cart/Cart.html" class="header_cart">
-            <img src="../Index/0.image/mo_cart.png" alt="" />
-          </a>
-          <button class="header_menu header_menu_mobile">
+    <div class="wrap">
+      <div id="header">
+        <div id="header_popup">
+          <img src="../0.image/header_close.png" alt="close" />
+          <span>아닐로X아메스 샤워타임 리미티드 세트 25% 할인</span>
+          <img src="../../0.image/header_close.png" alt="close" />
+        </div>
+        <div id="header_contents">
+          <button class="header_menu">
             <div></div>
             <div></div>
             <div></div>
           </button>
+          <a href="../../index.html" class="header_logo">
+            <img src="../../0.image/header_logo.png" alt="logo" />
+          </a>
+          <div class="header_right">
+            <button class="header_search">
+              <img src="../../0.image/header_search.png" alt="search" />
+            </button>
+            <a href="../Mypage/0.Login/Login.html" class="header_mypage">
+              <img src="../../0.image/header_mypage.png" alt="mypage" />
+            </a>
+            <a href="../Cart/Cart.html" class="header_cart">
+              <img src="../../0.image/header_cart.png" alt="" />
+            </a>
+            <button class="header_menu header_menu_mobile">
+              <div></div>
+              <div></div>
+              <div></div>
+            </button>
+          </div>
         </div>
       </div>
+      <div id="gnb">
+        <h1 class="gnb_container">Event</h1>
+        <ul class="gnb_container">
+          <li class="goingbtn"><a href="#">진행중</a></li>
+          <li class="endbtn"><a href="#">종료</a></li>
+        </ul>
+      </div>
+
+      <div id="event_container">
+        <div class="eventwrap">
+          <div id="event_going">
+            <div>
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/2nd_anniversary.jpg" alt="anniversary" />
+                  <div class="event_desc">
+                    <h3>ANILLO 2ND ANNIVERSARY</h3>
+                    <p>아닐로 2주년 프로모션</p>
+                    <span> 2024.03.04 ~ 2024.04.01 </span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/recommendation_event.jpg"
+                    alt="recommendation"
+                  />
+                  <div class="event_desc">
+                    <h3>ANILLO RECOMMENDATION EVENT</h3>
+                    <p>아닐로 친구 추천 이벤트</p>
+                    <span> 2024.02.12 ~ </span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/kakao talk channel event.jpg"
+                    alt="kakaochannel"
+                  />
+                  <div class="event_desc">
+                    <h3>KAKAO TALK CHANNEL EVENT</h3>
+                    <p>카카오톡 채널 추가 이벤트</p>
+                    <span>2022.03.17 ~ </span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_pagenumber">
+              <a href="#none">
+                <img
+                  id="left"
+                  class="arrow"
+                  src="./0.image/이전 페이지.png"
+                  alt="prev"
+                />
+              </a>
+              <button class="page-button" data-page="1">1</button>
+              <a href="#none">
+                <img
+                  id="right"
+                  class="arrow"
+                  src="./0.image/다음 페이지.png"
+                  alt="next"
+                />
+              </a>
+            </div>
+          </div>
+
+          <div id="event_end">
+            <div class="event_page" id="page1">
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/anilloxames.jpg" alt="ames" />
+                  <div class="event_desc">
+                    <h3>ANILLO X AMES WORLDWIDE SHOWER TIME (종료)</h3>
+                    <p>아닐로X아메스 샤워타임 컬렉션 런칭</p>
+                    <span> 2024.02.16 ~ 2024.04.01 </span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/happynewyear.jpg" alt="newyear" />
+                  <div class="event_desc">
+                    <h3>HAPPY NEW YEAR</h3>
+                    <p>2024 뉴이어 기프트</p>
+                    <span>2024.01.02 ~ 2024.02.15</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/happyholidays.jpg" alt="holiday" />
+                  <div class="event_desc">
+                    <h3>HAPPY HOLIDAYS(종료)</h3>
+                    <p>2023 홀리데이 기프트</p>
+                    <span>2023.11.24 ~ 2024.01.02</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/blacktea.jpg" alt="blacktea" />
+                  <div class="event_desc">
+                    <h3>BLACK TEA NOURISHING LAUNCHING(종료)</h3>
+                    <p>블랙티 너리싱 컬렉션 런칭 이벤트</p>
+                    <span>2023.10.20 ~ 2023.11.23 </span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/restinseoul.jpg" alt="restinseoul" />
+                  <div class="event_desc">
+                    <h3>REST IN SEOUL(종료)</h3>
+                    <p>아닐로 전시 팝업 '서울에서 쉬다'</p>
+                    <span>2023.10.13 ~ 2023.12.12</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/happyholidays.jpg" alt="holiday" />
+                  <div class="event_desc">
+                    <h3>HAPPY THANKSGIVING DAY(종료)</h3>
+                    <p>추석 맞이 보자기백 무료 포장 이벤트</p>
+                    <span>2023.09.01 ~ 2023.09.30</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_page" id="page2">
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/limesunday.jpg" alt="limesunday" />
+                  <div class="event_desc">
+                    <h3>LIME SUNDAY REFRESH SUMMER EVENT(종료)</h3>
+                    <p>라임썬데이와 함께하는 시원한 여름</p>
+                    <span>2023.07.03 ~ 2023.08.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/pawfriendly.jpg" alt="pawfriendly" />
+                  <div class="event_desc">
+                    <h3>ANILLO PAW-FRIENDLY SHOWER HOUSE CAMPAIGN(종료)</h3>
+                    <p>아닐로 포프렌들리 샤워하우스 캠페인</p>
+                    <span>2023.06.12 ~ 2023.08.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/amber528.jpg" alt="amber" />
+                  <div class="event_desc">
+                    <h3>AMBER528 PARFUM BODY MIST LAUNCHING(종료)</h3>
+                    <p>엠버528 퍼퓸 바디 미스트 런칭 이벤트</p>
+                    <span>2023.05.02 ~ 2023.05.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/rosynight.jpg" alt="rosynight" />
+                  <div class="event_desc">
+                    <h3>ROSY NIGHT PARFUM HAIR MIST LAUNCHING(종료)</h3>
+                    <p>로지나잇 퍼퓸 헤어 미스트 런칭 이벤트</p>
+                    <span>2023.04.07 ~ 2023.04.30</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/firstanniversary.jpg"
+                    alt="firstanniversary"
+                  />
+                  <div class="event_desc">
+                    <h3>ANILLO 1ST ANNIVERSARY EVENT(종료)</h3>
+                    <p>아닐로 런칭 1주년 프로모션</p>
+                    <span>2023.03.03 ~ 2023.03.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/mondayedition.jpg" alt="mondayedition" />
+                  <div class="event_desc">
+                    <h3>ANILLO X MONDAYEDITION(종료)</h3>
+                    <p>아닐로X먼데이에디션 리미티드 에디션</p>
+                    <span>2023.01.25 ~ 2023.02.28</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_page" id="page3">
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/newyeargiftevent.jpg" alt="newyeargift" />
+                  <div class="event_desc">
+                    <h3>HAPPY NEW YEAR GITT EVENT(종료)</h3>
+                    <p>뉴이어 기프트 세트 이벤트</p>
+                    <span>2023.01.02 ~ 2023.01.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/figwhiskyholiday.jpg" alt="figholiday" />
+                  <div class="event_desc">
+                    <h3>FIG WHISKY HOLIDAY EVENT(종료)</h3>
+                    <p>피그위스키 홀리데이 이벤트</p>
+                    <span>2022.12.01 ~ 2022.12.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/figwhiskylaunch.jpg" alt="figlaunch" />
+                  <div class="event_desc">
+                    <h3>FIG WHISKY LAUNCH EVENT(종료)</h3>
+                    <p>피그위스키 런칭 이벤트</p>
+                    <span>2022.11.10 ~ 2022.11.30</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/anilloxnontton.jpg" alt="nontton" />
+                  <div class="event_desc">
+                    <h3>ANILLO X NONTTON COLLABORATION EVENT(종료)</h3>
+                    <p>아닐로 X 논튼 콜라보레이션 이벤트</p>
+                    <span>2022.11.01 ~ 2022.11.30</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/anilloshowerhouse.jpg"
+                    alt="showerhouse"
+                  />
+                  <div class="event_desc">
+                    <h3>ANILLO SHOWER HOUSE(종료)</h3>
+                    <p>아닐로 샤워 하우스</p>
+                    <span>2022.09.16 ~ 2022.10.03</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/thanksgiving03.jpg" alt="mondayedition" />
+                  <div class="event_desc">
+                    <h3>HAPPY THANKSGIVING EVENT(종료)</h3>
+                    <p>추석 선물 & 무료 기프트 포장 서비스</p>
+                    <span>2022.08.29 ~ 2022.09.12</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_page" id="page4">
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/summergift.jpg" alt="summergift" />
+                  <div class="event_desc">
+                    <h3>SUMMER SPECIAL GIFT(종료)</h3>
+                    <p>3/5/7 구매금액별 사은품 증정</p>
+                    <span>2022.08.08 ~ 2022.08.28</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/limesunday04.jpg" alt="limesunday" />
+                  <div class="event_desc">
+                    <h3>LIME SUNDAY REFRESH LAUNCH EVENT(종료)</h3>
+                    <p>라임썬데이 리프레시 런칭 이벤트</p>
+                    <span>2022.06.14 ~ 2022.08.07</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/limesundaykit04.jpg"
+                    alt="limesundaykit"
+                  />
+                  <div class="event_desc">
+                    <h3>LIME SUNDAY PARFUM & SAMPLE KIT(종료)</h3>
+                    <p>라임썬데이 퍼퓸 & 샘플키트 무료 체험</p>
+                    <span>2022.06.08 ~ 2022.06.13</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/amberlaunch04.jpg" alt="amberlaunch04" />
+                  <div class="event_desc">
+                    <h3>AMBER528 SCENTED LAUNCH EVENT(종료)</h3>
+                    <p>엠버528 센티드 런칭 이벤트</p>
+                    <span>2022.05.11 ~ 2022.06.14</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img
+                    src="./0.image/amberedition04.jpg"
+                    alt="amberedition04"
+                  />
+                  <div class="event_desc">
+                    <h3>AMBER528 LIMITED PARFUM EDITION(종료)</h3>
+                    <p>엠버528 한정판 핸드메이드 에디션</p>
+                    <span>2022.05.04 ~ 2022.05.10</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/thankugift.jpg" alt="mondayedition" />
+                  <div class="event_desc">
+                    <h3>THANK U GIFT EVENT(종료)</h3>
+                    <p>금액별 증정 이벤트</p>
+                    <span>2022.04.01 ~ 2022.04.30</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_page" id="page5">
+              <section id="event">
+                <article class="eventcont">
+                  <img src="./0.image/launchevent05.jpg" alt="launchevent05" />
+                  <div class="event_desc">
+                    <h3>LAUNCH EVENT(종료)</h3>
+                    <p>런칭 이벤트</p>
+                    <span>2022.03.07 ~ 2022.03.31</span>
+                  </div>
+                </article>
+                <article class="eventcont">
+                  <img src="./0.image/prelaunch05.jpg" alt="prelaunch05" />
+                  <div class="event_desc">
+                    <h3>PRE-LAUNCHING EVENT(종료)</h3>
+                    <p>프리런칭 이벤트 - 미니퍼퓸</p>
+                    <span>2022.02.21 ~ 2022.03.06</span>
+                  </div>
+                </article>
+              </section>
+            </div>
+            <div class="event_pagenumber">
+              <a href="#none">
+                <img
+                  id="left"
+                  class="arrow"
+                  src="./0.image/이전 페이지.png"
+                  alt="prev"
+                />
+              </a>
+              <button class="page-button" data-page="1">1</button>
+              <button class="page-button" data-page="2">2</button>
+              <button class="page-button" data-page="3">3</button>
+              <button class="page-button" data-page="4">4</button>
+              <button class="page-button" data-page="5">5</button>
+              <a href="#none">
+                <img
+                  id="right"
+                  class="arrow"
+                  src="./0.image/다음 페이지.png"
+                  alt="next"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer">
+        <section id="footer_slide">
+          <div class="footer_slide_img">
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+          </div>
+        </section>
+        <div id="footer_cont">
+          <section id="footer_left">
+            <h2><b>COMPANY</b></h2>
+            <div class="footer_left_cont">
+              <span>
+                <p><b>COMPANY&nbsp;</b></p>
+                <p>Mediquitous&nbsp;&nbsp;</p>
+                <p><b>CEO&nbsp;</b></p>
+                <p>DooJin Lee</p>
+              </span>
+              <span>
+                <p><b>ECOMMERCE PERMIT REGISTRATION NO&nbsp;</b></p>
+                <p>2017-Seoul Gangnam-02608</p>
+              </span>
+              <span>
+                <p><b>PERMIT NUMBER&nbsp;</b></p>
+                <p>301-87-00296 Mediquitous Co., Ltd.</p>
+                <p></p>
+                <p>
+                  <a
+                    href=""
+                    onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=3018700296', 'bizCommPop', 'width=750, height=950;')"
+                    >[OPERATOR INFORMATION]</a
+                  >
+                </p>
+              </span>
+              <span>
+                <p><b>ADDRESS&nbsp;</b></p>
+                <p>
+                  06106 Gangnam-Gu, Seoul, Republic of Korea 2nd F, 644,
+                  Nonhyeon-Ro
+                </p>
+              </span>
+              <span>
+                <p><b>EMAIL(MARKETING INQUIRY)&nbsp;</b></p>
+                <p>marketing@anillo.co.kr</p>
+              </span>
+              <span>
+                <p><b>EMAIL(PARTERSHIP INQUIRY)&nbsp;</b></p>
+                <p>sales@anillo.co.kr</p>
+              </span>
+              <span>
+                <p><b>EMAIL(GLOBAL INQUIRY)&nbsp;</b></p>
+                <p>global@anillo.co.kr</p>
+              </span>
+              <span>
+                <p>copyright © ANILLO. All rights reserved.</p>
+              </span>
+            </div>
+          </section>
+          <section id="footer_right">
+            <div class="footer_right_cont">
+              <h2><b>CS CENTER</b></h2>
+              <span><b>TEL&nbsp;</b>1566-5103</span>
+              <span><b>OPEN&nbsp;</b>10:00am ~ 5:00pm</span>
+              <span><b>LUNCH TIME&nbsp;</b>12:00pm ~ 1:00pm</span>
+              <span><b>SAT, SUN, HOLIDAY OFF</b></span>
+              <div class="footer_right_cont_icon">
+                <span><i class="fab fa-instagram"></i></span>
+                <span><img src="./0.image/카카오톡.png" alt="kakao" /></span>
+              </div>
+            </div>
+            <div class="footer_right_cont">
+              <h2><b>DELIVERY INFO</b></h2>
+              <span><b>배송조회&nbsp;</b>CJ대한통운</span>
+              <span>
+                <b>반송주소&nbsp;</b>
+                HQ/CENTER<br />경기도 이천시 백사면 청백리로393번길<br />519-13
+                2층 볼드나인센터<br />메디쿼터스 물류센터</span
+              >
+            </div>
+            <div class="footer_right_cont">
+              <h2><b>HELP</b></h2>
+              <p>
+                <a href="#"><b>ABOUT US</b></a>
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/member/agreement.html"
+                  target="_blank"
+                  ><b>AGREEMENT</b></a
+                >
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/member/privacy.html"
+                  target="_blank"
+                  ><b>PRIVACY POLICY</b></a
+                >
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/shopinfo/guide.html"
+                  target="_blank"
+                  ><b>SHOP GUIDE</b></a
+                >
+              </p>
+              <p>
+                <a href="https://anillo.co.kr/membership.html" target="_blank"
+                  ><b>MEMBERSHIP</b></a
+                >
+              </p>
+              <p>copyright © ANILLO. All rights reserved.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div id="aside"></div>
+      <div id="menu"></div>
     </div>
-    <div id="gnb">
-      <h1 class="gnb_container">Event</h1>
-      <ul class="gnb_container">
-        <li><a href="#">진행중</a></li>
-        <li><a href="#">종료</a></li>
-      </ul>
-    </div>
-    <div id="container"></div>
-    <div id="footer"></div>
-    <div id="aside"></div>
-    <div id="menu"></div>
   </body>
 </html>

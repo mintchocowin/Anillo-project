@@ -441,11 +441,108 @@ body {
 .wrap {
   width: 100%;
   margin: 0 auto;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 .wrap #container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 65px;
+  margin: 90px auto 100px;
   width: 75%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  position: relative;
+}
+.wrap #container #stocklist_online #stocklist,
+.wrap #container #stocklist_offline #stocklist {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+.wrap #container #stocklist_online #stocklist .stockcont,
+.wrap #container #stocklist_offline #stocklist .stockcont {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 65px;
+}
+.wrap #container #stocklist_online #stocklist .stockcont img,
+.wrap #container #stocklist_offline #stocklist .stockcont img {
+  width: 100%;
+}
+.wrap #container #stocklist_online #stocklist .stockcont h3,
+.wrap #container #stocklist_offline #stocklist .stockcont h3 {
+  margin: 20px auto 9px;
+  font: 500 18px/1.8 "Futura PT";
+}
+.wrap #container #stocklist_online #stocklist .stockcont p,
+.wrap #container #stocklist_offline #stocklist .stockcont p {
+  font: normal 14px/1 "Futura PT";
+  color: #a0a0a0;
+}
+.wrap #container #stocklist_online #stocklist .stockcont:nth-child(3) h3,
+.wrap #container #stocklist_offline #stocklist .stockcont:nth-child(3) h3 {
+  font: 500 18px/1.8 "Noto Sans KR";
+}
+.wrap #container #stocklist_online #stocklist:last-child,
+.wrap #container #stocklist_offline #stocklist:last-child {
+  width: 100%;
+  justify-content: start;
+}
+.wrap #container #stocklist_online #stocklist:last-child .stockcont,
+.wrap #container #stocklist_offline #stocklist:last-child .stockcont {
+  width: 25%;
+}
+.wrap #container #stocklist_offline {
+  display: none;
+}
+.wrap #container #stocklist_offline .stockcont p {
+  margin-bottom: 9px;
+}
+.wrap #container #stocklist_offline .stockcont span {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font: normal 14px/1.4 "Futura PT";
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 9px;
+}
+.wrap #container #stocklist_offline .stockcont .stockcont_ananti_inner,
+.wrap #container #stocklist_offline .stockcont .stockcont_chicor_inner {
+  margin: 15px;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.5s;
+}
+.wrap #container #stocklist_offline .stockcont .stockcont_ananti_inner .stockcont_inner,
+.wrap #container #stocklist_offline .stockcont .stockcont_chicor_inner .stockcont_inner {
+  margin-top: 15px;
+}
+.wrap #container #stocklist_offline .stockcont .stockcont_ananti_inner .stockcont_inner:nth-child(1),
+.wrap #container #stocklist_offline .stockcont .stockcont_chicor_inner .stockcont_inner:nth-child(1) {
+  margin-top: 0px;
+}
+.wrap #container #stocklist_offline .stockcont .stockcont_ananti_inner .stockcont_inner h4,
+.wrap #container #stocklist_offline .stockcont .stockcont_chicor_inner .stockcont_inner h4 {
+  font: 14px/1.4 "Noto Sans KR";
+}
+.wrap #container #stocklist_offline .stockcont .stockcont_ananti_inner .stockcont_inner p,
+.wrap #container #stocklist_offline .stockcont .stockcont_chicor_inner .stockcont_inner p {
+  font: 11px/1.1 "Noto Sans KR";
+  color: #a0a0a0;
+}
+.wrap #container #stocklist_offline .stockcont .view {
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+.wrap #container .tab {
+  display: block;
 }
 
 @media screen and (max-width: 1200px) {
@@ -456,5 +553,53 @@ body {
 @media screen and (max-width: 768px) {
   .wrap {
     min-width: 390px;
+  }
+  .wrap #container {
+    gap: 0px;
+  }
+  .wrap #container #stocklist_online #stocklist,
+  .wrap #container #stocklist_offline #stocklist {
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .wrap #container #stocklist_online #stocklist .stockcont,
+  .wrap #container #stocklist_offline #stocklist .stockcont {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+  }
+  .wrap #container #stocklist_online #stocklist .stockcont img,
+  .wrap #container #stocklist_offline #stocklist .stockcont img {
+    width: 100%;
+  }
+  .wrap #container #stocklist_online #stocklist .stockcont h3,
+  .wrap #container #stocklist_offline #stocklist .stockcont h3 {
+    margin: 20px auto 9px;
+    font: 500 18px/1.8 "Futura PT";
+  }
+  .wrap #container #stocklist_online #stocklist .stockcont p,
+  .wrap #container #stocklist_offline #stocklist .stockcont p {
+    font: normal 14px/1.4 "Futura PT";
+    color: #a0a0a0;
+  }
+  .wrap #container #stocklist_online #stocklist .stockcont:nth-child(3) h3,
+  .wrap #container #stocklist_offline #stocklist .stockcont:nth-child(3) h3 {
+    font: 500 18px/1.8 "Noto Sans KR";
+  }
+  .wrap #container #stocklist_online #stocklist:last-child,
+  .wrap #container #stocklist_offline #stocklist:last-child {
+    width: 100%;
+    justify-content: start;
+  }
+  .wrap #container #stocklist_online #stocklist:last-child .stockcont,
+  .wrap #container #stocklist_offline #stocklist:last-child .stockcont {
+    width: 100%;
+  }
+  .wrap #container #stocklist_offline {
+    display: none;
+  }
+  .wrap #container .tab {
+    display: block;
   }
 }/*# sourceMappingURL=Stocklist.css.map */

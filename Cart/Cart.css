@@ -443,18 +443,95 @@ body {
   margin: 0 auto;
   border: 1px solid red;
 }
-.wrap #container {
+.wrap #cart_container {
   width: 75%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  margin: 40px auto 0;
+}
+.wrap #cart_container #carttap ul {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  border: 1px solid #e0ded9;
+  border-bottom-color: #1e1e1e;
+  background: #f7f7ef;
+}
+.wrap #cart_container #carttap ul li {
+  padding: 10px 50px;
+  font: normal 14px/1.4 "Noto Sans KR";
+  border-right: 1px solid #e0ded9;
+}
+.wrap #cart_container #carttap ul li:nth-child(1) {
+  background: #fafaf6;
+  border: 1px solid #1e1e1e;
+  border-bottom-color: #fff;
+  margin: 0 0 -2px;
+}
+.wrap #cart_container #carttap ul li:nth-child(2) {
+  color: #a0a0a0;
+}
+.wrap #cart_container #cartcont p {
+  margin: 40px;
+  text-align: center;
+  font: bold 14px/1.4 "Noto Sans KR";
+}
+.wrap #cart_container #cartbtn {
+  position: relative;
+  display: flex;
+  padding: 10px 0 40px;
+  margin-bottom: 100px;
+}
+.wrap #cart_container #cartbtn .cartbtn_center {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.wrap #cart_container #cartbtn .cartbtn_right {
+  position: absolute;
+  right: 0;
 }
 
 @media screen and (max-width: 1200px) {
-  .wrap #container {
+  .wrap #cart_container {
     width: 100%;
   }
 }
 @media screen and (max-width: 768px) {
   .wrap {
     min-width: 390px;
+  }
+  .wrap #cart_container {
+    width: 100%;
+    margin: 40px auto 0;
+  }
+  .wrap #cart_container #carttap ul {
+    display: flex;
+    justify-content: space-between;
+  }
+  .wrap #cart_container #carttap ul li {
+    width: 50%;
+    text-align: center;
+    padding: 10px 50px;
+    font: normal 14px/1.4 "Noto Sans KR";
+    border-right: 1px solid #e0ded9;
+  }
+  .wrap #cart_container #carttap ul li:nth-child(1) {
+    background: #fafaf6;
+    border: 1px solid #1e1e1e;
+    border-bottom-color: #fff;
+    margin: 0 0 -2px;
+  }
+  .wrap #cart_container #carttap ul li:nth-child(2) {
+    color: #a0a0a0;
+  }
+  .wrap #cart_container #cartcont p {
+    margin: 40px 0 100px;
+    text-align: center;
+    font: bold 14px/1.4 "Noto Sans KR";
+  }
+  .wrap #cart_container #cartbtn {
+    display: none;
   }
 }/*# sourceMappingURL=Cart.css.map */

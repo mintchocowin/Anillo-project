@@ -1,56 +1,600 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./Stocklist.css">
-  <script defer src="./Stocklist.js"></script>
-  <title>Document</title>
-</head>
-<body>
-  <div id="header">
-    <div id="header_popup">
-      <img src="../Index/0.image/close button.png" alt="close" />
-      <span>아닐로X아메스 샤워타임 리미티드 세트 25% 할인</span>
-      <img src="../Index/0.image/inceto widget close icon.png" alt="close" />
-    </div>
-    <div id="header_contents">
-      <button class="header_menu">
-        <div></div>
-        <div></div>
-        <div></div>
-      </button>
-      <a href="./index.html" class="header_logo">
-        <img src="../Index/0.image/logo.png" alt="logo" />
-      </a>
-      <div class="header_right">
-        <button class="header_search">
-          <img src="../Index/0.image/ico-search-m01.png" alt="search" />
-        </button>
-        <a href="../Mypage/0.Login/Login.html" class="header_mypage">
-          <img src="../Index/0.image/mo_ico-mypg-m01.png" alt="mypage" />
-        </a>
-        <a href="../Cart/Cart.html" class="header_cart">
-          <img src="../Index/0.image/mo_cart.png" alt="" />
-        </a>
-        <button class="header_menu header_menu_mobile">
-          <div></div>
-          <div></div>
-          <div></div>
-        </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/74454cb6c5.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./Stocklist.css" />
+    <script defer src="./Stocklist.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="header">
+        <div id="header_popup">
+          <img src="../0.image/header_close.png" alt="close" />
+          <span>아닐로X아메스 샤워타임 리미티드 세트 25% 할인</span>
+          <img src="./0.image/header_close.png" alt="close" />
+        </div>
+        <div id="header_contents">
+          <button class="header_menu">
+            <div></div>
+            <div></div>
+            <div></div>
+          </button>
+          <a href="../../index.html" class="header_logo">
+            <img src="../../0.image/header_logo.png" alt="logo" />
+          </a>
+          <div class="header_right">
+            <button class="header_search">
+              <img src="../../0.image/header_search.png" alt="search" />
+            </button>
+            <a href="../Mypage/0.Login/Login.html" class="header_mypage">
+              <img src="../../0.image/header_mypage.png" alt="mypage" />
+            </a>
+            <a href="../Cart/Cart.html" class="header_cart">
+              <img src="../../0.image/header_cart.png" alt="" />
+            </a>
+            <button class="header_menu header_menu_mobile">
+              <div></div>
+              <div></div>
+              <div></div>
+            </button>
+          </div>
+        </div>
       </div>
+      <div id="gnb">
+        <h1 class="gnb_container">Stocklist</h1>
+        <ul class="gnb_container">
+          <li class="online"><a href="#">Online</a></li>
+          <li class="offline"><a href="#">Off-line</a></li>
+        </ul>
+      </div>
+
+      <div id="container">
+        <div id="stocklist_online">
+          <section id="stocklist">
+            <article class="stockcont">
+              <img src="./0.image/stock_wconcept.jpg" alt="wconcept" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://display.wconcept.co.kr/brand/110124"
+                    target="_blank"
+                    >W CONCEPT</a
+                  >
+                </h3>
+                <p>
+                  <a
+                    href="https://display.wconcept.co.kr/brand/110124"
+                    target="_blank"
+                    >www.wconcept.co.kr</a
+                  >
+                </p>
+                <p>1566-5027</p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stock_eql.jpg" alt="eql" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://www.eqlstore.com/brands/main?brndCategoryNumber=BDMA01M13"
+                    target="_blank"
+                    >EQL</a
+                  >
+                </h3>
+                <p>
+                  <a
+                    href="https://www.eqlstore.com/brands/main?brndCategoryNumber=BDMA01M13"
+                    target="_blank"
+                    >www.eqlstore.com</a
+                  >
+                </p>
+                <p>1661-8858</p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stock_kakaogift.jpg" alt="kakao" />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://gift.kakao.com/brand/14457" target="_blank"
+                    >카카오톡 선물하기</a
+                  >
+                </h3>
+                <p>
+                  <a href="https://gift.kakao.com/brand/14457" target="_blank"
+                    >gift.kakao.com</a
+                  >
+                </p>
+                <p>1544-2431</p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stock_29cm.jpg" alt="29cm" />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://shop.29cm.co.kr/brand/17663" target="_blank"
+                    >29CM</a
+                  >
+                </h3>
+                <p>
+                  <a href="https://shop.29cm.co.kr/brand/17663" target="_blank"
+                    >www.29cm.co.kr</a
+                  >
+                </p>
+              </div>
+            </article>
+          </section>
+
+          <section id="stocklist">
+            <article class="stockcont">
+              <img src="./0.image/stock_musinsa.jpg" alt="musinsa" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://www.musinsa.com/brands/anillo"
+                    target="_blank"
+                    >MUSINSA</a
+                  >
+                </h3>
+                <p>
+                  <a
+                    href="https://www.musinsa.com/brands/anillo"
+                    target="_blank"
+                    >www.musinsa.com</a
+                  >
+                </p>
+                <p>1544-7199</p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stock_33hoodie.jpg" alt="33hoodie" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://www.33hoodie.com/brand2.html?cate_no=202"
+                    target="_blank"
+                    >33HOODIE</a
+                  >
+                </h3>
+                <p>
+                  <a
+                    href="https://www.33hoodie.com/brand2.html?cate_no=202"
+                    target="_blank"
+                    >www.33hoodie.com</a
+                  >
+                </p>
+                <p>070-8807-3300</p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img
+                src="./0.image/stock_eternaljourney.jpg"
+                alt="eternaljourney"
+              />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://eternaljourney.ananti.kr/brand/0249"
+                    target="_blank"
+                    >ETERNAL JOURNEY</a
+                  >
+                </h3>
+                <p>
+                  <a
+                    href="https://eternaljourney.ananti.kr/brand/0249"
+                    target="_blank"
+                    >www.eternaljourney.ananti.kr</a
+                  >
+                </p>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stock_chicor.jpg" alt="chicor" />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://chicor.com/main" target="_blank">CHICOR</a>
+                </h3>
+                <p>
+                  <a href="https://chicor.com/main" target="_blank"
+                    >www.chicor.com</a
+                  >
+                </p>
+                <p>1600-5932</p>
+              </div>
+            </article>
+          </section>
+
+          <section id="stocklist">
+            <article class="stockcont">
+              <img src="./0.image/stock_makefolio.jpg" alt="makefolio" />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://www.makefolio.co.kr/anillo" target="_blank"
+                    >MAKE FOLIO</a
+                  >
+                </h3>
+                <p>
+                  <a href="https://www.makefolio.co.kr/anillo" target="_blank"
+                    >www.makefolio.co.kr</a
+                  >
+                </p>
+                <p>070-5158-9013</p>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <div id="stocklist_offline">
+          <section id="stocklist">
+            <article class="stockcont">
+              <img
+                src="./0.image/stocklist_offline_beclean.jpg"
+                alt="beclean"
+              />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://www.instagram.com/b_clean_beauty/"
+                    target="_blank"
+                    >비클린 더현대서울</a
+                  >
+                </h3>
+                <p>서울 영등포구 여의대로 108 지하2층</p>
+                <span>
+                  <a
+                    href="https://map.naver.com/p/entry/place/1312812074?placePath=%2Fhome&c=15.00,0,0,0,dh"
+                    target="_blank"
+                    >MAP</a
+                  >
+                </span>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stocklist_offline_cecile.jpg" alt="cecile" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="hhttps://www.instagram.com/cecile.n.cedric/"
+                    target="_blank"
+                    >세실앤세드릭</a
+                  >
+                </h3>
+                <p>서울특별시 중구 퇴계로81길 8</p>
+                <span>
+                  <a
+                    href="https://www.google.co.kr/maps/place/%EC%84%B8%EC%8B%A4%EC%95%A4%EC%84%B8%EB%93%9C%EB%A6%AD/data=!3m1!4b1!4m5!3m4!1s0x357ca30fa786c3eb:0x50df72e0ab3eb1e0!8m2!3d37.5659407!4d127.0181329?hl=ko"
+                    target="_blank"
+                    >MAP</a
+                  >
+                </span>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stocklist_offline_ananti.jpg" alt="ananti" />
+              <div class="stock_desc">
+                <h3>살롱 드 이터널저니</h3>
+                <p>아난티 코드 | 아난티 코브</p>
+                <span id="moreone"> MORE </span>
+                <div class="stockcont_ananti_inner">
+                  <div class="stockcont_inner 01">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%82%B4%EB%A1%B1+%EB%93%9C+%EC%9D%B4%ED%84%B0%EB%84%90%EC%A0%80%EB%8B%88/data=!3m1!4b1!4m15!1m7!3m6!1s0x3563396d89f4d731:0x2a87ca66b08fbcb4!2z7IK066GxIOuTnCDsnbTthLDrhJDsoIDri4g!8m2!3d37.626135!4d127.4799276!16s%2Fg%2F11q3tphp23!3m6!1s0x3563396d89f4d731:0x2a87ca66b08fbcb4!8m2!3d37.626135!4d127.4799276!15sCizslYTrgpzti7Ag7L2U65OcIOyCtOuhsSDrk5wg7J207YSw64SQIOyggOuLiFovIi3slYTrgpwg7YuwIOy9lOuTnCDsgrTrobEg65OcIOydtO2EsOuEkCDsoIDri4iSARFicnVuY2hfcmVzdGF1cmFudJoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOMWVUWkhXR1pCRUFF4AEA!16s%2Fg%2F11q3tphp23?hl=ko&entry=ttu"
+                        target="_blank"
+                      >
+                        <b>아난티 코드 살롱 드 이터널 저니</b>
+                      </a>
+                    </h4>
+                    <span>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%82%B4%EB%A1%B1+%EB%93%9C+%EC%9D%B4%ED%84%B0%EB%84%90%EC%A0%80%EB%8B%88/data=!4m10!1m2!2m1!1z7JWE64Kc7YuwIOy9lOuTnCDsgrTrobEg65OcIOydtO2EsOuEkCDsoIDri4g!3m6!1s0x3563396d89f4d731:0x2a87ca66b08fbcb4!8m2!3d37.626135!4d127.4799276!15sCizslYTrgpzti7Ag7L2U65OcIOyCtOuhsSDrk5wg7J207YSw64SQIOyggOuLiFovIi3slYTrgpwg7YuwIOy9lOuTnCDsgrTrobEg65OcIOydtO2EsOuEkCDsoIDri4iSARFicnVuY2hfcmVzdGF1cmFudJoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOMWVUWkhXR1pCRUFF4AEA!16s%2Fg%2F11q3tphp23?hl=ko"
+                        target="_blank"
+                        >MAP</a
+                      >
+                    </span>
+                    <p>경기도 가평군 설악면 방일리 산94-1</p>
+                  </div>
+                  <div class="stockcont_inner 02">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%9D%B4%ED%84%B0%EB%84%90+%EC%A0%80%EB%8B%88%26%EC%B9%B4%ED%8E%98/data=!4m10!1m2!2m1!1z7JWE64Kc7YuwIOy9lOu4jCDsgrTrobHrk5wg7KCA64uI!3m6!1s0x35688eaf48865551:0x6a2c4d87a5ccd9c5!8m2!3d35.1976059!4d129.2281474!15sCiHslYTrgpzti7Ag7L2U67iMIOyCtOuhseuTnCDsoIDri4haJSIj7JWE64KcIO2LsCDsvZTruIwg7IK066GxIOuTnCDsoIDri4iSAQpib29rX3N0b3JlmgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5TVU41YjJWbVJqTlJSUkFC4AEA!16s%2Fg%2F11f1jwmvpp?hl=ko"
+                        target="_blank"
+                      >
+                        <b>아난티 코브 살롱 드 이터널 저니</b>
+                      </a>
+                    </h4>
+                    <span>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%9D%B4%ED%84%B0%EB%84%90+%EC%A0%80%EB%8B%88%26%EC%B9%B4%ED%8E%98/data=!4m10!1m2!2m1!1z7JWE64Kc7YuwIOy9lOu4jCDsgrTrobHrk5wg7KCA64uI!3m6!1s0x35688eaf48865551:0x6a2c4d87a5ccd9c5!8m2!3d35.1976059!4d129.2281474!15sCiHslYTrgpzti7Ag7L2U67iMIOyCtOuhseuTnCDsoIDri4haJSIj7JWE64KcIO2LsCDsvZTruIwg7IK066GxIOuTnCDsoIDri4iSAQpib29rX3N0b3JlmgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5TVU41YjJWbVJqTlJSUkFC4AEA!16s%2Fg%2F11f1jwmvpp?hl=ko"
+                        target="_blank"
+                        >MAP</a
+                      >
+                    </span>
+                    <p>부산광역시 기장군 기장해안로 268-31</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stocklist_offline_chicor.jpg" alt="chicor" />
+              <div class="stock_desc">
+                <h3>CHICOR</h3>
+                <p>시코르 신세계 강남점</p>
+                <span>
+                  <a
+                    href="https://www.google.co.kr/maps/place/CHICOR+%EC%8B%9C%EC%BD%94%EB%A5%B4+%EC%8B%A0%EC%84%B8%EA%B3%84+%EA%B0%95%EB%82%A8%EC%A0%90/@37.5041299,126.9943145,16z/data=!4m7!3m6!1s0x357ca1951efea463:0xb3578b7132d769e6!8m2!3d37.5041299!4d127.0030692!15sChPsi5zsvZTrpbQg6rCV64Ko7KCQWhYiFOyLnOy9lCDrpbQg6rCV64Ko7KCQkgEPY29zbWV0aWNzX3N0b3Jl4AEA!16s%2Fg%2F11j1knlrzr?hl=ko&coh=164777&entry=tt&shorturl=1"
+                    target="_blank"
+                    >MAP</a
+                  >
+                </span>
+                <span id="moretwo"> MORE </span>
+                <div class="stockcont_chicor_inner">
+                  <div class="stockcont_inner 01">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%8B%9C%EC%BD%94%EB%A5%B4+CHICOR+%EC%84%BC%ED%85%80%EC%8B%9C%ED%8B%B0/@35.1666921,129.1371585,15z/data=!4m7!3m6!1s0x35689357343deedb:0xd7fc4d67c6ee5a92!8m2!3d35.1702709!4d129.1282757!15sCiPsi5zsvZTrpbQg7Iug7IS46rOEIOyEvO2FgOyLnO2LsOygkFonIiXsi5zsvZQg66W0IOyLoOyEuOqzhCDshLzthYDsi5zti7Ag7KCQkgEPY29zbWV0aWNzX3N0b3Jl4AEA!16s%2Fg%2F11hzlw0qg6?hl=ko&coh=164777&entry=tt&shorturl=1"
+                        target="_blank"
+                      >
+                        <b>시코르 신세계 센텀시티점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>부산광역시 해운대구 센텀4로 15</p>
+                  </div>
+                  <div class="stockcont_inner 02">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/CHICOR+%EC%8B%9C%EC%BD%94%EB%A5%B4+%EC%95%84%EC%9D%B4%ED%8C%8C%ED%81%AC%EB%AA%B0+%EC%9A%A9%EC%82%B0%EC%A0%90/data=!3m1!4b1!4m6!3m5!1s0x357ca3aecaf17997:0x4f76ce1b205fe853!8m2!3d37.5297133!4d126.9654824!16s%2Fg%2F11j5696ryz?hl=ko&entry=ttu"
+                        target="_blank"
+                      >
+                        <b>시코르 아이파크몰 용산점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>서울특별시 용산구 한강대로23길 55</p>
+                  </div>
+                  <div class="stockcont_inner 03">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/CHICOR+%EC%8B%9C%EC%BD%94%EB%A5%B4+%EC%8A%A4%ED%83%80%ED%95%84%EB%93%9C+%EA%B3%A0%EC%96%91%EC%A0%90/data=!3m1!4b1!4m6!3m5!1s0x357c973093bd636d:0x754c2e5e8e2bbee0!8m2!3d37.6462712!4d126.894544!16s%2Fg%2F11fr5d12j3?hl=ko&entry=ttu"
+                        target="_blank"
+                      >
+                        <b>시코르 스타필드 고양점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>경기도 고양시 덕양구 고양대로 1955</p>
+                  </div>
+                  <div class="stockcont_inner 04">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/CHICOR+%EC%8B%9C%EC%BD%94%EB%A5%B4+%EC%8B%A0%EC%84%B8%EA%B3%84+%EA%B0%95%EB%82%A8%EC%A0%90/@37.5041299,126.993542,16z/data=!4m7!3m6!1s0x357ca1951efea463:0xb3578b7132d769e6!8m2!3d37.5041299!4d127.0030692!15sChPsi5zsvZTrpbQg6rCV64Ko7KCQWhYiFOyLnOy9lCDrpbQg6rCV64Ko7KCQkgEPY29zbWV0aWNzX3N0b3Jl4AEA!16s%2Fg%2F11j1knlrzr?hl=ko&entry=tts"
+                        target="_blank"
+                      >
+                        <b>시코르 강남점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>서울특별시 서초구 신반포로 176 B1 파미에스트리트</p>
+                  </div>
+                  <div class="stockcont_inner 05">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/%EC%8B%9C%EC%BD%94%EB%A5%B4+NC+%EA%B0%95%EC%84%9C%EC%A0%90/data=!4m6!3m5!1s0x357c9d007ae331bd:0x5d8251e411c62e40!8m2!3d37.5602441!4d126.8404586!16s%2Fg%2F11vrn2nc48?entry=ttu"
+                        target="_blank"
+                      >
+                        <b>시코르 강서점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>서울특별시 강서구 강서로56길 17 NC백화점 강서점 1층</p>
+                  </div>
+                  <div class="stockcont_inner 06">
+                    <h4>
+                      <a
+                        href="https://www.google.co.kr/maps/place/CHICOR+%EC%8B%9C%EC%BD%94%EB%A5%B4+%EC%8A%A4%ED%83%80%ED%95%84%EB%93%9C+%EC%88%98%EC%9B%90%EC%A0%90+(24.1.24+%EC%98%A4%ED%94%88)/data=!3m1!4b1!4m6!3m5!1s0x357b43001afd8507:0x9abf85b37fcacab2!8m2!3d37.287384!4d126.9915807!16s%2Fg%2F11lcyqnyqf?hl=ko&entry=ttu"
+                        target="_blank"
+                      >
+                        <b>시코르 스타필드 수원점</b>
+                      </a>
+                    </h4>
+                    <span>MAP</span>
+                    <p>경기도 수원시 장안구 수성로 175 1층</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section id="stocklist">
+            <article class="stockcont">
+              <img src="./0.image/stocklist_offline_moani.jpg" alt="moani" />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://www.instagram.com/moani____/" target="_blank"
+                    >모아니</a
+                  >
+                </h3>
+                <p>경기 성남시 분당구 쇳골로 116 1층</p>
+                <span>
+                  <a
+                    href="https://www.google.co.kr/maps/place/%EB%AA%A8%EC%95%84%EB%8B%88/data=!3m1!4b1!4m15!1m7!3m6!1s0x357b59ac1b50412b:0x40d9e8cf156ad168!2z6rK96riw64-EIOyEseuCqOyLnCDrtoTri7nqtawg7Iez6rOo66GcIDExNiAx7Li1!3b1!8m2!3d37.3646484!4d127.089029!3m6!1s0x357b59344c40ba57:0x872a3fbbd407dfd1!8m2!3d37.3646431!4d127.0891218!15sCi3qsr3quLAg7ISx64Ko7IucIOu2hOuLueq1rCDsh7Pqs6jroZwgMTE2IDHsuLVaMSIv6rK96riwIOyEseuCqOyLnCDrtoTri7nqtawg7IezIOqzqOuhnCAxMTYgMSDsuLWSAQRjYWZlmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU5QYmtseVJVdDNFQUU!16s%2Fg%2F11fs03rgr6?hl=ko&entry=ttu"
+                    target="_blank"
+                    >MAP</a
+                  >
+                </span>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img
+                src="./0.image/stocklist_offline_favorite.jpg"
+                alt="favorite"
+              />
+              <div class="stock_desc">
+                <h3>
+                  <a href="https://www.instagram.com/playce2go/" target="_blank"
+                    >favorite</a
+                  >
+                </h3>
+                <p>제주특별자치도 서귀포시 성산읍 동류암로 20</p>
+                <span>
+                  <a
+                    href="https://www.google.co.kr/maps/place/%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4+%EC%BA%A0%ED%94%84+%EC%A0%9C%EC%A3%BC/data=!3m1!4b1!4m21!1m10!3m9!1s0x350d137d9f817519:0x8f49d1ef499bcbaf!2z7ZSM66CI7J207IqkIOy6oO2UhCDsoJzso7w!5m2!4m1!1i2!8m2!3d33.4500452!4d126.9184399!16s%2Fg%2F11c58s2qss!3m9!1s0x350d137d9f817519:0x8f49d1ef499bcbaf!5m2!4m1!1i2!8m2!3d33.4500452!4d126.9184399!15sChLtlIzroIjsnbTsiqTsuqDtlIRaFSIT7ZSM66CI7J207IqkIOy6oO2UhJIBBWhvdGVs4AEA!16s%2Fg%2F11c58s2qss?hl=ko&entry=ttu"
+                    >MAP</a
+                  >
+                </span>
+              </div>
+            </article>
+            <article class="stockcont">
+              <img src="./0.image/stocklist_offline_ttrs.jpg" alt="ttrs" />
+              <div class="stock_desc">
+                <h3>
+                  <a
+                    href="https://www.instagram.com/ttrs.seongsu/"
+                    target="_blank"
+                    >TTRS</a
+                  >
+                </h3>
+                <p>서울특별시 성동구 아차산로9길 12 1층</p>
+                <span>
+                  <a
+                    href="https://www.google.com/maps/place/TTRS+Seongsu/data=!4m14!1m7!3m6!1s0x357ca5c65cdcbcf5:0x75d751202bc156ca!2sTTRS+Seongsu!8m2!3d37.5450568!4d127.0584418!16s%2Fg%2F11vbykwnj3!3m5!1s0x357ca5c65cdcbcf5:0x75d751202bc156ca!8m2!3d37.5450568!4d127.0584418!16s%2Fg%2F11vbykwnj3?entry=ttu"
+                    >MAP</a
+                  >
+                </span>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
+
+      <div id="footer">
+        <section id="footer_slide">
+          <div class="footer_slide_img">
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+            <img src="./0.image/marquee-text.jpg" alt="slideimg" />
+          </div>
+        </section>
+        <div id="footer_cont">
+          <section id="footer_left">
+            <h2><b>COMPANY</b></h2>
+            <div class="footer_left_cont">
+              <span>
+                <p><b>COMPANY&nbsp;</b></p>
+                <p>Mediquitous&nbsp;&nbsp;</p>
+                <p><b>CEO&nbsp;</b></p>
+                <p>DooJin Lee</p>
+              </span>
+              <span>
+                <p><b>ECOMMERCE PERMIT REGISTRATION NO&nbsp;</b></p>
+                <p>2017-Seoul Gangnam-02608</p>
+              </span>
+              <span>
+                <p><b>PERMIT NUMBER&nbsp;</b></p>
+                <p>301-87-00296 Mediquitous Co., Ltd.</p>
+                <p></p>
+                <p>
+                  <a
+                    href=""
+                    onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=3018700296', 'bizCommPop', 'width=750, height=950;')"
+                    >[OPERATOR INFORMATION]</a
+                  >
+                </p>
+              </span>
+              <span>
+                <p><b>ADDRESS&nbsp;</b></p>
+                <p>
+                  06106 Gangnam-Gu, Seoul, Republic of Korea 2nd F, 644,
+                  Nonhyeon-Ro
+                </p>
+              </span>
+              <span>
+                <p><b>EMAIL(MARKETING INQUIRY)&nbsp;</b></p>
+                <p>marketing@anillo.co.kr</p>
+              </span>
+              <span>
+                <p><b>EMAIL(PARTERSHIP INQUIRY)&nbsp;</b></p>
+                <p>sales@anillo.co.kr</p>
+              </span>
+              <span>
+                <p><b>EMAIL(GLOBAL INQUIRY)&nbsp;</b></p>
+                <p>global@anillo.co.kr</p>
+              </span>
+              <span>
+                <p>copyright © ANILLO. All rights reserved.</p>
+              </span>
+            </div>
+          </section>
+          <section id="footer_right">
+            <div class="footer_right_cont">
+              <h2><b>CS CENTER</b></h2>
+              <span><b>TEL&nbsp;</b>1566-5103</span>
+              <span><b>OPEN&nbsp;</b>10:00am ~ 5:00pm</span>
+              <span><b>LUNCH TIME&nbsp;</b>12:00pm ~ 1:00pm</span>
+              <span><b>SAT, SUN, HOLIDAY OFF</b></span>
+              <div class="footer_right_cont_icon">
+                <span><i class="fab fa-instagram"></i></span>
+                <span><img src="./0.image/카카오톡.png" alt="kakao" /></span>
+              </div>
+            </div>
+            <div class="footer_right_cont">
+              <h2><b>DELIVERY INFO</b></h2>
+              <span><b>배송조회&nbsp;</b>CJ대한통운</span>
+              <span>
+                <b>반송주소&nbsp;</b>
+                HQ/CENTER<br />경기도 이천시 백사면 청백리로393번길<br />519-13
+                2층 볼드나인센터<br />메디쿼터스 물류센터</span
+              >
+            </div>
+            <div class="footer_right_cont">
+              <h2><b>HELP</b></h2>
+              <p>
+                <a href="#"><b>ABOUT US</b></a>
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/member/agreement.html"
+                  target="_blank"
+                  ><b>AGREEMENT</b></a
+                >
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/member/privacy.html"
+                  target="_blank"
+                  ><b>PRIVACY POLICY</b></a
+                >
+              </p>
+              <p>
+                <a
+                  href="https://anillo.co.kr/shopinfo/guide.html"
+                  target="_blank"
+                  ><b>SHOP GUIDE</b></a
+                >
+              </p>
+              <p>
+                <a href="https://anillo.co.kr/membership.html" target="_blank"
+                  ><b>MEMBERSHIP</b></a
+                >
+              </p>
+              <p>copyright © ANILLO. All rights reserved.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div id="aside"></div>
+      <div id="menu"></div>
     </div>
-  </div>
-  <div id="gnb">
-    <h1 class="gnb_container">Stocklist</h1>
-    <ul class="gnb_container">
-      <li><a href="#">Online</a></li>
-      <li><a href="#">off-line</a></li>
-    </ul>
-  </div>
-  <div id="container"></div>
-  <div id="footer"></div>
-  <div id="aside"></div>
-  <div id="menu"></div>
-</body>
+  </body>
 </html>
