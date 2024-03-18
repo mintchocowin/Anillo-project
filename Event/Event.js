@@ -45,10 +45,10 @@ const pageOn = (pageNumber) => {
   }
 };
 
-const arrows = document.querySelector(".arrow");
-
+const arrows = document.querySelectorAll(".arrow");
 const pages = document.querySelectorAll(".event_page");
-console.log(pages);
+const nextButton = document.querySelector("#right");
+const prevButton = document.querySelector("#left");
 let i = 0;
 const changePage = (direction) => {
   if (direction === "next") {
@@ -56,21 +56,29 @@ const changePage = (direction) => {
     if (i >= pages.length) {
       i = 0;
     }
-    /*     reset(); */
-    buttonOn[i].classList.add("active");
+    reset();
+    buttons[i].classList.add("active");
   } else if (direction === "prev") {
     i--;
     if (i < 0) {
-      i - pages.length - 1;
+      i = pages.length - 1;
     }
-    /*     reset(); */
-    buttonOn[i].classList.add("active");
+    reset();
+    buttons[i].classList.add("active");
   }
 };
 
-arrows.forEach((arrow) => {
+/* arrows.forEach((arrow) => {
   arrow.addEventListener("click", (e) => {
     const direction = e.target.id === "left" ? "prev" : "next";
     changePage(direction);
   });
+}); */
+
+/* arrows.forEach((arrow) => {
+  arrow.addEventListener("click", function () {
+    const direction = e.target.id === "left" ? "prev" : "next";
+    changePage(direction);
+  });
 });
+ */
