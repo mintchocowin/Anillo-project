@@ -1,0 +1,542 @@
+const DEBUG = false;
+const MOBILE_WIDTH = 480;
+
+// default values for DEBUG = true; will be updated in incentoInitCafe24API
+// if DEBUG = false. For local development, change these values
+let SHOP_CAFE24_ID = 'likemeliving';
+let SHOP_CAFE24_NUMBER = 4;
+const DEV_SHOP_USERNAME = 'incentoTest4';
+const DEV_MULTISHOP_DESCRIPTION = 'g_clicker';
+
+const DEV_WIDGET_SRC = 'http://localhost:3000';
+const WIDGET_SRC = 'https://widget.incento.kr';
+
+let CSS_URL = 'main.css';
+let SCRIPT_URL = `../src/extensions/${SHOP_CAFE24_ID}/${
+  SHOP_CAFE24_NUMBER === 1
+    ? ''
+    : `${SHOP_CAFE24_NUMBER}${
+        DEV_MULTISHOP_DESCRIPTION != null
+          ? ` (${DEV_MULTISHOP_DESCRIPTION})`
+          : ''
+      }/`
+}incentoWidgetExtension.js`;
+let widgetListening = false;
+
+function incentoInitCafe24API() {
+  if (!DEBUG) {
+    CAFE24API.init({
+      client_id: 'LQidJFVaNNAp2lUUp19AJB',
+      version: '2022-06-01',
+    });
+    SHOP_CAFE24_ID = CAFE24API.MALL_ID;
+    SHOP_CAFE24_NUMBER = CAFE24API.SHOP_NO;
+    CSS_URL = `https://s3.incento.kr/scripts/extensions/${SHOP_CAFE24_ID}${
+      SHOP_CAFE24_NUMBER === 1 ? '' : `/${SHOP_CAFE24_NUMBER}`
+    }/incentoWidgetExtension.css`;
+    SCRIPT_URL = `https://s3.ap-northeast-2.amazonaws.com/s3.incento.kr/scripts/extensions/${SHOP_CAFE24_ID}${
+      SHOP_CAFE24_NUMBER === 1 ? '' : `/${SHOP_CAFE24_NUMBER}`
+    }/incentoWidgetExtension.js`;
+  }
+}
+
+function incentoGetLocalStorage(key) {
+  const item = window.localStorage.getItem(key); // get itm from localstorage of host website
+  const iframe = window.top.document.getElementById('incento_iframe'); // get our iframe
+
+  const dataTo = {
+    type: key,
+    message: item,
+  };
+  iframe.contentWindow.postMessage(dataTo, '*'); // post it to the widget
+}
+
+function incentoSetLocalStorage(key, value) {
+  window.localStorage.setItem(key, value); // set value to localstorage of host website
+}
+
+function incentoRemoveLocalStorage(key) {
+  window.localStorage.removeItem(key); // set value to localstorage of host website
+}
+
+const incentoGetCookie = (cname) => {
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+};
+
+function incentoGetRootDomain() {
+  // Get the current hostname
+  const { hostname } = window.location;
+  if (hostname.includes('co.kr') || hostname.includes('or.kr')) {
+    // Split the hostname by dots (.)
+    const parts = hostname.split('.');
+
+    // Check if the hostname has at least two parts (e.g., "example.com")
+    if (parts.length >= 3) {
+      // Get the last two parts of the hostname and join them with a dot (.)
+      return parts.slice(-3).join('.');
+    }
+    // If there are fewer than two parts, return the original hostname
+    return hostname;
+  }
+  // Split the hostname by dots (.)
+  const parts = hostname.split('.');
+
+  // Check if the hostname has at least two parts (e.g., "example.com")
+  if (parts.length >= 2) {
+    // Get the last two parts of the hostname and join them with a dot (.)
+    return parts.slice(-2).join('.');
+  }
+  // If there are fewer than two parts, return the original hostname
+  return hostname;
+}
+
+function incentoDeleteCookie(cname) {
+  const d = new Date();
+  d.setTime(d.getTime() - 1); // Set expiration date to a past date
+  const expires = `; expires=${d.toUTCString()}`;
+  const incentoCookieDomain = incentoGetRootDomain(); // Replace with your domain retrieval logic
+  document.cookie = `${cname}=${expires}; domain=.${incentoCookieDomain}; path=/`;
+}
+
+const incentoSetCookie = (cname, cvalue) => {
+  const d = new Date();
+  d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
+  let expires = '';
+  const date = new Date();
+  date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
+  expires = `; expires=${date.toUTCString()}`;
+  let incentoCookieDomain = incentoGetRootDomain();
+  if (DEBUG) {
+    incentoCookieDomain = window.location.hostname;
+  }
+  const cookie = `${cname}=${
+    cvalue ?? ''
+  }${expires}; domain=.${incentoCookieDomain}; path=/`;
+  document.cookie = cookie;
+};
+
+function incentoGetRefID() {
+  return incentoGetCookie('inc-ref-id');
+}
+
+function incentoGetCampaignID() {
+  return incentoGetCookie('inc-campaign-id');
+}
+
+function incentoAddMessageEventListener() {
+  window.addEventListener('message', (event) => {
+    if (
+      event.origin.startsWith('https://widget.incento.kr') ||
+      event.origin.includes('localhost')
+    ) {
+      if (event.data.pageLoaded === true) {
+        widgetListening = true;
+      }
+      if (event.data.type === 'incentoGetlocalstorage') {
+        incentoGetLocalStorage(event.data.args);
+      } else if (event.data.type === 'incentoSetlocalstorage') {
+        incentoSetLocalStorage(event.data.args[0], event.data.args[1]);
+      } else if (event.data.type === 'incentoRemovelocalstorage') {
+        incentoRemoveLocalStorage(event.data.args);
+      } else if (event.data.type === 'copy') {
+        navigator.clipboard
+          .writeText(`https://incen.me/${event.data.copy}`)
+          .then(() => {
+            // Alert the user that the action took place.
+            // Nobody likes hidden stuff being done under the hood!
+            // alert("링크가 복사되었습니다");
+          });
+      }
+      if (event.data.redirect === 'login') {
+        window.location.href = `${window.location.origin}/member/login.html`;
+      } else if (event.data.redirect === 'create') {
+        window.location.href = `${window.location.origin}/member/login.html`;
+      }
+    }
+  });
+}
+
+function incentoInjectCss(fileName) {
+  const { head } = document;
+  const link = document.createElement('link');
+
+  link.type = 'text/css';
+  link.rel = 'stylesheet';
+  link.href = fileName;
+  link.as = 'script';
+
+  head.appendChild(link);
+}
+
+let widgetWaits = 0;
+
+function incentoWaitAndPostMessage(data) {
+  const iframe = window.top.document.getElementById('incento_iframe');
+  if (!widgetListening && widgetWaits < 20) {
+    widgetWaits += 1;
+    setTimeout(incentoWaitAndPostMessage, 100, data);
+  } else {
+    iframe.contentWindow.postMessage(data, '*');
+    // eslint-disable-next-line no-console
+    console.log('message posted', data);
+  }
+}
+
+function incentoPostCredentialsMessage(iframe) {
+  if (DEBUG) {
+    setTimeout(() => {
+      const data = {
+        type: 'credentials',
+        message: {
+          username: DEV_SHOP_USERNAME,
+          shopName: SHOP_CAFE24_ID,
+          shopNumber: SHOP_CAFE24_NUMBER,
+        },
+      };
+      if (iframe.contentWindow) {
+        incentoWaitAndPostMessage(data);
+      }
+    }, 0);
+  } else {
+    let customerInfo;
+    // eslint-disable-next-line no-undef
+    CAFE24API.getCustomerInfo((err, res) => {
+      if (err) {
+        // console.log(err);
+      } else {
+        customerInfo = res.customer;
+        const { member_id: memberId } = customerInfo;
+        const mobileNumber = customerInfo.cellphone;
+        const { email } = customerInfo;
+        const { created_date: createdDate } = res.customer;
+        const refId = incentoGetRefID();
+        const campaignId = incentoGetCampaignID();
+        const incTxnId = incentoGetCookie('incento_txn_id');
+        setTimeout(() => {
+          const data = {
+            type: 'credentials',
+            message: {
+              username: memberId,
+              mobile_number: mobileNumber,
+              email,
+              inc_ref: refId,
+              shopName: SHOP_CAFE24_ID,
+              shopNumber: SHOP_CAFE24_NUMBER,
+              campaign_id: campaignId,
+              created_date: createdDate,
+              group_no: res.customer.group_no,
+              incento_txn_id: incTxnId,
+            },
+          };
+          if (iframe.contentWindow) {
+            incentoWaitAndPostMessage(data);
+          }
+        }, 0);
+      }
+    });
+  }
+}
+
+function incentoPostCampaignRefData() {
+  const iframe = window.top.document.getElementById('incento_iframe');
+  const shopData = {
+    type: 'shop',
+    message: {
+      shopName: SHOP_CAFE24_ID,
+      shopNumber: SHOP_CAFE24_NUMBER,
+    },
+  };
+
+  const refData = {
+    type: 'ref_id',
+    message: {
+      inc_ref: incentoGetRefID(),
+    },
+  };
+
+  if (iframe.contentWindow) {
+    incentoWaitAndPostMessage(shopData);
+  }
+
+  // TODO: need to figure out why this setTimeout to zero seconds is necessary
+  setTimeout(() => {
+    if (iframe.contentWindow) {
+      incentoWaitAndPostMessage(refData);
+    }
+  }, 0);
+}
+
+function incentoHandleWidgetLaunch(eventType) {
+  // widget container
+  const container = window.top.document.getElementById('incento-widget');
+
+  // icon container (clickable)
+  const launcher = window.top.document.getElementById('incento-launcher');
+  const iframe = window.top.document.getElementById('incento_iframe');
+
+  if (container.classList.contains('incento_widget_close')) {
+    incentoPostCampaignRefData();
+  }
+
+  const data = {
+    type: 'click',
+    message: {
+      // eslint-disable-next-line no-restricted-globals
+      path: top.location.pathname,
+      eventType,
+    },
+  };
+  incentoWaitAndPostMessage(data);
+
+  // if the icon is shown, hide it
+  // if the widget is hidden, show it
+  setTimeout(() => {
+    setTimeout(() => {
+      if (container.classList.contains('incento_widget_close')) {
+        container.classList.remove('incento_widget_close');
+      }
+      container.classList.add('incento_widget_open');
+    }, 100);
+
+    if (launcher.classList.contains('incento_widget__launcher_open')) {
+      launcher.classList.remove('incento_widget__launcher_open');
+    }
+    launcher.classList.add('incento_widget__launcher_close');
+  }, 0);
+
+  iframe.style.height = `${
+    container.clientHeight > 0 ? container.clientHeight : 650
+  }px`;
+}
+
+function incentoHandleWidgetClose() {
+  const container = window.top.document.getElementById('incento-widget');
+  const launcher = window.top.document.getElementById('incento-launcher');
+
+  try {
+    const meta = window.top.document.getElementById(
+      'incento-widget-meta-viewport',
+    );
+    if (meta) {
+      meta.remove();
+    }
+    document
+      .getElementsByTagName('body')[0]
+      .classList.remove('incento-widget-mobile');
+  } catch (e) {
+    // console.log(e);
+  }
+
+  const data = {
+    type: 'close',
+    message: {
+      // eslint-disable-next-line no-restricted-globals
+      path: top.location.pathname,
+      event_type: 'X',
+    },
+  };
+  incentoWaitAndPostMessage(data);
+
+  setTimeout(() => {
+    if (container.classList.contains('incento_widget_open')) {
+      container.classList.remove('incento_widget_open');
+    }
+    container.classList.add('incento_widget_close');
+    setTimeout(() => {
+      if (launcher.classList.contains('incento_widget__launcher_close')) {
+        launcher.classList.remove('incento_widget__launcher_close');
+      }
+      launcher.classList.add('incento_widget__launcher_open');
+    }, 100);
+  }, 0);
+}
+
+function incentoAttachIFrame() {
+  const body = window.top.document.querySelector('body');
+
+  const launcher = window.top.document.createElement('div');
+  launcher.classList.add(
+    'incento_widget__launcher',
+    'incento_widget__launcher_open',
+  );
+  launcher.id = 'incento-launcher';
+  launcher.style.display = 'none';
+  body.appendChild(launcher);
+
+  launcher.addEventListener('click', () => {
+    incentoHandleWidgetLaunch('C');
+  });
+
+  const container = document.createElement('div');
+  container.classList.add(
+    'incento_widget__container',
+    'incento_widget_right_bottom',
+  );
+
+  container.id = 'incento-widget';
+  container.classList.add('incento_widget_close');
+
+  body.appendChild(container);
+
+  const containerInner = document.createElement('div');
+  containerInner.classList.add('incento_widget__inner');
+
+  container.appendChild(containerInner);
+
+  const iframe = document.createElement('iframe');
+  iframe.src = DEBUG ? DEV_WIDGET_SRC : WIDGET_SRC;
+  iframe.id = 'incento_iframe';
+  iframe.style.width = '100% !important';
+  iframe.style.height = `${
+    container.clientHeight > 0 ? container.clientHeight : 650
+  }px`;
+  iframe.classList.add('incento_iframe');
+  containerInner.appendChild(iframe);
+
+  window.addEventListener('resize', () => {
+    const resizeContainer =
+      window.top.document.getElementById('incento-widget');
+    if (
+      window.screen.width <= MOBILE_WIDTH ||
+      window.innerWidth <= MOBILE_WIDTH
+    ) {
+      resizeContainer.classList.add('incento_widget__container_mobile');
+    } else {
+      resizeContainer.classList.remove('incento_widget__container_mobile');
+    }
+
+    const resizeIframe = window.top.document.getElementById('incento_iframe');
+    resizeIframe.style.height = `${
+      window.top.document.getElementById('incento-widget').clientHeight
+    }px`;
+  });
+
+  //   Create buttons
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('incento_widget__close_btn');
+  containerInner.appendChild(closeBtn);
+
+  const img = document.createElement('img');
+  img.alt = 'inceto widget close icon';
+  img.id = 'incentoWidgetCloseIcon';
+  //   we have to replace this url with our own
+  img.src =
+    'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png';
+  img.style.width = '15px';
+  img.style.height = '15px';
+
+  closeBtn.appendChild(img);
+  closeBtn.addEventListener('click', incentoHandleWidgetClose);
+
+  const button = window.top.document.getElementById('incento-launcher');
+  button.style.display = 'flex';
+}
+
+function incentoLoadUserWidget() {
+  const iframe = window.top.document.getElementById('incento_iframe');
+  // eslint-disable-next-line no-undef
+  if (DEBUG || CAPP_ASYNC_METHODS.IS_LOGIN) {
+    incentoPostCredentialsMessage(iframe);
+  }
+}
+
+function incentoHandleParams() {
+  // get search params
+  let searchParams = window.location.search;
+  if (searchParams.length > 0) {
+    searchParams = searchParams.substring(1);
+  }
+
+  const incentoParams = searchParams.split('&');
+  for (let i = 0; i < incentoParams.length; i += 1) {
+    const [key, value] = incentoParams[i].split('=');
+    switch (key) {
+      case 'ref_id':
+        incentoSetCookie('inc-ref-id', value);
+        break;
+      case 'campaign_id':
+        incentoSetCookie('inc-campaign-id', value);
+        break;
+      case 'incento_txn_id':
+        incentoSetCookie('incento_txn_id', value);
+        break;
+      case 'incento_popup':
+        incentoHandleWidgetLaunch('P');
+        break;
+      case 'show_incento_popup':
+        // eslint-disable-next-line no-undef
+        if (DEBUG || CAPP_ASYNC_METHODS.IS_LOGIN) {
+          break;
+        }
+        incentoSetCookie('inc-show-popup', true);
+        break;
+      default:
+        // eslint-disable-next-line no-console
+        console.log(key, ' is not an incento param');
+    }
+  }
+  // eslint-disable-next-line no-undef
+  if (DEBUG || CAPP_ASYNC_METHODS.IS_LOGIN) {
+    if (incentoGetCookie('inc-show-popup')) {
+      incentoPostCampaignRefData();
+      setTimeout(() => {
+        incentoDeleteCookie('inc-show-popup');
+        incentoHandleWidgetLaunch('P');
+      }, 1000);
+    }
+  } else {
+    incentoRemoveLocalStorage('authTokens');
+  }
+}
+
+function incentoInjectExtensionScript() {
+  const scriptElem = document.createElement('script');
+  scriptElem.setAttribute('src', SCRIPT_URL);
+  scriptElem.setAttribute('type', 'text/javascript');
+  document.body.appendChild(scriptElem);
+
+  scriptElem.addEventListener('error', (error) => {
+    // eslint-disable-next-line no-console
+    console.log(
+      `Error on loading incentoWidgetExtension.js file for shop ${SHOP_CAFE24_ID}`,
+    );
+    // eslint-disable-next-line no-console
+    console.log(error.message);
+  });
+
+  scriptElem.addEventListener('load', () => {
+    // eslint-disable-next-line no-console
+    console.log('incentoWidgetExtension.js file loaded successfully');
+  });
+}
+
+function incentoMain() {
+  incentoInitCafe24API();
+  if (SHOP_CAFE24_ID === 'newhbj0215') {
+    return;
+  }
+  incentoAddMessageEventListener();
+  if (SHOP_CAFE24_ID !== 'verish') {
+    incentoInjectCss(CSS_URL);
+  }
+  incentoAttachIFrame();
+  incentoHandleParams();
+  incentoLoadUserWidget();
+  incentoInjectExtensionScript();
+}
+
+setTimeout(() => {
+  incentoMain();
+}, 100);

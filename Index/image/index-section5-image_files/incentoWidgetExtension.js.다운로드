@@ -1,0 +1,29 @@
+const path = window.location.pathname;
+const POPUP_MODAL_HTML_URL =
+  "https://s3.incento.kr/scripts/extensions/anillo1/incentoWidgetExtension.html";
+
+if (path.includes("/order/order_result.html")) {
+  (async () => {
+    const popup_modal = document.createElement("div");
+    popup_modal.id = "inc-popup";
+    popup_modal.classList.add("incento_modal");
+    const popupModalInnerHtml = await (
+      await fetch(POPUP_MODAL_HTML_URL)
+    ).text();
+    popup_modal.innerHTML = popupModalInnerHtml;
+    document.body.appendChild(popup_modal);
+    popup_modal.style.display = "flex";
+    const close_button = document.getElementById("inc-onsite-close");
+    close_button.addEventListener("click", () => {
+      popup_modal.style.display = "none";
+    });
+    const popup_share_button = document.getElementById("inc-onsite-share");
+    popup_share_button.addEventListener("click", () => {
+      incentoHandleWidgetLaunch("E");
+      popup_modal.style.display = "none";
+    });
+    incentoInjectCss(
+      "https://referral-bucket-test.s3.ap-northeast-2.amazonaws.com/2e7c3965-350a-430a-9d65-d62d0cf7b309/popup-Anillo.css"
+    );
+  })();
+}

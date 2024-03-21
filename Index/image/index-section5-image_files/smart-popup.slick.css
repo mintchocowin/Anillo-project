@@ -1,0 +1,253 @@
+/* Slider */
+.app-smart-popup-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+    background: #ffffff;
+}
+.app-smart-popup-slider-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.app-smart-popup-slider-list:focus {
+    outline: none;
+}
+.app-smart-popup-slider-list.dragging {
+    cursor: pointer;
+    cursor: hand;
+}
+.app-smart-popup-slider .app-smart-popup-slider-track,
+.app-smart-popup-slider .app-smart-popup-slider-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.app-smart-popup-slider-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.app-smart-popup-slider-track:before,
+.app-smart-popup-slider-track:after {
+    display: table;
+    content: '';
+}
+.app-smart-popup-slider-track:after {
+    clear: both;
+}
+.slick-loading .app-smart-popup-slider-track {
+    visibility: hidden;
+}
+.app-smart-popup-slider-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .app-smart-popup-slider-slide {
+    float: right;
+}
+.app-smart-popup-slider-slide img {
+    display: block;
+}
+.app-smart-popup-slider-slide.slick-loading img {
+    display: none;
+}
+.app-smart-popup-slider-slide.dragging img {
+    pointer-events: none;
+}
+.app-smart-popup-slider-initialized .app-smart-popup-slider-slide {
+    display: block;
+}
+.slick-loading .app-smart-popup-slider-slide {
+    visibility: hidden;
+}
+.slick-vertical .app-smart-popup-slider-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+.app-smart-popup-slider-arrow.slick-hidden {
+    display: none;
+}
+@charset 'UTF-8';
+/* Slider */
+.slick-loading .app-smart-popup-slider-list {
+    background: #ffffff url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/ajax-loader.gif') center center no-repeat;
+}
+/* Icons */
+@font-face {
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/fonts/slick.eot');
+    src: url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/fonts/slick.eot?#iefix') format('embedded-opentype'), url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/fonts/slick.woff') format('woff'), url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/fonts/slick.ttf') format('truetype'), url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/fonts/slick.svg#slick') format('svg');
+}
+/* Dots */
+.app-smart-popup-slider-dotted.app-smart-popup-slider {
+    margin-bottom: 0px;
+}
+.app-smart-popup-slider-dots {
+    position: absolute;
+    bottom: 15px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+.app-smart-popup-slider-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer;
+}
+.app-smart-popup-slider-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.app-smart-popup-slider-dots li button:hover,
+.app-smart-popup-slider-dots li button:focus {
+    outline: none;
+}
+.app-smart-popup-slider-dots li button:hover:before,
+.app-smart-popup-slider-dots li button:focus:before {
+    opacity: 1;
+}
+.app-smart-popup-slider-dots li button:before {
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.app-smart-popup-slider-dots li.app-smart-popup-slider-active button:before {
+    opacity: .75;
+    color: black;
+}
+
+/* APP4U-1482 */
+
+    /* next/prev button */
+    .app-smart-popup-slider-prev {
+        left: 10px;
+        background: url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/images/controls.png') no-repeat 0 -32px;
+    }
+    .app-smart-popup-slider-prev:hover,
+    .app-smart-popup-slider-prev:focus {
+        background-position: 0 0;
+    }
+    .app-smart-popup-slider-next {
+        right: 10px;
+        background: url('//file.cafe24cos.com/common-lib/slick/1.8.1/css/images/controls.png') no-repeat -43px -32px;
+    }
+    .app-smart-popup-slider-next:hover,
+    .app-smart-popup-slider-next:focus {
+        background-position: -43px 0;
+    }
+    .app-smart-popup-slider-arrow {
+        position: absolute;
+        top: 50%;
+        margin-top: -16px;
+        outline: 0;
+        width: 32px;
+        height: 32px;
+        text-indent: -9999px;
+        z-index: 9999;
+        border: 0;
+    }
+
+    /* before sliding hidden */
+    .app-smart-popup-slider {
+        opacity: 0;
+    }
+    .app-smart-popup-slider-initialized {
+        opacity: 1
+    }
+
+    /* sslee01 */
+    .app-smart-popup-slider .app-smart-popup-slider-track {
+        display: flex;
+    }
+    .app-smart-popup-slider-slide {
+        flex: 1;
+        height: auto;
+    }
+    .app-smart-popup-slider-slide > div, .app-smart-popup-slider-slide > div {
+        height: 100%;
+    }
+    .smart-popup-img {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .app-smart-popup-slider-dots{
+        bottom:20px;
+    }
+    .app-smart-popup-slider-dots li{
+        height:auto;
+        margin:0 6px;
+        width:auto;
+    }
+    .app-smart-popup-slider-dots li button{
+        background-color:#404040;
+        border-radius:50%;
+        height:10px;
+        opacity:.3;
+        padding:0;
+        width:10px;
+    }
+    .app-smart-popup-slider-dots li.app-smart-popup-slider-active button{
+        opacity:1;
+    }
+    .app-smart-popup-slider-dots.app-smart-popup-bar li button{
+        border-radius:0;
+        height:5px;
+        width:20px;
+    }
+    .app-smart-popup-slider-dots li button:before{
+        display:none;
+    }
+/* APP4U-1482 */

@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/* 스크롤을 못하도록 막기 */
+.sr_scroll_off {
+    height: auto !important;
+    overflow: hidden !important;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
+    -ms-overflow-style: none !important;
+}
+.sr_scroll_off::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* 투명도 0으로 만들기 */
+.sr_opacity_0 {
+    opacity: 0 !important;
+}

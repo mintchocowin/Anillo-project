@@ -1,0 +1,2056 @@
+if (!String.prototype.includes) {
+	Object.defineProperty(String.prototype, 'includes', {
+		enumerable: false,
+		value: function(search, start) {
+			'use strict';
+		
+			if (search instanceof RegExp) {
+				throw TypeError('first argument must not be a RegExp');
+			} 
+			if (start === undefined) { start = 0; }
+			return this.indexOf(search, start) !== -1;
+		},
+	});
+}
+if (!Array.prototype.includes) {
+	Object.defineProperty(Array.prototype, 'includes', {
+		enumerable: false,
+		value: function(searchElement /*, fromIndex*/) {
+			'use strict';
+			if (this == null) {
+				throw new TypeError('Array.prototype.includes called on null or undefined');
+			}
+		
+			var O = Object(this);
+			var len = parseInt(O.length, 10) || 0;
+			if (len === 0) {
+				return false;
+			}
+			var n = parseInt(arguments[1], 10) || 0;
+			var k;
+			if (n >= 0) {
+				k = n;
+			} else {
+				k = len + n;
+				if (k < 0) {k = 0;}
+			}
+			var currentElement;
+			while (k < len) {
+				currentElement = O[k];
+				if (searchElement === currentElement ||
+				(searchElement !== searchElement && currentElement !== currentElement)) { // NaN !== NaN
+				return true;
+				}
+				k++;
+			}
+			return false;
+		},
+	});
+}
+
+(function() {
+	window.snapUtils = window.snapUtils || function(domain, reviewobj) {
+		this.fit_base_domain		= domain || '//sfre-srcs-service.snapfit.co.kr';
+		this.fitDrawDomain	    	= this.fit_base_domain + "/Draw";
+		this.check_hashes 			= [];
+		this.scrollWidgets 			= {};
+		this.scrollReadyWidgets 	= {};
+		this.snapTicking 			= false;
+		this.reviewobj 				= reviewobj || null;
+		this.hash_historys 			= [];
+		this.writeUrl 				= this.fit_base_domain + '/Draw/draw_review_write_popup';
+		this.writeParams 			= {};
+		this.notifyUrl 				= this.fit_base_domain + '/Draw/draw_review_write_notify_popup';
+		this.writeBtnSelectors 		= {};
+		this.mypageNotiPopupInitPos = "50px";
+		this.opacityZeroClassName	= "sr_opacity_0";
+		this.DRAW_URL	 = {
+			NOTIFICATION: 	   this.fitDrawDomain + "/drawNotification",
+			MYPAGE_NOTI_POPUP: this.fitDrawDomain + "/drawMypageNotiPopup"
+		},
+		this.WIDGET_TYPE = {
+			UPPER:                1,
+			MIDDLE_INSERT:        2,
+			MAIN:                 3,
+			THUMBNAIL_SUMMARY:    4,
+			OPTION:               5,
+			CATE_REVIEW:          10,
+			WRITE_REVIEW:         11,
+			EMPTY_REPLACE_REVIEW: 12,
+			FORCE_SHOW_POPUP:     13,
+			MOBILE_FILTER:        14,
+			WRITE_REVIEW_NOTIFY:  16,
+			MYPAGE:               17,
+			NOTICE:               18,
+			NOTICE_POPUP:         19,
+			REPORT:               20,
+			NOTIFICATION:         21,
+			MYPAGE_NOTI_POPUP:	  22,
+			ONE_LINE_REVIEW:	  23,
+			FREE_CUSTOM_1:        1001,
+			FREE_CUSTOM_2:        1002,
+			FREE_CUSTOM_3:        1003
+		}
+
+		let isNotified 				 = false,
+			isLoadedOutsideCommonCss = false;
+		const loadedClass		= "loaded",
+			  toArray			= function(value) {
+			  	return Array.isArray(value) && value || [value];
+			  },
+			  arrayUnique		= function(array) {
+				  return Array.isArray(array) && array.filter(function(v, i, arr) {
+					  return arr.indexOf(v) === i && arr.indexOf(v, i + 1) === -1;
+				  }) || array;
+			  },
+			  isValidElement	= function(element) {
+				  return element && "function" === typeof element.getAttribute;
+			  },
+			  isValidClass		= function(classes) {
+				  return Array.isArray(classes) || "string" == typeof classes;
+			  },
+			  getClass			= function(element) {
+				  if(!isValidElement(element)) return "";
+				  let classes = element.getAttribute("class") || "";
+				  return classes.split(" ").filter(function(v) {
+					  return v;
+				  });
+			  },
+			  setClass			= function(element, classes) {
+				  if(!isValidElement(element) || !isValidClass(classes)) return element;
+				  element.setAttribute("class", toArray(classes).join(" "));
+				  return element;
+			  },
+			  addClass			= function(element, classes) {
+			  	  if(!isValidElement(element) || !isValidClass(classes)) return element;
+			  	  let oldClasses = getClass(element);
+				  toArray(classes).forEach(v => oldClasses.push(v));
+			  	  return setClass(element, arrayUnique(oldClasses));
+			  };
+
+		/**
+		 * moveMypageNotiPopup
+		 *
+		 * @param {object} popup 		 이동시킬 마이페이지 알림 팝업 dom
+		 * @param {int}	   PercentToShow 팝업의 몇 %만 보여줄건지(기본값: -7)
+		 * @param {bool}   isMoveInitPos 팝업을 초기 위치로 이동시킬 건지 여부(기본값: false)
+		 *
+		 * @author 임예나
+		 */
+		this.moveMypageNotiPopup = (() => {
+			const converRateToPx = {};
+
+			return (popup, PercentToShow = -90, isMoveInitPos = false) => {
+				const POPUP_WIDTH = popup.offsetWidth;
+
+				let converRateToPxForCurPopup = null;
+
+				converRateToPx[POPUP_WIDTH] ??= {};
+				converRateToPxForCurPopup   =   converRateToPx[POPUP_WIDTH];
+
+				// 팝업을 초기 위치로 이동
+				if(isMoveInitPos) return popup.style.right = snaputil.mypageNotiPopupInitPos;
+
+				// 비율 숫자형으로 변환
+				PercentToShow = Number(PercentToShow);
+				if(isNaN(PercentToShow)) return;
+
+				// 이동할 px값 구하기
+				converRateToPxForCurPopup[PercentToShow] ??= Math.round(POPUP_WIDTH * (PercentToShow / 100));
+
+				// 팝업 이동
+				popup.style.right = converRateToPxForCurPopup[PercentToShow] + "px";
+			};
+		})();
+
+		/**
+		 * showHideMallScroll
+		 *
+		 * 쇼핑몰 스크롤을 보여주거나 숨기는 함수
+		 *
+		 * @param {bool}   isHide 	true이면 숨기고 false이면 보여준다(기본값: true)
+		 * @param {string} selector 숨길 요소 셀렉터(기본값: "html, body")
+		 *
+		 * @author 임예나
+		 */
+		this.showHideMallScroll = (isHide = true, selector = "html, body") => {
+			const scrollControlFunc = isHide && "add" || "remove";
+
+			document.querySelectorAll(selector).forEach(ele => ele.classList[scrollControlFunc]("sr_scroll_off"));
+		}
+
+		/**
+		 * isTypeof
+		 *
+		 * 변수 값이 해당 타입인지 확인하는 함수
+		 * 파라미터로 받는 type 변수의 type이 문자열이 아니거나 빈 문자열이면 기본으로 "undefined" 설정
+		 *
+		 * @param {string} type     확인하고 싶은 타입
+		 * @param {*}      variable 확인하고 싶은 변수의 값
+		 *
+		 * @return boolean 변수의 값이 해당 타입이면 true, 아니면 false
+		 *
+		 * @author 임예나
+		 */
+		this.isTypeof = function (type, variable) {
+			return typeof variable == (typeof type == "string" && type || "undefined");
+		}
+
+		/**
+		 * isFunction
+		 *
+		 * 파라미터로 받은 값이 함수인지 체크하는 함수
+		 *
+		 * @param {*} variable 확인하고 싶은 변수의 값
+		 *
+		 * @author 임예나
+		 */
+		this.isFunction = this.isTypeof.bind(this, "function");
+
+		this.loadOutsideCommonCss = () => {
+			if(isLoadedOutsideCommonCss) return;
+
+			isLoadedOutsideCommonCss = true;
+
+			const stylesheet = document.createElement("link");
+
+			stylesheet.setAttribute("rel", "stylesheet");
+			stylesheet.setAttribute("href", "//cdn.snapfit.co.kr/review/css/outside_common.css");
+
+			document.head.appendChild(stylesheet);
+		}
+
+		this.make_send_data_detail = function (store_username, sendDatas) {
+			if (!store_username || "undefined" === store_username) return false;
+
+			Array.isArray(sendDatas) || (sendDatas = []);
+			const type = encodeURIComponent(snaputil.sf_get_device_type());
+			const sendData = {
+				device_type: encodeURIComponent(type),
+				store_username: encodeURIComponent(store_username)
+			};
+			if(!sendDatas.length) return sendData;
+
+			sendDatas.includes('url') 		  && (sendData['url'] 		  = encodeURIComponent(location.href));
+			sendDatas.includes('draw_target') && (sendData['draw_target'] = sendData['device_type']);
+
+			return sendData;
+		}
+		this.setwidgetidsparam = function (senddata) {
+			let widgetList	= document.querySelectorAll(`.snap_widget:not(.${loadedClass})`),
+				widgetIds 	= this.originReduce([].slice.call(widgetList), (obj, widget) => {
+					obj[widget.getAttribute("id")] = 1;
+					return obj;
+				}, {});
+
+			widgetIds = Object.keys(widgetIds);
+			if (widgetIds.length > 0) {
+				senddata['review_usewidgets'] = widgetIds;
+			}
+		}
+
+		this.decode_json = function(data){
+			try {
+				return JSON.parse(data);
+			} catch(e) {
+				return false;
+			}
+		}
+
+		// IE 확인
+		function isIE() {
+			var agent = navigator.userAgent.toLowerCase(),
+				name = navigator.appName;
+			return name === 'Microsoft Internet Explorer' || agent.indexOf('trident') > -1 || agent.indexOf('edge/') > -1;
+		}
+		this.isIOS = function() {
+			return navigator.userAgent.match(/iPhone|iPod|iPad/i) != null;
+		}
+		// iOS version check
+		this.getVersionIOS = function() {
+			var agent = window.navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/);
+			agent = agent && typeof agent == 'object' && agent[1] || -1;
+
+			return Number(agent);
+		}
+
+		this.chunk = function(array, size) {
+			size = size || 0;
+			var chunk = [], i;
+			for(i = 0; i < array.length; i += size) {
+				chunk.push( array.slice(i, i + Math.min(array.length, size)) );
+			}
+
+			return chunk;
+		};
+		this.originReduce = function(array, reducer, init_value) {
+			array.forEach(function(v, i, arr) {
+				init_value = reducer(init_value, v, i, arr);
+			});
+
+			return init_value;
+		};
+
+		// 뒤로가기시 팝업 닫기 이벤트
+		function returnClosePopup(event) {
+			if(!snaputil) {
+				return;
+			}
+
+			for(var i = 0; i < snaputil.check_hashes.length; ++i) {
+				if(event.oldURL.indexOf(snaputil.check_hashes[i]) !== -1) {
+					snaputil.close_popup(snaputil.check_hashes[i]);
+					snaputil.check_hashes.splice(i, 1);
+					break;
+				}
+			}
+
+			if(snaputil.check_hashes.length == 0) {
+				window.removeEventListener('hashchange', returnClosePopup, false);
+			}
+		}
+
+		this.sf_get_solutiontype = function () {
+			var selector = document.getElementById('solutiontype');
+			return selector && selector.innerText || null;
+		}
+
+		this.snap_review_replaceAll = function(str,org, dest) {
+			return str.split(org).join(dest);
+		}
+
+		this.snaprxs = function (str) {
+			return str;
+		}
+		this.GetSafeDicValue = function(val, key) {
+			if(!val || (!key && key !== 0 && key !== '0'))
+				return false;
+
+			return key in val && val[key] || null;
+		}
+
+		this.is_fit_support_brower = function () {
+			// 'use strict';
+			var agent = navigator.userAgent.toLowerCase(),
+				name = navigator.appName,
+				browser;
+
+			// MS 계열 브라우저를 구분하기 위함.
+			if (name === 'Microsoft Internet Explorer' || agent.indexOf('trident') > -1 || agent.indexOf('edge/') > -1) {
+				browser = 'ie';
+				if (name === 'Microsoft Internet Explorer') {  // IE old version (IE 10 or Lower)
+					var version = null;
+					var word = '';
+					if (navigator.appName == "Microsoft Internet Explorer") {
+						word = "msie ";
+					}
+					else if (agent.search("trident") > -1) {
+						word = "trident/.*rv:";
+					}
+					else if (agent.search("edge/") > -1) {
+						word = "edge/";
+					} else {
+						return false;
+					}
+					var reg = new RegExp(word + "([0-9]{1,})(\\.{0,}[0-9]{0,1})");
+					if (reg.exec(agent) != null) {
+						version = RegExp.$1 + RegExp.$2;
+					}
+
+					if (version < 9) {
+						console.log('not support ie version:' + agent);
+						return false;
+					}
+
+				} else { // IE 11+
+					if (agent.indexOf('trident') > -1) { // IE 11
+						browser += 11;
+					} else if (agent.indexOf('edge/') > -1) { // Edge
+						browser = 'edge';
+					}
+					console.log('support' + browser);
+					return true;
+
+				}
+			} else if (agent.indexOf('safari') > -1) { // Chrome or Safari
+				if (agent.indexOf('Opera') > -1) { // Opera
+					console.log('not support opr');
+					return false;
+				} else if (agent.indexOf('chrome') > -1) { // Chrome
+					console.log('chrome');
+					return true;
+				} else { // Safari
+					console.log('safari');
+					return true;
+				}
+			} else if (agent.indexOf('firefox') > -1) { // Firefox
+				console.log('firefox');
+				return true;
+			} else {
+				console.log('unknow browser');
+				return true;
+			}
+		}
+
+		this.isvalid = function (value) {
+			return !(!value || value === false || value == 'false' || value == "" || value == null || typeof(value) == 'undefined' || value == 'null' || value == 'undefined' || value == undefined
+			|| value.length <= 0);
+		}
+
+		this.isElement = data => data instanceof HTMLElement;
+
+		this.make_param_url = function (datas) {
+			var param = '';
+			for(var key in datas) {
+				if(param != '') {
+					param += '&';
+				}
+				param += (key + '=' + datas[key]);
+			}
+			return snaputil.snaprxs(param);
+		}
+
+		this.insertAfter = function(referenceNode, newNode) {
+			if(this.isElement(referenceNode) && this.isElement(newNode) && this.isElement(referenceNode.parentNode)) {
+				if (this.isElement(referenceNode.nextSibling)) {
+					referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+				} else {
+					referenceNode.parentNode.appendChild(newNode);
+				}
+			}
+		}
+
+		/*
+		* ie에서 javascript function에서 디폴트파라미터가 안먹힘. 따라서 불필요한 파라미터를 지저분하게 다 넣어줘야해서
+		* draw_default_iframe타입의 함수를 만들어서 Wrapp
+		* */
+		//src에 param이 존재하는경우
+		this.draw_iframe_default_add_paramurl = function (obj, targetframe, id, name, width, height, src, drawmodule, frametag, isusetag) {
+			this.draw_iframe_default(obj, targetframe, id, name, width, height, src, drawmodule, frametag, isusetag);
+		}
+
+		//javascript ie에서 default param이 안먹혀서 한번 wrapp
+		this.draw_iframe_default = function (obj, targetframe, id, name, width, height, src, drawmodule, frametag, isusetag) {
+			this.draw_iframe(obj, targetframe, id, name, width, height, "0", "0", "no", 0, 0, 0, 0, src, drawmodule, frametag, isusetag);
+		}
+
+		//아이프레임 일반 draw
+		this.draw_iframe = function (obj, targetframe, id, name, width, height, border, frameborder, scrolling, marginheight, marginwidth, frameborder, iborder, src, drawmodule, frametag, isusetag) {
+			if(!targetframe || !src) return null;
+
+			obj = typeof obj == 'object' && obj || {};
+
+			if(this.isvalid(frametag) == false) {
+				if (drawmodule == 'fit') {
+					frametag = [document.getElementById(targetframe)];
+				} else {
+					let selector = document.querySelectorAll(`.snap_widget:not(.${loadedClass})[id='${targetframe}']`);
+					frametag = Array.prototype.slice.call(selector);
+				}
+			} else if(Array.isArray(frametag) == false) {
+				frametag = [frametag];
+			}
+
+			let isImageWidget = name == sfMakeIframeNameG(2);
+
+			if(this.isvalid(frametag)) {
+				let href = window.location.href;
+				for(let i = 0; i < frametag.length; ++i) {
+					let aIframe 	= document.createElement("iframe"),
+						targetname 	= name + '_' + i,
+						key 		= id + '_' + i,
+						regex 		= new RegExp('snap' + key + '_page=(\\d+)'),
+						initPage 	= href.match(regex);
+					obj['j'] 		= i;
+					obj['page'] 	= initPage && initPage[1] || '1';
+					aIframe.setAttribute("id", id + '_' + i);
+					aIframe.setAttribute("name", targetname);
+					aIframe.setAttribute("data-url", src);
+					aIframe.setAttribute("data-params", JSON.stringify(obj));
+					aIframe.style.width 		= width;
+					aIframe.style.height 		= height;
+					aIframe.style.border 		= border;
+					aIframe.style.frameborder 	= frameborder;
+					aIframe.scrolling 			= scrolling;
+					aIframe.marginheight 		= marginheight;
+					aIframe.marginwidth 		= marginwidth;
+					aIframe.frameborder 		= frameborder;
+					aIframe.border 				= iborder;
+					if(isImageWidget) {
+						if(isusetag == 1)
+							this.insertAfter(frametag[i], aIframe);
+						else
+							frametag[i].parentNode.insertBefore(aIframe, frametag[i]);
+					} else {
+						frametag[i].appendChild(aIframe);
+					}
+					addClass(frametag[i], loadedClass);
+
+					snaputil.formSubmit({
+						action: src,
+						target: targetname,
+						datas: obj,
+					});
+				}
+			}
+
+			return true;
+		}
+
+		/**
+		 * objectToQueryString
+		 *
+		 * 객체를 쿼리스트링으로 변환
+		 *
+		 * @param {object} datas 데이터
+		 *
+		 * @return {string} 쿼리 스트링으로 변환한 문자열
+		 *
+		 * @author 임예나
+		 */
+		this.objectToQueryString = datas => datas && "object" === typeof datas && Object.entries(datas).map(v => v.join("=")).join("&") || "";
+
+		/**
+		 * sendHttpRequest
+		 *
+		 * 백단으로 요청 보내기
+		 *
+		 * @param {string}   requesturl 요청 url
+		 * @param {object}   param  	보낼 데이터
+		 * @param {function} callback 	데이터를 성공적으로 받아왔을 경우 실행하는 함수
+		 */
+        this.sendHttpRequest = function (requesturl, param, callback) {
+			const options = {
+				method: "POST",
+				cache:	"no-cache",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: snaputil.objectToQueryString(param)
+			};
+
+            fetch(requesturl, options)
+				.then(res => "function" === typeof res?.json && res.json())
+				.then(datas => "function" === typeof callback && callback(datas));
+        }
+
+		this.reload_iframe = function(element) {
+			if(!element || !element.dataset['url']) return;
+
+			snaputil.snapreview_sf_post_to_resultviewmessage({
+				e: 'refesh_widget',
+				solutiontype: 'snap_review',
+				data: {}
+			}, element.getAttribute('id'));
+		}
+
+
+		/**
+		 * drawIframePopup
+		 *
+		 * 팝업 아이프레임을 그려주는 함수
+		 * 기본 적으로는 화면을 꽉 채워서 띄움
+		 *
+		 * @param {object} datas 팝업을 그리는데 필요한 기본 데이터
+		 *
+		 * @return 팝업을 그렸으면 팝업 객체, 그리지 못했으면 null 반환
+		 *
+		 * @author 임예나
+		 */
+		this.drawIframePopup = datas => {
+			if(!datas || "object" !== typeof datas) return null;
+
+			const url     	  	    = datas.url     		  ?? "",
+				  id      	  	    = datas.id      		  ?? "snap_popup_iframe",
+				  name    	  	    = datas.name    		  ?? "snap_popup_iframe",
+				  value   	  	    = datas.value   		  ?? "",
+				  parent  	  	    = datas.parent  		  ?? "",
+				  width 	  	    = datas.width		      ?? "100%",
+				  height	  	    = datas.height		      ?? "100%",
+				  position	  	    = datas.position		  ?? {top: 0, left: 0},
+				  transform	  	    = datas.transform	      ?? "none",
+				  isHideMallScroll  = datas.isHideMallScroll  ?? true,
+				  addHash 	   	    = datas.addHash 		  ?? null,
+				  isIframeFullPopup = datas.isIframeFullPopup ?? true,
+				  isHashChange 	    = datas.isHashChange && location.hash == `#${parent}` || false,
+				  params 	   	   	= "object" === typeof datas.params && datas.params || {};
+			let popupEle = document.querySelector(`#${id}`);
+
+			if(!url) return null;
+
+			// 동일 id를 가진 팝업이 있다면 새로 호출하지 않는다.
+			if(popupEle) return null;
+
+			// 호스팅 페이지 스크롤 막기
+			isHideMallScroll && snaputil.showHideMallScroll();
+
+			// 팝업 그리기
+			popupEle = document.createElement("iframe");
+
+			// 팝업 속성 지정
+			popupEle.setAttribute("id", id);
+			popupEle.setAttribute("name", name);
+			popupEle.setAttribute("value", value);
+			popupEle.setAttribute("data-parent", parent);
+			popupEle.setAttribute("data-ifp", isIframeFullPopup && 1 || 0);
+
+			// 팝업 style 지정
+			popupEle.style.width      = width;
+			popupEle.style.height     = height;
+			popupEle.style.border 	  = "none";
+			popupEle.style.position   = "fixed";
+			popupEle.style.opacity 	  = 0;
+			popupEle.style.zIndex     = "99999";
+			popupEle.style.transform  = transform || "none";
+			popupEle.style.transition = "opacity 0.5s linear";
+
+			// 팝업 위치 지정
+			for(const property in position) {
+				popupEle.style[property] = position[property] || 0;
+			}
+
+			popupEle.allowtransparency = true;
+			popupEle.frameborder 	   = 0;
+
+			// 팝업 url 지정
+			if(Object.keys(params).length) {
+				popupEle.setAttribute("data-url", url);
+				popupEle.setAttribute("data-params", JSON.stringify(params));
+			} else {
+				popupEle.src = this.snaprxs(encodeURI(url));
+			}
+
+			// 팝업 렌더링
+			document.body.appendChild(popupEle);
+
+			addHash && popupEle.addEventListener("load", () => snaputil && snaputil.add_url_hash(addHash, isHashChange));
+			snaputil.formSubmit({
+				action: url,
+				target: name,
+				datas:  params,
+			});
+
+			return popupEle;
+		}
+
+		/*
+		아이프레임 팝업 draw
+		lms: 스크롤시 본 사이트의 overflow를 hidden처리를 하므로 팝업이 꺼질 때 돌려놔야합니다.
+		이를 처리해주는건 Postmessage->ReceiveMessage에서 처리를 해주며 여기서 PostMessage를 보내는 트리거들은
+		Iframe내에 ~~~define.js 함수에서 팝업close일때 postmessage를 해줍니다. 이 부분 유의해서 사용하셔야합니다.
+		close처리가 안되면 본 사이트의 hidden처리가 문제가 생깁니다.
+		*/
+		this.draw_iframe_full_popup = function (datas) {
+			if(!datas || typeof datas != 'object') {
+				return false;
+			}
+
+			var url = datas['url'] || '',
+				id = datas['id'] || 'snap_popup_full_iframe',
+				name = datas['name'] || 'snap_popup_full_iframe',
+				value = datas['value'] || '',
+				parent = datas['parent'] || '',
+				addHash = datas['addHash'] || null,
+				isHashChange = datas['isHashChange'] && location.hash == '#'+ parent,
+				post = typeof datas['post'] == 'object' && datas['post']  || {};
+
+			if(!url) {
+				return false;
+			}
+
+			// 동일 id를 가진 팝업이 있다면 새로 호출하지 않는다.
+			var popupFrame = document.querySelector('#' + id);
+			if(popupFrame) {
+				return false;
+			}
+
+			snaputil.showHideMallScroll();
+
+			var aIframe = document.createElement("iframe");
+			aIframe.setAttribute("id", id);
+			aIframe.setAttribute("name", name);
+			aIframe.setAttribute("value", value);
+			aIframe.setAttribute("data-ifp", 1);
+			aIframe.setAttribute("data-parent", parent);
+			aIframe.style.width = "100%";
+			aIframe.style.height = "100%";
+			aIframe.style.zIndex = "99999";
+			aIframe.style.position = "fixed";
+			aIframe.style.left = '0px';
+			aIframe.style.right = '0px';
+			aIframe.style.top = '0px';
+			aIframe.style.bottom = '0px';
+			aIframe.style.border = '0px solid white';
+			aIframe.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+			aIframe.style.transition = 'opacity 0.5s linear';
+			aIframe.style.opacity = 0;
+			aIframe.allowtransparency = true;
+			aIframe.frameborder = 0;
+			if(Object.keys(post).length) {
+				aIframe.setAttribute("data-url", url);
+				aIframe.setAttribute("data-params", JSON.stringify(post));
+			} else {
+				aIframe.src = this.snaprxs(encodeURI(url));
+			}
+			document.body.appendChild(aIframe);
+			addHash && aIframe.addEventListener('load', function() {
+				snaputil && snaputil.add_url_hash(addHash, isHashChange);
+			});
+			snaputil.formSubmit({
+				action: url,
+				target: name,
+				datas: post,
+			});
+
+			return aIframe;
+		}
+
+		this.redirect_url = function(url, datas) {
+			if(!url) {
+				return false;
+			}
+			url = url.replace(/^(https?:)?\/\//, window.location.protocol + '//');
+
+			datas = typeof datas == 'object' && datas || {};
+			if(Object.keys(datas).length) {
+				return snaputil.formSubmit({
+					action: url,
+					datas: datas,
+				});
+			}
+
+			window.location.href = url;
+		}
+
+		this.formSubmit = function(infos) {
+			if(!infos || !infos['action']) {
+				return;
+			}
+
+			var form = document.createElement('form'),
+				submit,
+				method = infos['method'] || 'post',
+				datas = typeof infos['datas'] == 'object' && infos['datas'] || {},
+				target = infos['target'] || null;
+
+			form.setAttribute('action', infos['action']);
+			form.setAttribute('method', method);
+			target && form.setAttribute('target', target);
+			for(key in datas) {
+				submit = document.createElement('input');
+				submit.setAttribute('name', key);
+				submit.setAttribute('value', datas[key]);
+				form.appendChild(submit);
+			}
+			document.body.appendChild(form);
+			form.submit();
+			form.parentNode.removeChild(form);
+		}
+
+		this.window_open = function(url) {
+			url && window.open(url);
+		}
+
+		this.snapreview_sf_post_to_resultviewmessage = function(data, frameid) {
+			var target	= snaputil.reviewobj && window || getIframeWindow(frameid);
+			data = typeof (data) !== "string" && JSON.stringify(data) || data;
+
+			if(!target || !data) return false;
+
+			return target.postMessage(data, '*');
+		}
+
+		/***********************************************
+		 * GET_VALUE함수들
+		 *
+		 * ********************************************/
+		//고객 아이디를 가져오는 함수
+		this.sf_get_user_id = function () {
+			var user_id_selector = document.getElementsByClassName('xans-member-var-id');
+			if (!user_id_selector || user_id_selector.length <= 0) {
+				return null;
+			}
+
+			return user_id_selector[0].innerText || user_id_selector[0].textContent;
+		}
+
+		this.sf_get_value = function (idselector) {
+			var selector = document.getElementById(idselector);
+			return selector && selector.value || null;
+		}
+
+		this.sf_get_device_type = function () {
+			var selector = document.getElementById('sf_draw_type');
+			if(!selector) {
+				return null;
+			}
+			if(selector.value === 'responsive') {
+				selector.value = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) ? 'mobile' : 'pc';
+			}
+			return selector.value;
+		}
+
+		this.isPC = () => "pc" === snaputil.sf_get_device_type();
+
+		this.sf_get_innertext = function (idselector) {
+			var selector = document.getElementById(idselector);
+			return selector && selector.innerText || null;
+		}
+
+        this.get_nem_id = function(device_type) {
+            return new Promise((resolve, reject) => {
+                let count = 0;
+                const interval = setInterval(
+                    () => {
+                        const nem_id    = snaputil.GetSnapNemIdG(device_type),
+                              exist_nem = nem_id && "undefined" !== nem_id;
+
+                        15 === count && console.log("slow nem");
+                        ++count;
+
+                        if(!exist_nem && count < 17) return;
+
+                        clearInterval(interval);
+
+                        resolve(exist_nem && nem_id || null);
+                    },
+                    200
+                )
+            });
+        }
+
+        this.get_user_id = function(solution_type) {
+            return new Promise((resolve, reject) => {
+                let count = 0;
+                const is_cafe24 = "cafe24" !== solution_type,
+                      interval  = setInterval(
+                    () => {
+                        const user_id       = snaputil.sf_get_user_id(),
+                              exist_user_id = user_id && "undefined" !== user_id;
+
+                        ++count;
+                        if(!exist_user_id && is_cafe24 && count >= 32) return;
+
+                        clearInterval(interval);
+                        if(exist_user_id) return resolve(user_id);
+
+                        resolve(null);
+                    },
+                    200
+                )
+            });
+        }
+
+		//최초로 서버에 클라이언트의 정보를 보내고 패킷을 받아오는 함수.
+		this.send_init = async function(src, send_data) {
+            const device_type   = snaputil.GetSafeDicValue(send_data, 'device_type'),
+                  solution_type = snaputil.sf_get_innertext('solutiontype'),
+                  nem_id        = await snaputil.get_nem_id(device_type),
+                  user_id       = await snaputil.get_user_id(solution_type);
+
+            nem_id && (send_data["nemid"] = nem_id);
+            user_id && (send_data["user_id"] = user_id);
+
+            return await snaputil.postForm({ url: src, body: send_data });
+		}
+
+		// 팝업이 열려 있고, 뒤로가기 버튼 클릭시 팝업을 닫기 위해 해시 처리
+		this.add_url_hash = function(hash, isChange) {
+			if(hash && window.location.hash.indexOf(hash) === -1) {
+				var hashCount = this.check_hashes.length;
+				if(isIE() || isChange) {
+					history.replaceState({data:'', type: 'popup'}, '', '#'+hash);
+					this.check_hashes.pop();
+				} else {
+					history.pushState({data:'', type: 'popup'}, '', '#'+hash);
+				}
+
+				if(hashCount == 0) {
+					window.addEventListener('hashchange', returnClosePopup, false);
+				}
+				this.check_hashes.push(hash);
+			}
+		}
+
+		this.history_back = function() {
+			if(!isIE()) {
+				history.back();
+			} else {
+				var len = snaputil.check_hashes.length;
+				if(len) {
+					snaputil.close_popup(snaputil.check_hashes[len-1]);
+					this.check_hashes.pop();
+				}
+			}
+		}
+
+		this.close_popup = function(id) {
+			var popup = document.getElementById(id);
+			if(popup && null !== popup.getAttribute("data-ifp")) {
+				const parentnode 	  	    = popup.parentNode,
+					  prevWidgetId			= popup.getAttribute("data-parent") ?? "",
+					  MYPAGE_NOTI_POPUP_ID  = sfMakeIframeIdG(snaputil.WIDGET_TYPE.MYPAGE_NOTI_POPUP),
+					  realCloseProcess		= () => {
+						parentnode.removeChild(popup);
+						snaputil.showHideMallScroll(false);
+					  };
+
+				if(parentnode) {
+					if(snaputil.isPC() && MYPAGE_NOTI_POPUP_ID === prevWidgetId) {
+						// PC일 떄 현재 닫을 팝업이 어떤 팝업이든 이전 위젯이 마이페이지 알림 팝업이면서 존재하면 애니메이션이 끝나고 제거
+						const mypageNotiPopup = document.getElementById(MYPAGE_NOTI_POPUP_ID);
+
+						if(!mypageNotiPopup) return realCloseProcess();
+
+						popup.ontransitionend = () => {
+							// 마이페이지 알림 팝업 원위치
+							snaputil.moveMypageNotiPopup(mypageNotiPopup, null, true);
+							// 현재 닫을 팝업 닫기
+							realCloseProcess();
+						};
+
+						// 현재 닫을 팝업 fade-out
+						popup.classList.add(snaputil.opacityZeroClassName);
+					} else if(snaputil.isPC() && MYPAGE_NOTI_POPUP_ID === id) {
+						// PC일 떄 현재 닫을 팝업이 마이페이지 알림 팝업이면 애니메이션이 끝나고 제거
+						popup.ontransitionend = realCloseProcess;
+						snaputil.moveMypageNotiPopup(popup, -100);
+					} else {
+						realCloseProcess();
+					}
+				}
+			}
+		}
+
+		this.addCommaForPrice = function(price) {
+			return price.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+
+		this.updateReviewCountInfos = function(itemSelector, urlSelector) {
+			if(!itemSelector || !urlSelector) {
+				return;
+			}
+
+			var solution = this.sf_get_innertext('solutiontype');
+			var snapItemList = document.querySelectorAll(itemSelector);
+			if (snapItemList && snapItemList.length > 0) {
+				for (var i = 0; i < snapItemList.length; ++i) {
+					var itemUrls = snapItemList[i].querySelectorAll(urlSelector);
+					if (itemUrls && itemUrls.length > 0) {
+						var itemCodes = null;
+						var itemCode = null;
+						if(solution == 'cafe24') {
+							itemCodes = /(product_no=|product\/[^\/]+\/)([^\/&#]+)/.exec(itemUrls[0]);
+							if(itemCodes && itemCodes.length > 2) {
+								itemCode = itemCodes[2];
+							}
+						} else if(solution == 'makeshop') {
+							itemCodes = /branduid=([^&#]+)/.exec(itemUrls[0]);
+							if(itemCodes && itemCodes.length > 1) {
+								itemCode = itemCodes[1];
+							}
+						} else if(solution == 'makeglobal') {
+							itemCodes = /pid\/([^\/&#]+)/.exec(itemUrls[0]);
+							if(itemCodes && itemCodes.length > 1) {
+								itemCode = itemCodes[1];
+							}
+						} else if (solution == 'godomall') {
+							itemCodes = /goodsNo=([^&#]+)/.exec(itemUrls[0]);
+							if(itemCodes && itemCodes.length > 1) {
+								itemCode = itemCodes[1];
+							}
+						}
+						var reviewCount = snapItemList[i].querySelector('.snap_review_count');
+						if (itemCode && reviewCount) {
+							reviewCount.setAttribute('snap_item_id', itemCode);
+						}
+					}
+				}
+			}
+		}
+
+		function getOrderInfoInWriteButton(selector) {
+			let solutiontype = snaputil.sf_get_innertext('solutiontype'),
+				orderId,
+				productId,
+				productCode;
+
+			if(solutiontype == 'cafe24') {
+				let detail 		= selector.getAttribute('data-detail'),
+					writeLink 	= selector.getAttribute('data-params');
+
+				if(detail) {
+					let orderIdArea 	= /ord_item_code=[^\&\=\'\"]+/.exec(detail),
+						productIdArea 	= /product_no=[^\&\=\'\"]+/.exec(detail);
+
+					orderId 	= orderIdArea?.length 	? orderIdArea[0].replace('ord_item_code=', '') 	: null;
+					productId 	= productIdArea?.length ? productIdArea[0].replace('product_no=', '') 	: null;
+				}
+
+				if(writeLink) {
+					if(!orderId) {
+						let orderIdArea = /order_id=[^\&\=\'\"]+/.exec(writeLink);
+						orderId = orderIdArea?.length ? orderIdArea[0].replace('order_id=', '') : null;
+					}
+					if(!productId) {
+						let productIdArea = /product_no=[^\&\=\'\"]+/.exec(writeLink);
+						productId = productIdArea?.length ? productIdArea[0].replace('product_no=', '') : null;
+					}
+				}
+			} else if(solutiontype == 'makeshop') {
+				let orderLink 		= selector.getAttribute('data-order_link'),
+					productIdArea 	= /(branduid)=([^&]+)/.exec(orderLink),
+					productCodeArea = /go_brand\([\'\"](\w+)/.exec(orderLink),
+					orderIdArea 	= /(order_id|ordernum)=([^&]+)/.exec(orderLink);
+
+				if(productIdArea?.length > 2) {
+					productId = productIdArea[2];
+				} else {
+					productCode = productCodeArea?.length > 1 && productCodeArea[1] || null;
+				}
+
+				if(orderIdArea?.length > 2) {
+					orderId = orderIdArea[2];
+				} else {
+					orderIdArea = /order_view\([^,]+,[^\'\"]+[\'\"](\w+-\w+)/.exec(orderLink);
+					orderId = orderIdArea?.length > 1 && orderIdArea[1] || null;
+				}
+
+				orderId = orderId && orderId.replace(/_\[*([^\]]+)\]*$/, '_[$1]');
+			} else if(solutiontype == 'makeglobal') {
+				orderId 	= selector.getAttribute('data-order_id');
+				productId 	= selector.getAttribute('data-item_id');
+			} else if (solutiontype == 'godomall') {
+				orderId 	= selector.getAttribute('data-order_id');
+				productId 	= selector.getAttribute('data-item_id');
+
+				let orderSubId = selector.getAttribute('data-sno');
+				if(orderId && orderSubId) {
+					orderId += '_' + orderSubId;
+				}
+			}
+
+			return {
+				order_id 	: orderId 		|| null,
+				product_id	: productId 	|| null,
+				product_code: productCode 	|| null
+			}
+		}
+
+		this.addReviewWriteButtons = function(itemSelector, dataSelector, targetSelector) {
+			itemSelector 	= itemSelector 		|| this.writeBtnSelectors.itemSelector 		|| '';
+			dataSelector 	= dataSelector 		|| this.writeBtnSelectors.dataSelector 		|| '';
+			targetSelector 	= targetSelector 	|| this.writeBtnSelectors.targetSelector 	|| '';
+
+			if(!itemSelector || !dataSelector || !targetSelector) return;
+
+			this.writeBtnSelectors.itemSelector		= itemSelector;
+			this.writeBtnSelectors.dataSelector		= dataSelector;
+			this.writeBtnSelectors.targetSelector	= targetSelector;
+
+			var items = [].slice.call(document.querySelectorAll(itemSelector + ":not(.set)"));
+			items.map(function(v) {
+				var dataElement 	= v.querySelector(dataSelector),
+					targetElement	= v.querySelector(targetSelector),
+					data			= dataElement && dataElement.getAttribute("onclick") || null;
+
+				if(!targetElement || !data) return;
+				targetElement.setAttribute("data-detail", data);
+				targetElement.setAttribute("href", "#");
+				targetElement.setAttribute("class", targetElement.getAttribute("class") + " snap_review_write_btn");
+			});
+		}
+
+		this.updateReviewWriteButtons = function(param) {
+			this.writeParams = typeof param == 'object' && param || this.writeParams;
+			param = this.writeParams;
+
+			this.addReviewWriteButtons();
+
+			let popup_btn = document.querySelectorAll('.snap_review_write_btn:not(.set)');
+			if(popup_btn?.length) {
+				let writeBtnOrderIds = [];
+				for(btn of popup_btn) {
+					btn.style.display = "none";
+
+					let nowOrderId = getOrderInfoInWriteButton(btn).order_id;
+					nowOrderId && writeBtnOrderIds.push(nowOrderId);
+				}
+
+				writeBtnOrderIds && snaputil.getDisplayWriteButtons(writeBtnOrderIds);
+			}
+		}
+		this.updateItemReviewWriteButtons = function () {
+			var write_btn = document.querySelectorAll('.snap_item_review_write_btn');
+			if(write_btn && write_btn.length) {
+				for(var i = 0; i < write_btn.length; ++i) {
+					write_btn[i].onclick = function() {
+						snaputil.draw_iframe_full_popup({
+							url: snaputil.writeUrl,
+							post: snaputil.writeParams,
+							id: sfMakeIframeIdG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+							name: sfMakeIframeNameG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+							addHash: sfMakeIframeIdG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+						});
+					}
+				}
+			}
+		}
+		this.updateWriteNotify = function (param, notifyId) {
+			if(isNotified) return;
+
+			isNotified = true;
+			snaputil.draw_iframe_full_popup({
+				url: snaputil.notifyUrl,
+				post: param,
+				id: sfMakeIframeIdG(notifyId),
+				name: sfMakeIframeNameG(notifyId),
+				addHash: sfMakeIframeIdG(notifyId),
+			});
+		}
+
+		this.getDisplayWriteButtons = function(orderIds) {
+			let store_username 	= snaputil.sf_get_value('sf_store_name'),
+				user_id 		= snaputil.sf_get_user_id() ?? "";
+
+			if (!store_username || store_username == "undefined" || !orderIds?.length) return;
+
+			let requestURL 	= `${snaputil.fit_base_domain}/Dataupdate/GetWritableOrderIds`,
+				sendData 	= snaputil.make_send_data_detail(store_username);
+
+			sendData["order_id"] = orderIds;
+			sendData["user_id"]  = user_id != "undefined" ? user_id : "";
+
+            snaputil.postForm({
+                url: requestURL,
+                body: sendData
+            }).then(response => response.json())
+              .then(response => snaputil.setDisplayWriteButtons(response));
+		}
+
+		this.setDisplayWriteButtons = function(obj) {
+			if (!obj || !obj?.success) return null;
+
+			let popup_btn = document.querySelectorAll(".snap_review_write_btn:not(.set)");
+			if (!popup_btn?.length) return null;
+
+			let orderData 	= obj?.data || {},
+                writables   = orderData.writableOrders   || {},
+                unwritables = orderData.unwritableOrders || {},
+				params 		= this.writeParams;
+
+			for (const btn of popup_btn) {
+				let setButton 		= false,
+					nowOrderInfo 	= getOrderInfoInWriteButton(btn),
+					nowOrderId 		= nowOrderInfo.order_id,
+					nowProductId	= nowOrderInfo.product_id;
+
+				for(const [orderId, itemId] of Object.entries(writables)) {
+					let isSameItem = nowProductId ? itemId == nowProductId : true;
+
+					if (orderId.indexOf(nowOrderId) > -1 && isSameItem) {
+						btn.style.display = "";
+
+						delete writables[orderId];
+
+						setButton = true;
+						break;
+					}
+				}
+                if(!setButton) {
+                    for(const orderId of Object.entries(unwritables)) {
+                        if (orderId.indexOf(nowOrderId) > -1) {
+                            delete unwritables[orderId];
+
+                            setButton = true;
+                            break;
+                        }
+                    }
+                }
+
+				if (!setButton) continue;
+
+				btn.onclick = function(e) {
+					let addParam = getOrderInfoInWriteButton(this);
+
+					if(addParam['order_id']) {
+						let sendParam = params;
+						for(key in addParam) {
+							if (addParam[key]) {
+								sendParam[key] = addParam[key];
+							}
+						}
+						snaputil.draw_iframe_full_popup({
+							url		: snaputil.writeUrl,
+							post	: sendParam,
+                            id      : sfMakeIframeIdG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+                            name    : sfMakeIframeNameG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+                            addHash : sfMakeIframeIdG(snaputil.WIDGET_TYPE.WRITE_REVIEW),
+						});
+					}
+
+					e.preventDefault();
+				}
+				addClass(btn, "set");
+			}
+		}
+
+		this.get_postmessage_form = function(eventtype,etcdata) {
+			return postmessage = {
+				e: eventtype,
+				data: etcdata,
+				solutiontype: 'snap_review',
+			};
+		}
+
+		var scrollEvent = function() {
+			if(snaputil.snapTicking) {
+				return;
+			}
+
+			snaputil.snapTicking = true;
+			if(!window.requestAnimationFrame) {
+				setTimeout(checkScrollEvent, 20);
+			} else {
+				window.requestAnimationFrame(checkScrollEvent);
+			}
+		}
+
+		this.pushstate_history = function(pushstates) {
+			if(!pushstates) {
+				return;
+			}
+			var my_pushstates = this.hash_historys[this.hash_historys.length - 1] || {},
+				url;
+
+			// 복사
+			my_pushstates = this.copy_object(my_pushstates);
+
+			// 현재 popstate에서 추가하거나 덮어씌운다
+			my_pushstates = snaputil.originReduce(Object.keys(pushstates), function(m, key) {
+				m[key] = pushstates[key];
+				return m;
+			}, my_pushstates);
+
+			url = Object.keys(my_pushstates).map(function(key) {
+				return key + '=' + my_pushstates[key];
+			}).join('&');
+
+			history.pushState({ index: this.hash_historys.length, type: 'page' }, '', '#' + url);
+			this.hash_historys.push(my_pushstates);
+		};
+
+		this.popstate_eventlistener = function() {
+			if (event?.state?.type != 'page') return;
+
+			let last_index 	= this.hash_historys.length - 1,
+				cur_index	= event?.state?.index ?? last_index;
+
+			// 같은 경우는 작성 팝업을 띄웠다가 돌아왔다거나..등등 -> 이땐 변화가 없어야됨
+			if (cur_index == last_index) return;
+
+			let page_historys 	= window.location.href.match(/snapreview_widget\w+_page=\d+/g) || [],
+				isBack 			= cur_index < last_index,
+				prev_history 	= this.hash_historys[last_index] || {},
+				rest_history 	= snaputil.originReduce(page_historys, function(m, page_history) { // 현재에 없는 이전 위젯 상태를 걸러내기
+					let key = page_history.split('=')[0];
+					delete m[key];
+					return m;
+				}, this.copy_object(prev_history)),
+				history;
+
+			// 현재에 없는 이전의 위젯은 1페이지로 이동
+			page_historys = snaputil.originReduce(Object.keys(rest_history), function(m, key) {
+				m.push(key + '=1');
+				return m;
+			}, page_historys);
+
+			history = snaputil.originReduce(page_historys, function(m, page_history) {
+				let widget_id 	= (page_history.match(/widget\d+(_\d+)?/g) ?? [])[0],
+					page 		= page_history.match(/\d+$/g)[0] * 1,
+					key 		= 'snapreview_' + widget_id + '_page';
+
+				if (!widget_id) return m;
+
+				if (prev_history[key] != page) {
+					let data 			= snaputil.get_postmessage_form('getScrollPage', { page: page }),
+						full_widget_id 	= 'review_' + widget_id,
+						widgetframe 	= document.getElementById(full_widget_id),
+						moveWidget		= function() { widgetframe && widgetframe.scrollIntoView(); };
+
+					snaputil.snapreview_sf_post_to_resultviewmessage(data, full_widget_id);
+					moveWidget();
+
+					window.removeEventListener('scroll', moveScroll);
+					window.addEventListener('scroll', moveScroll);
+
+					function moveScroll() {
+						event.preventDefault();
+						moveWidget();
+						window.removeEventListener('scroll', moveScroll);
+					}
+				}
+
+				m[key] = page;
+				return m;
+			}, {});
+
+			this.hash_historys[isBack ? 'pop' : 'push'](history);
+		};
+
+		this.copy_object = function(obj) {
+			return snaputil.originReduce(Object.keys(obj), function(m, key) {
+				m[key] = obj[key];
+				return m;
+			}, {});
+		};
+
+		function checkScrollEvent() {
+			readyScrollWidget();
+			var keys = Object.keys(snaputil.scrollWidgets);
+			snaputil.snapTicking = false;
+			if(keys.length == 0) {
+				window.removeEventListener("scroll", scrollEvent);
+				return;
+			}
+
+			var space = 20,
+				viewTop = window.scrollY
+					|| window.pageYOffset
+					|| document.documentElement.scrollTop
+					|| document.body.scrollTop
+					|| 0,
+				viewBottom = visualViewport && visualViewport.height || screen.availHeight;
+			for(var i = 0; i < keys.length; ++i) {
+				var widgetid = keys[i],
+					widgetframe = document.getElementById(widgetid),
+					bottom = document.body.scrollHeight,
+					isPaging = Math.abs(bottom - viewTop - document.body.clientHeight) <= space;
+				if(widgetframe) {
+					bottom = widgetframe.getBoundingClientRect().bottom;
+					isPaging = space <= bottom && bottom < viewBottom - space;
+				}
+				if (isPaging) {
+					var page = ++snaputil.scrollWidgets[widgetid],
+						post = snaputil.get_postmessage_form('getScrollPage',{'page':page});
+					if(snaputil.reviewobj) {
+						snaputil.reviewobj.sf_postmessage_toparent(post, widgetid);
+					} else {
+						snaputil.snapreview_sf_post_to_resultviewmessage(post, widgetid);
+					}
+					delete snaputil.scrollWidgets[widgetid];
+				}
+			}
+		}
+		this.infinite_paging = function(data) {
+			if(!snaputil || !('widgetid' in data) || !('load_way' in data) || data['load_way'] != '3' || snaputil.scrollReadyWidgets && snaputil.scrollReadyWidgets[data['widgetid']]) {
+				return;
+			}
+
+			var widgetid = sfMakeIframeIdG(data['widgetid']);
+			if(!data['page']) {
+				data['page'] = 2;
+			}
+
+			var isFirst = Object.keys(snaputil.scrollWidgets).length == 0;
+
+			snaputil.scrollReadyWidgets[widgetid] = data['page'];
+			if(isFirst) {
+				window.addEventListener("scroll", scrollEvent);
+				checkPaging();
+			}
+		}
+
+		function readyScrollWidget() {
+			var readyKeys = Object.keys(snaputil.scrollReadyWidgets);
+			for(var i = 0; i < readyKeys.length; ++i) {
+				var widgetid = readyKeys[i];
+				if(!snaputil.scrollWidgets[widgetid]) {
+					snaputil.scrollWidgets[widgetid] = snaputil.scrollReadyWidgets[widgetid];
+					delete snaputil.scrollReadyWidgets[widgetid];
+				}
+			}
+		}
+
+		function checkPaging() {
+			if(!snaputil.reviewobj) {
+				return;
+			}
+			var height = document.documentElement.getBoundingClientRect().bottom - document.documentElement.getBoundingClientRect().top;
+			if(document.body.scrollHeight <= height) {
+				checkScrollEvent();
+			}
+		}
+
+		this.GetSnapNemIdG = function(platform) {
+			var cName = platform == "pc" && 'spm_member_id_pc' || 'spm_member_id_m';
+			cName = snapHash(getSnapPrefix() + cName);
+			return snapCookieInstance.getCookie(cName);
+		}
+
+		function getSnapPrefix() {
+			return snaputil.sf_get_value('sf_store_name') + '_';
+		}
+
+		function snapHash(value) {
+			return value && encodeURIComponent((btoa(value))) || '';
+		}
+
+		this.updateDetailPopup = function(param) {
+			var detail_popup_id = 13;
+
+			var detailUrl = snaputil.fit_base_domain + '/Draw/draw_review_detail_popup';
+			var detail_popup_btn = document.querySelectorAll('.snap_review_detail_btn');
+
+			if(detail_popup_btn && detail_popup_btn.length) {
+				for(var i = 0; i < detail_popup_btn.length; ++i) {
+					detail_popup_btn[i].onclick = function() {
+						var review_id = this.getAttribute('review_id');
+						var item_id = this.getAttribute('item_id');
+
+						var detailParam = param;
+						detailParam['widgetid'] = detail_popup_id;
+						detailParam['reviewid'] = review_id;
+						detailParam['d'] = item_id;
+
+						snaputil.draw_iframe_full_popup({
+							url: detailUrl,
+							post: detailParam,
+							id: sfMakeIframeIdG(detail_popup_id),
+							name: sfMakeIframeNameG(detail_popup_id),
+							addHash: sfMakeIframeIdG(detail_popup_id),
+						});
+					}
+				}
+			}
+		}
+
+		this.popup = function() {
+			if (!isexistdata) {
+				return;
+			}
+
+			var data = postdata['data'];
+			if('id' in data && 'src' in data) {
+				var id = sfMakeIframeIdG(data['id']),
+					name = sfMakeIframeNameG(data['id']),
+					parent = sfMakeIframeIdG(data['parent']),
+					is_close = data['is_close'];
+				if(is_close) {
+					var prevframe = document.getElementById(parent);
+					if (typeof prevframe != 'undefined' && prevframe != null) {
+						snaputil.close_popup(parent);
+					}
+				}
+				var reviewpopupframe = document.getElementById(id);
+				if (typeof (reviewpopupframe) != 'undefined' && reviewpopupframe != null) {
+					return;
+				}
+
+				var url = data['src'];
+				var prevTarget = event.currentTarget.document.activeElement;
+				var prevTargetId = prevTarget.id;
+				if (!prevTargetId) {
+					prevTargetId = 'snapfit_resultview_iframe';
+				}
+
+				document.querySelector('body').style.overflow = 'hidden';
+				snaputil.draw_iframe_full_popup({
+					url: url,
+					post: data['post'],
+					id: id,
+					name: name,
+					value: prevTargetId,
+					parent: parent,
+					addHash: id,
+					isHashChange: is_close,
+				});
+			}
+		}
+
+		this.snap_sfreview_receiveMessage = function(event) {
+			try {
+				var data = event.data,
+					postdata = data && snaputil.decode_json(data) || {},
+					eventtype = postdata['e'],
+					solutiontype = postdata['solutiontype'],
+					data = postdata['data'],
+					isshop = this === snaputil;
+				if (isshop && event.origin.indexOf('snapvi') == -1 && event.origin.indexOf('snapfit') == -1) {
+					return;
+				}
+
+				if (!Boolean(data) || !Boolean(eventtype) || solutiontype != 'snap_review') {
+					return;
+				}
+
+				if (eventtype == 'snapreview_popup') {
+					if(!data['id'] || !data['src']) {
+						return;
+					}
+					var id     			 	   = sfMakeIframeIdG(data.id ?? ""),
+						name   			 	   = sfMakeIframeNameG(data.id ?? ""),
+						parent 			 	   = sfMakeIframeIdG(data.parent ?? ""),
+						reviewpopupframe 	   = document.getElementById(id),
+						url 				   = data.src ?? "",
+						prevTarget			   = event.currentTarget.document.activeElement,
+						prevTargetId 		   = prevTarget.id || 'snapfit_resultview_iframe',
+						is_close 			   = data.is_close ?? false,
+						datasRequiredOpenPopup = {
+							url: url,
+							post: data.post ?? {},
+							id: id,
+							name: name,
+							value: prevTargetId,
+							parent: parent,
+							addHash: id,
+							isHashChange: is_close,
+						};
+
+					if(is_close) {
+						var prevframe = document.getElementById(parent);
+						if (typeof prevframe != 'undefined' && prevframe != null) {
+							snaputil.close_popup(parent);
+						}
+					}
+
+					if (typeof reviewpopupframe != 'undefined' && reviewpopupframe != null) return;
+
+					// PC일 때 현재 띄울 팝업이 어떤 팝업이든 간에 이전 프레임이 마이페이지 알림 팝업이면 애니메이션 후 팝업 띄우기
+					if(snaputil.isPC() && sfMakeIframeIdG(this.WIDGET_TYPE.MYPAGE_NOTI_POPUP) === prevTargetId) {
+						const curPopup = snaputil.draw_iframe_full_popup(datasRequiredOpenPopup);
+
+						// 현재 띄울 팝업을 미리 로드한 후 애니메이션이 끝나면 보여주도록 하기 위해
+						curPopup.classList.add(snaputil.opacityZeroClassName);
+
+						prevTarget.ontransitionend = () => {
+							// 현재 띄울 팝업 fade-in
+							curPopup.classList.remove(snaputil.opacityZeroClassName);
+							prevTarget.ontransitionend = "";
+						};
+
+						// 마이페이지 알림 팝업 우측으로 숨기기
+						snaputil.moveMypageNotiPopup(prevTarget);
+					} else {
+						snaputil.draw_iframe_full_popup(datasRequiredOpenPopup);
+					}
+
+				} else if (eventtype == 'snapreview_send_message') {
+					var readdata = data['data'] || {},
+						platform = readdata['platform'] || null,
+						widgetid = data['id'] || null,
+						frameid = widgetid && sfGetIframeIdG(widgetid) || null,
+						nowFrame = frameid && document.getElementById(frameid) || null,
+						parentid = nowFrame && nowFrame.getAttribute('data-parent') || null,
+						type = readdata['send_type'] || null,
+						reviewid = readdata['review_id'] || null;
+					if(!platform || !widgetid)
+						return;
+
+					if(isshop) {
+						parentid && snaputil.snapreview_sf_post_to_resultviewmessage({
+								e: 'snapreview_send_message',
+								solutiontype: 'snap_review',
+								data: data,
+							},
+							parentid);
+						return;
+					}
+					if(type == 'recom') {
+						var recomtype = readdata['recomtype'],
+							recom = readdata['recom'],
+							unit = readdata['unit'];
+						if(recomtype == 1) {
+							this.set_recommend_btn('recommend', recom, reviewid,unit);
+						} else if(recomtype == -1) {
+							this.set_recommend_btn('not_recommend', recom, reviewid,unit);
+						} else {
+							this.set_recommend_btn('', recom, reviewid,unit);
+						}
+					}
+					else if(type == 'filter'){
+						var filter = readdata['filterdata'];
+						this.GetData(1, 1, filter);
+					}
+				} else if (eventtype == 'snapreview_resultview_resize') {
+					var widgetid    = sfMakeIframeIdG(data['widgetid']),
+						width	    = data.width ?? null,
+						height      = data['height'] || 0,
+						widgetframe = document.getElementById(widgetid);
+
+					if (!widgetframe || 1 == widgetframe.getAttribute('data-ifp') || height <= 40 || (null !== width && width <= 40)) {
+						return;
+					}
+
+					width && widgetframe.style.setProperty("width", `${width}px`, "important");
+					widgetframe.style.setProperty('height', height + 'px', 'important');
+				} else if (eventtype == 'snapreview_post_focusmove_by_id') {
+					var frameid = data['frameid'] || null,
+						foucsframe = frameid && document.getElementById(frameid) || null;
+
+					foucsframe && foucsframe.scrollIntoView();
+				} else if (eventtype == 'snapreview_close_popup') {
+					if(!data['id']) {
+						return;
+					}
+					var id = sfMakeIframeIdG(data['id']),
+						widgetframe = document.getElementById(id);
+					if (typeof widgetframe != 'undefined' && widgetframe != null) {
+						location.hash && snaputil.history_back();
+						snaputil.close_popup(id);
+					}
+				} else if (eventtype == 'snapreview_redirect_url') {
+					if('widgetid' in data && window.location.hash.indexOf('#review_widget') !== -1) {
+						var widgetid = sfMakeIframeIdG(data['widgetid']);
+						snaputil.history_back();
+						snaputil.close_popup(id);
+					}
+					var itemurl = data['url'];
+					if (!itemurl) {
+						return;
+					}
+					if(data['isLogin'] && itemurl.indexOf('=') !== -1) {
+						if(snaputil.fit_base_domain.indexOf(window.location.href) === -1) {
+							itemurl += window.location.href;
+						} else if(document.referrer && snaputil.fit_base_domain.indexOf(document.referrer) === -1) {
+							itemurl += document.referrer;
+						}
+					}
+					snaputil.redirect_url(itemurl, data['post']);
+				} else if (eventtype == 'sf_redirect_url') {
+					var itemurl = data['url'];
+					if (!itemurl) {
+						return;
+					}
+					if(snaputil.fit_base_domain.indexOf(window.location.href) !== -1) {
+						itemurl += window.location.href;
+					} else if(document.referrer && snaputil.fit_base_domain.indexOf(document.referrer) !== -1) {
+						itemurl += document.referrer;
+					}
+					snaputil.redirect_url(itemurl, data['post']);
+				} else if (eventtype == 'snapreview_set_cookie') {
+					if (!data['data']) {
+						return;
+					}
+					var platform = data['platform'],
+						widgetid = data['id'],
+						readdata = data['data'],
+						name = readdata['name'],
+						value = readdata['value'],
+						expire = readdata['expire'];
+					if(!platform || !widgetid || !name || typeof value == 'undefined' || !expire) {
+						return;
+					}
+
+					snapCookieInstance.setCookie(name, value, expire['day'], expire['hours'], expire['minutes'], expire['seconds']);
+				} else if (eventtype == 'refresh_mypage') {
+					if(isshop) {
+						if (!data.widgetId) return;
+						snaputil.snapreview_sf_post_to_resultviewmessage({
+							e: 'refresh_mypage',
+							solutiontype: 'snap_review'
+						}, sfGetIframeIdG(data.widgetId));
+					}
+
+					/**
+					 * 마이페이지 알림 팝업은 상세 페이지를 그리지 않고
+					 * 상세 팝업을 띄우기 때문에 리프레시 할 필요 X
+					 * 따라서 해당 함수가 정의된 경우에만 호출하도록 수정
+					 */
+					"function" === typeof this.refreshPage && this.refreshPage(1);
+				} else if (eventtype == 'snapreview_scroll_evnet') {
+					var id = sfMakeIframeIdG(data['value']),
+						widgetframe = document.getElementById(id);
+					widgetframe && widgetframe.scrollIntoView();
+				} else if (eventtype == 'snapreview_replace_frame') {
+					if (!data['old_id']) {
+						return;
+					}
+					var widgetid = sfMakeIframeIdG(data['widgetid']),
+						id = sfMakeIframeIdG(data['old_id']),
+						ele = document.getElementById(id);
+					if(!ele) {
+						return;
+					}
+					ele.setAttribute("name", widgetid);
+					ele.setAttribute("id", widgetid);
+				} else if (eventtype == 'infinity_scroll_paging') {
+					if(isshop) {
+						data['reviewobj'] = this;
+					}
+					snaputil.infinite_paging(data);
+				} else if (eventtype == 'show_iframe') {
+					if (!data.frameid) return;
+
+					var frameid = sfGetIframeIdG(data.frameid),
+						frame = document.getElementById(frameid);
+
+					if(frame) {
+						frame.style.opacity = 1;
+
+						// PC 이면서 마이페이지 알림 팝업이면 우측에서 팝업이 나오도록 애니메이션 실행
+						snaputil.isPC() && snaputil.WIDGET_TYPE.MYPAGE_NOTI_POPUP == data.frameid && snaputil.moveMypageNotiPopup(frame, null, true);
+					}
+				} else if (eventtype == 'open_review_detail_frame') {
+					var widget_id = 'open_widget_id' in data ? data.open_widget_id : '3_0',
+						frameid = sfGetIframeIdG(widget_id),
+						nowFrame = document.getElementById(frameid),
+						link = '',
+						params = {};
+
+					if(nowFrame) {
+						link = nowFrame.src || nowFrame.getAttribute('data-url') || '';
+						params = nowFrame.getAttribute('data-params');
+						params = params && typeof params == 'string' && snaputil.decode_json(params) || {};
+					}
+					if(!link) {
+						return;
+					}
+
+					if(Object.keys(params).length) {
+						params['i'] = 'tibb';
+						params['isContentReview'] = '1';
+					} else {
+						link = link.replace('&i=tiaa','&i=tibb');
+						link += '&isContentReview=1';
+					}
+					snaputil.redirect_url(link, params);
+				} else if (eventtype == 'my_review_update') {
+					if (!data.widgetId) return;
+
+					snaputil.snapreview_sf_post_to_resultviewmessage(data = {
+						e: 'getScrollPage',
+						solutiontype: 'snap_review',
+						data:{page:1}
+					}, sfGetIframeIdG(data.widgetId));
+				} else if (eventtype == 'refresh_mypage_order') {
+					if (!data.order_id) return;
+
+					if(isshop) {
+						if(!data.widgetId) return;
+						snaputil.snapreview_sf_post_to_resultviewmessage({
+							e: 'refresh_mypage_order',
+							solutiontype: 'snap_review',
+							data: { order_id: data.order_id }
+						}, sfGetIframeIdG(data.widgetId));
+						return;
+					}
+
+					const orderId = postdata?.data?.order_id ?? "";
+
+					"function" === typeof this.refresh_mypage_order && this.refresh_mypage_order(orderId);
+				} else if(eventtype == "refreshWriteablePage") {
+					if(!data.order_id) return;
+
+					if(isshop) {
+						if(!data.widgetId) return;
+						snaputil.snapreview_sf_post_to_resultviewmessage(
+							{
+								e: "refreshWriteablePage",
+								solutiontype: "snap_review",
+								data: { order_id: data.order_id }
+							},
+							sfGetIframeIdG(data.widgetId)
+						);
+						return;
+					}
+
+					const orderId  = postdata?.data?.order_id ?? "",
+						  TAB_NAME = this.TAB?.WRITABLE,
+						  TAB_INFO = this.TAB_INFO && this.TAB_INFO[TAB_NAME] || {};
+
+					this.isFunction(TAB_INFO.refresh) && TAB_INFO.refresh(orderId);
+				} else if (eventtype == 'pushstate_parent') {
+					snaputil.pushstate_history(data.pushstates);
+				} else if (eventtype == 'window_open') {
+					snaputil.window_open(data['url']);
+				} else if (eventtype == 'getScrollPage') {
+					isshop || this.GetData(data['page'] || 1, 1);
+				} else if (eventtype == 'refesh_widget') {
+					isshop || location.reload();
+				} else if (eventtype == 'blindRequest') {
+					if (isshop) {
+						var widgetList = document.querySelectorAll(`.snap_widget.${loadedClass} iframe`) || [];
+						for(var i = 0; i < widgetList.length; i++){
+							var widgetId = widgetList[i].id;
+
+							snaputil.snapreview_sf_post_to_resultviewmessage({
+								e: 'blindRequest',
+								solutiontype: 'snap_review',
+								data: { blindRd: data.blindRd }
+							}, widgetId);
+						}
+					} else {
+						this.setBlind(data['blindRd']);
+					}
+				} else if(eventtype == "snapreview_mypage_noti_popup") {
+					const params   			  = data.params ?? {},
+						  parent 			  = sfMakeIframeIdG(data.parent ?? ""),
+						  isParentClose 	  = data. isParentClose ?? false,
+						  MYPAGENOTI_POPUP_ID = sfMakeIframeIdG(snaputil.WIDGET_TYPE.MYPAGE_NOTI_POPUP),
+						  hasMypageNotiPopup  = null !== document.getElementById(MYPAGENOTI_POPUP_ID);
+
+					if(isParentClose) {
+						const prevFrame = document.getElementById(parent);
+
+						undefined !== prevFrame && null !== prevframe && snaputil.close_popup(parent);
+					}
+
+					if(hasMypageNotiPopup) {
+						// 이미 마이페이지 알림 팝업이 띄워져 있으면 해당 팝업으로 보여주기
+						snaputil.snapreview_sf_post_to_resultviewmessage(
+							{
+								e: 			  "active_and_reload_mypage_noti_popup_tab",
+								solutiontype: "snap_review",
+								data: 		  {
+									initTab: 	  params.initTab ?? null,
+									closePopupId: sfMakeIframeIdG(data?.params?.widgetid ?? "")
+								},
+							},
+							MYPAGENOTI_POPUP_ID
+						);
+					} else {
+						snaputil.initMypageNotiPopup(params);
+					}
+				} else if(eventtype == "active_and_reload_mypage_noti_popup_tab") {
+					const INIT_TAB = data.initTab ?? Object.values(this.MYPAGE_TAB ?? {})[0],
+						  TAB_INFO = this.TAB_INFO && this.TAB_INFO[INIT_TAB] || {};
+
+					// 페이지 리로드 및 탭 활성화
+					snaputil.isFunction(TAB_INFO.reload) && TAB_INFO.reload(true);
+				}
+			} catch(e) {
+				console.log(e);
+			}
+		}
+
+		this.objectEach = function(obj, callback) {
+			if("object" != typeof obj || "function" != typeof callback) return;
+			var key, res;
+			for(key in obj) {
+				res = callback(obj[key], key, obj);
+				if(true === res) continue;
+				else if(false === res) break;
+			}
+		}
+
+		// 리뷰 평점 노출 세팅 함수
+		this.snap_draw_avg_score = function(frame, score, avg_setting, show_type) {
+			var front_image 			= 'front_image' 	 in avg_setting && avg_setting.front_image 	  	|| "//cdn.snapfit.co.kr/review/images/review_default_star_front.png",
+				background_image 		= 'background_image' in avg_setting && avg_setting.background_image || "//cdn.snapfit.co.kr/review/images/review_default_star_back.png",
+				avg_score_warp 			= document.createElement('div'),
+				avg_score_image_front 	= document.createElement('div'),
+				avg_score_image_back 	= document.createElement('div'),
+				avg_width 				= (score * 1) * 20,
+				isSetComplete 			= false;
+
+			avg_score_warp.setAttribute('class', 'snap_review_avg_score');
+			avg_score_warp.style.display = "inline-block";
+			avg_score_warp.style.marginRight = "10px";
+
+			if (show_type == 1) {
+				// 텍스트
+				avg_score_warp.textContent = "평점: "+ score;
+
+				frame.insertBefore(avg_score_warp, frame.firstChild);
+
+				isSetComplete = true;
+			} else if(show_type == 2) {
+				// 이미지(심플형)
+				var avg_score_image = document.createElement('div'),
+					avg_score_text 	= document.createElement('span');
+
+				avg_score_image.setAttribute('class', 'snap_review_avg_score_image');
+				avg_score_image.setAttribute('style', 'background: url('+front_image+');width: 15px;height: 13px; float: left;');
+
+				avg_score_text.textContent = score;
+
+				avg_score_warp.appendChild(avg_score_image);
+				avg_score_warp.appendChild(avg_score_text);
+
+				frame.insertBefore(avg_score_warp, frame.firstChild);
+
+				isSetComplete = true;
+			} else if(show_type == 3 || show_type == 4) {
+				// 이미지(상세형)
+				avg_score_image_front.setAttribute('class', 'snap_review_avg_score_image_front');
+				avg_score_image_front.setAttribute('style', 'background: url('+front_image+');width: '+avg_width+'%;height: 13px;background-size: cover;position: absolute;left: 0px;top: 0px; display: inline-block;');
+
+				avg_score_image_back.setAttribute('class', 'snap_review_avg_score_image_back');
+				avg_score_image_back.setAttribute('style', 'background: url('+background_image+');width: 75px;height: 13px;background-size: cover;position: relative;display: inline-block;');
+
+				avg_score_image_back.appendChild(avg_score_image_front);
+				avg_score_warp.appendChild(avg_score_image_back);
+
+				if (show_type == 4) {
+					// 이미지(평점강조형)
+					var avg_score_text = document.createElement('span');
+
+					avg_score_image_back.style.float = "left";
+
+					avg_score_text.textContent = score;
+					avg_score_text.setAttribute('style', 'height: 13px; margin-left: 10px; line-height: 13px; display: inline-block;');
+
+					avg_score_warp.appendChild(avg_score_text);
+				}
+
+				frame.insertBefore(avg_score_warp, frame.firstChild);
+
+				isSetComplete = true;
+			}
+
+			return isSetComplete;
+		}
+
+        this.requestForm = async function(config) {
+            const { url, method, headers = {}, body = {} } = config;
+            const payload = new FormData();
+            for(const [key, value] of Object.entries(body)) {
+                payload.append(key, value);
+            }
+
+            return await fetch(url, {
+                method:  method,
+                headers: headers,
+                body:    payload
+            });
+        }
+        this.postForm = async function(config) {
+            return await snaputil.requestForm(Object.assign(config, {method: "POST"}));
+        }
+
+		/**
+		 * initNotificationWidget
+		 *
+		 * 리뷰 알림 위젯을 초기화하는 함수
+		 *
+		 * @param {object} params 뷰를 그릴 때 필요한 데이터
+		 *
+		 * @author 임예나
+		 */
+		this.initNotificationWidget = params => {
+			const popupDatas = {
+				  	url:  	 	  	   snaputil.DRAW_URL.NOTIFICATION,
+				  	id:   	 	  	   sfMakeIframeIdG(snaputil.WIDGET_TYPE.NOTIFICATION),
+				  	name:    	  	   sfMakeIframeNameG(snaputil.WIDGET_TYPE.NOTIFICATION),
+				  	params: 	 	   params ?? {},
+					height: 	  	   "45px",
+					position:	  	   params?.position  ?? {bottom: 0, left: 0},
+					transform:	  	   "translateX(calc(50vw - 50%))",
+					isHideMallScroll:  false,
+					isIframeFullPopup: false
+				  };
+
+			// 뷰를 그릴 때 필요 없는 데이터 삭제
+			delete popupDatas.params.position;
+
+			snaputil.drawIframePopup(popupDatas);
+		}
+
+		/**
+		 * initMypageNotiPopup
+		 *
+		 * 마이페이지 알림 팝업을 초기화하는 함수
+		 *
+		 * @param {object} params 뷰를 그릴 때 필요한 데이터
+		 *
+		 * @author 임예나
+		 */
+		this.initMypageNotiPopup = params => {
+			const isMobile = "mobile" === params?.platform;
+
+			let popupDatas = {
+				  	url:  	 	  	   snaputil.DRAW_URL.MYPAGE_NOTI_POPUP,
+				  	id:   	 	  	   sfMakeIframeIdG(snaputil.WIDGET_TYPE.MYPAGE_NOTI_POPUP),
+				  	name:    	  	   sfMakeIframeNameG(snaputil.WIDGET_TYPE.MYPAGE_NOTI_POPUP),
+				  	params: 	 	   params ?? {},
+				    width:		  	   "400px",
+				    height: 	  	   "80vh",
+				    position:	  	   {top: "0", right: snaputil.mypageNotiPopupInitPos},
+				    transform:	  	   "translateY(calc(50vh - 50%))",
+				    isHideMallScroll:  false,
+				  	isIframeFullPopup: false
+				  },
+				  popupEle = null;
+
+			if(isMobile) {
+				popupDatas = {
+					...popupDatas,
+					width:    		   "100%",
+					height:   		   "100%",
+					position: 		   {top: 0, right: 0},
+					transform:		   "none",
+					isHideMallScroll:  true,
+					isIframeFullPopup: true
+				};
+			}
+
+			// 팝업 draw
+			popupEle = snaputil.drawIframePopup(popupDatas);
+
+			if(!isMobile) {
+				// PC에서 팝업을 열때는 잠시 우측으로 숨겼다가 열기
+				popupEle.style.transition = "right 0.7s ease-in-out, opacity 0.3s linear";
+				snaputil.moveMypageNotiPopup(popupEle);
+			}
+		}
+
+		function getIframeWindow(frameId) {
+			if(!frameId) return null;
+			frameId = document.getElementById(frameId);
+			return frameId && frameId.contentWindow || null;
+		}
+
+		window.addEventListener("message", this.snap_sfreview_receiveMessage.bind(reviewobj || this), false);
+		window.addEventListener('popstate', this.popstate_eventlistener.bind(this));
+	}
+})();
+
+/**
+ * 쇼핑몰 쿠키 관리 객체
+ * @class
+ */
+(function() {
+	window.snapCookieManager = window.snapCookieManager || function() {
+		this.prefix = "";
+		this.setCookie = function(cName, cValue, cDay, cHours, cMinutes, cSeconds) {
+			var expire = new Date();
+			var domain = document.domain.replace(/^www./,'');
+			var mainDomain = document.domain.replace(/^www./,'').replace(/^m./,'');
+			expire.setDate(expire.getDate() + cDay);
+			if(typeof cHours != 'undefined') expire.setHours(cHours);
+			if(typeof cMinutes != 'undefined') expire.setMinutes(cMinutes);
+			if(typeof cSeconds != 'undefined') expire.setSeconds(cSeconds);
+	
+			cookies = (this.prefix + cName) + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
+			if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
+			document.cookie = cookies + 'Domain=' + domain;
+			document.cookie = cookies + 'Domain=' + mainDomain;
+		}
+	
+		this.getCookie = function(cName) {
+			cName = (this.prefix + cName + '=');
+			var cookieData = document.cookie,
+				start = cookieData.indexOf(cName),
+				cValue = '';
+			if(start != -1) {
+				start += cName.length;
+				var end = cookieData.indexOf(';', start);
+				if(end == -1) end = cookieData.length;
+				cValue = cookieData.substring(start, end);
+			}
+			return unescape(cValue);
+		}
+	}
+	window.snapCookieInstance = window.snapCookieInstance || new snapCookieManager();
+})();
+
+function sfMakeIframeNameG(widgetid) {
+	return 'review_widget' + widgetid
+}
+function sfMakeIframeIdG(widgetid) {
+	return 'review_widget' + widgetid
+}
+function sfGetIframeIdG(widgetid) {
+	return 'review_widget' + widgetid
+}

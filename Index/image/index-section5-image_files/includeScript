@@ -1,0 +1,11 @@
+(function() {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+
+    var constW = 1024;
+    var constH = 800;
+
+    if (w < constW || h < constH) {
+        window.resizeTo(constW, constH);
+    }
+})();

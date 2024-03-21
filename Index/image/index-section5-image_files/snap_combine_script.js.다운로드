@@ -1,0 +1,57 @@
+(function() {
+window.snapSolution = window.snapSolution || function(storeName) {
+this.base_domain ="//sfre-srcs-service.snapfit.co.kr";
+this.onLoadSnapScript = function(url, callback) {
+let script  = document.createElement("script");
+script.type ="text/javascript";
+if(script.readyState) {
+script.onreadystatechange = function() {
+if(script.readyState =="loaded" || script.readyState =="complete") {
+script.onreadystatechange = null;
+typeof callback =='function' && callback();
+}
+};
+} else {
+script.onload = function() {
+typeof callback =='function' && callback();
+};
+}
+script.src = url;
+document.head.appendChild(script);
+console.log("load : " + url);
+}
+this.loadScript = function(solutiontype, callback) {
+let snapObj = this,
+url  ='',
+baseUrl ='//sfre-srcs-service.snapfit.co.kr/js/',
+subUrl  ='',
+version ='?822';
+if(solutiontype =='review_dependent') {
+subUrl ='snap_fit_dependent.js';
+} else if(solutiontype =='review_independent' ) {
+subUrl ='snap_fit_independent.js';
+} else {
+return;
+}
+
+url = baseUrl + subUrl + version;
+if(typeof isLoadSnaputil =='undefined') {
+callback  = loadSnapUtil.bind(snapObj, {url: url, callback: callback});
+url   = baseUrl + 'snap_combine_script_main.js' + version;
+}
+snapObj.onLoadSnapScript(url, callback);
+function loadSnapUtil(variables) {
+let subLoadModules = variables && variables['url'] && snapObj.onLoadSnapScript.bind(snapObj, variables['url'], variables['callback']);
+if(typeof snaputil =='undefined') {
+isLoadSnaputil  = true;
+snaputil   = new snapUtils(snapObj.base_domain);
+}
+if(snaputil.isIOS() && snaputil.getVersionIOS() < 15) {
+let widgetlist = document.querySelectorAll('iframe[name^="review_widget"]');
+widgetlist.forEach(widget => snaputil.reload_iframe(widget));
+}
+subLoadModules && subLoadModules();
+}
+}
+}
+})();

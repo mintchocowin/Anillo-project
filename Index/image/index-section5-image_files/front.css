@@ -1,0 +1,42 @@
+.app-smart-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid #919196;
+    margin: 10px;
+    z-index: 999;
+}
+.app-smart-popup .smart-popup-img a {
+    display: block;
+}
+.app-smart-popup .smart-popup-img img {
+    display: block;
+    border: 0;
+    max-width: 100%;
+}
+.app-smart-popup .smart-popup-btns {
+    border-top: 1px solid #919196;
+    overflow: hidden;
+}
+.app-smart-popup .smart-popup-btns button {
+    float: left;
+    background-color: #fafafc;
+    border: 0;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 16px;
+    height: 60px;
+    outline: 0;
+    width: 50%;
+    color: black;
+}
+.app-smart-popup .smart-popup-btns button:hover {
+    background-color: #e6e6eb;
+}
+.app-smart-popup .smart-popup-btns button.smart-popup-close {
+    background-color: #ffffff;
+    border-left: 1px solid #cdd2d7;
+}
+.app-smart-popup .smart-popup-btns button.smart-popup-close:hover {
+    background-color: #f0f0f5;
+}

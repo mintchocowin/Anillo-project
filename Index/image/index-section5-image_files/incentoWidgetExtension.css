@@ -1,0 +1,168 @@
+body {
+  position: relative;
+}
+
+.incento-widget-mobile {
+  min-width: unset !important;
+}
+
+.incento_widget__container {
+  position: fixed;
+  z-index: 2147483647;
+  height: min(650px, 90%);
+  width: 350px;
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: 0px 7px 29px 0px rgba(100, 100, 111, 0.2);
+  overflow: hidden;
+  overflow-y: scroll;
+  visibility: hidden;
+  background-color: white;
+  transition: all 0.1s ease-in;
+  opacity: 0;
+}
+
+.incento_widget__container::-webkit-scrollbar {
+  display: none;
+}
+
+.incento_widget__inner {
+  min-height: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+
+.incento_widget_right_bottom {
+  right: 5px;
+  bottom: 5px;
+}
+
+#incento_iframe {
+  border: none;
+  overflow-y: scroll;
+  width: 100% !important;
+}
+
+.incento_widget__close_btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  z-index: 2147483647;
+  outline: none;
+}
+
+.incento_widget_close {
+  display: none;
+  overflow: hidden;
+  animation: fade-out 0.1s forwards;
+  transform: translate(-10px, -10px);
+  right: 5px;
+  bottom: 5px;
+}
+
+.incento_widget__launcher_close {
+  animation: fade-out 0.3s forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-5px, -5px);
+}
+
+.incento_widget__launcher_open {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  100% {
+    transform: translateY(100px);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateY(100px);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .incento_widget__container {
+    border-radius: 30px 30px 0 0;
+    height: 90%;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-height: unset;
+    box-shadow: 0 0 10px 0px lightgray;
+  }
+
+  .incento_widget__close_btn {
+    cursor: auto;
+  }
+
+  .incento_widget__launcher {
+    cursor: auto;
+  }
+}
+
+@media screen and (max-device-width: 480px) {
+  .incento_widget__container {
+    border-radius: 30px 30px 0 0;
+    height: 90%;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-height: unset;
+    box-shadow: 0 0 10px 0px lightgray;
+  }
+
+  .incento_widget__close_btn {
+    cursor: auto;
+  }
+
+  .incento_widget__launcher {
+    cursor: auto;
+  }
+}
+
+.incento_widget__container_mobile {
+  border-radius: 30px 30px 0 0;
+  height: 90%;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  max-height: unset;
+  box-shadow: 0 0 10px 0px lightgray;
+}
+@media (min-width:480px) {.incento_widget__launcher {background-image: url('https://referral-bucket-test.s3-ap-northeast-2.amazonaws.com/2e7c3965-350a-430a-9d65-d62d0cf7b309/temp/facc1a30-3531-47db-a87f-2c84fcfa35f7.png'); background-size: 40px 59px; background-repeat: no-repeat; position : fixed; bottom: 180px; right:  25px; width: 40px; height: 59px; border-radius: 0px; border: none; cursor:pointer; transition: all 0.2s ease-in; z-index: 2147483647;}}@media (max-width:480px) {.incento_widget__launcher {background-image: url('https://referral-bucket-test.s3-ap-northeast-2.amazonaws.com/2e7c3965-350a-430a-9d65-d62d0cf7b309/temp/a0fe1425-2722-45d2-bed4-a716a1027d05.png'); background-size: 40px 59px;  background-repeat: no-repeat; position : fixed; bottom: 110px; right:  10px; width: 40px; height: 59px; border-radius: 0px; border: none; cursor:pointer; transition: all 0.2s ease-in; z-index: 2147483647;}}@media (max-width:480px) {.incento_widget_open { visibility: visible; overflow-y: scroll; animation: fade-in 0.1s forwards;}} @media (min-width: 480px) {.incento_widget_open { visibility: visible; overflow-y: scroll; animation: fade-in 0.1s forwards; right: 20px; bottom:25px; }}

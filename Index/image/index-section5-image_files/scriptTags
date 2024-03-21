@@ -1,0 +1,5 @@
+var app4youSmartpopupScriptSrc = 'https://app4you.cafe24.com/SmartPopup/tunnel/scriptTagContent';
+var app4youSmartpopupAppScripts = document.createElement("script");
+app4youSmartpopupAppScripts.type = "text/javascript";
+app4youSmartpopupAppScripts.src = app4youSmartpopupScriptSrc;
+$("head").append(app4youSmartpopupAppScripts);

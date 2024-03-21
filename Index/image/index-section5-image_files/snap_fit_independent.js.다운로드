@@ -1,0 +1,385 @@
+(function() {
+    window.snapreviewfit = window.snapreviewfit || function () {
+        this.review_count_text = '리뷰 개수 : {$review_count}';
+        this.avg_setting = null;
+        this.itemSelector = null;
+        this.urlSelector = 'a';
+        this.parentSelector = null;
+        this.useAddTag = false;
+        this.isInit = false;
+        this.review_count_zero = 0;
+        this.avg_score_zero = 0;
+        this.set_review_cnt = 0;
+    
+        this.getsrcnt = function() {
+            var snap_review_countlistarr = [],
+                snap_review_countlist = document.querySelectorAll('.snap_review_count.noset[snap_item_id]'),
+                i,
+                item_id;
+            if(snap_review_countlist && snap_review_countlist.length > 0) {
+                for (i = 0; i < snap_review_countlist.length; ++i) {
+                    item_id = snap_review_countlist[i].getAttribute('snap_item_id');
+                    item_id && snap_review_countlistarr.push(item_id);
+                }
+            }
+            return snap_review_countlistarr;
+        }
+    
+        this.init = async function() {
+            if (!snaputil.is_fit_support_brower()) return false;
+
+            // 외부 공통 css 로드
+            snaputil.loadOutsideCommonCss();
+
+            let store_username = snaputil.sf_get_value('sf_store_name'),
+                send_data;
+            if(!store_username || store_username === "undefined") return false;
+
+            send_data = snaputil.make_send_data_detail(store_username)
+            snaputil.setwidgetidsparam(send_data);
+            const response = await snaputil.send_init(snaputil.fit_base_domain + "/Datainit/init_independent_review", send_data);
+            this.success_draw_init(await response.json());
+
+            // 리뷰 개수 요청
+            await this.request_snap_review_cnt();
+        };
+
+        this.catchMoreItemReviewCnt = function() {
+            const updateReviewCount         = () => {
+                      if("function" !== typeof snaputil.updateReviewCountInfos) return;
+                      snaputil.updateReviewCountInfos(snapinstanceindependent.itemSelector, snapinstanceindependent.urlSelector);
+                  },
+                  addReviewCountTags        = () => {
+                      if(!snapinstanceindependent.useAddTag || "function" !== typeof snapinstanceindependent.addReviewCountTags) return;
+                      snapinstanceindependent.addReviewCountTags(snapinstanceindependent.itemSelector, snapinstanceindependent.urlSelector, snapinstanceindependent.parentSelector);
+                  },
+                  updateReviewWriteButtons  = () => {
+                      if("function" !== typeof snaputil.updateReviewWriteButtons) return;
+                      snaputil.updateReviewWriteButtons();
+                  },
+                  requestSnapReviewCount    = () => {
+                      if("function" !== typeof snapinstanceindependent.request_snap_review_cnt) return;
+                      snapinstanceindependent.request_snap_review_cnt();
+                  },
+                  updateAsync               = () => {
+                      readyAsync = false;
+                      if(!snaputil || "object" !== typeof snaputil || !snapinstanceindependent?.isInit) return setTimeout(updateAsync, 500);
+                      addReviewCountTags();
+                      updateReviewCount();
+                      updateReviewWriteButtons();
+                      requestSnapReviewCount();
+                      readyAsync = true;
+                  };
+            let snapAjaxListener = new Object(),
+                readyAsync       = false;
+            snapAjaxListener.snapSend = window.XMLHttpRequest.prototype.send;
+            XMLHttpRequest.prototype.send = function() {
+                const snapXHR = this;
+                snapXHR.addEventListener('load', function() {
+                    if (snapXHR.readyState == 4 && snapXHR.status == 200 && readyAsync) {
+                        setTimeout(updateAsync, 500);
+                    }
+                });
+                snapAjaxListener.snapSend.apply(snapXHR, arguments);
+            }
+
+            setTimeout(updateAsync, 1500);
+        }
+    
+        this.addReviewWriteButtons = function(itemSelector, dataSelector, targetSelector) {
+            "object" == typeof snaputil && "function" == typeof snaputil.addReviewWriteButtons && snaputil.addReviewWriteButtons(itemSelector, dataSelector, targetSelector);
+        }
+
+        this.addReviewCountTags = function(itemSelector, urlSelector, parentSelector) {
+            if(!itemSelector || !urlSelector) {
+                return false;
+            }
+    
+            this.itemSelector = itemSelector;
+            this.urlSelector = urlSelector;
+            if(parentSelector) {
+                this.parentSelector = parentSelector;
+            }
+    
+            this.useAddTag = true;
+            var items = document.querySelectorAll(itemSelector);
+            if(items && items.length > 0) {
+                for(var i = 0; i < items.length; ++i) {
+                    var reviewCount = items[i].querySelector('.snap_review_count');
+                    if (reviewCount) {
+                        continue;
+                    }
+    
+                    var itemWrap = items[i];
+                    if(parentSelector) {
+                        itemWrap = items[i].querySelector(parentSelector);
+                    }
+    
+                    if(itemWrap) {
+                        var reviewCount = document.createElement('span');
+                        reviewCount.setAttribute('class', 'snap_review_count noset');
+                        itemWrap.appendChild(reviewCount);
+                    }
+                }
+    
+                this.setReviewCountSelector(itemSelector, urlSelector);
+            }
+        }
+    
+        this.setReviewCountSelector = function(itemSelector, urlSelector) {
+            if(itemSelector) {
+                this.itemSelector = itemSelector;
+            }
+            if(urlSelector) {
+                this.urlSelector = urlSelector;
+            }
+            
+            snaputil.updateReviewCountInfos(this.itemSelector, this.urlSelector);
+        }
+    
+        async function call_update_review_cnt(src, data) {
+            const response = await snaputil.postForm({ url:  src, body: data });
+            snapinstanceindependent.snap_update_review_cnt(await response.json());
+        }
+
+        /**
+         * requestSnapWritableReviewCnt
+         * 
+         * 작성 가능한 리뷰 개수 요청
+         * 
+         * @param {object} sendDatas 백단에 보낼 데이터
+         * 
+         * @author 임예나
+         */
+        this.requestSnapWritableReviewCnt = function (sendDatas) {
+            const shouldSendRequest = document.querySelectorAll(".snap_writeable_review_count")?.length;
+
+            if(shouldSendRequest) {
+                snaputil.sendHttpRequest(
+                    snaputil.fit_base_domain + "/Dataupdate/getWritableReviewCnt",
+                    sendDatas,
+                    snapinstanceindependent.snap_draw_writeable_review_cnt
+                );
+            }
+        }
+
+        /**
+         * requestSnapWritedReviewCnt
+         * 
+         * 작성한 리뷰 개수 요청
+         * 
+         * @param {object} sendDatas 백단에 보낼 데이터
+         * 
+         * @author 임예나
+         */
+        this.requestSnapWritedReviewCnt = function (sendDatas) {
+            const shouldSendRequest = document.querySelectorAll(".snap_writed_review_count")?.length;
+
+            if(shouldSendRequest) {
+                snaputil.sendHttpRequest(
+                    snaputil.fit_base_domain + "/Dataupdate/getWritedReviewCnt",
+                    sendDatas,
+                    snapinstanceindependent.drawSnapWritedReviewCnt
+                );
+            }
+        }
+
+        /**
+         * request_snap_review_cnt
+         * 
+         * 리뷰 개수 요청
+         */
+        this.request_snap_review_cnt = async function() {
+            const store_username = snaputil.sf_get_value('sf_store_name'),
+                  srcnt          = this.getsrcnt(),
+                  chunk_size     = 300,
+                  delay_time     = 500;
+            if(!store_username || store_username === "undefined" || !srcnt) return false;
+
+            const src   = snaputil.fit_base_domain + "/Dataupdate/GetReviewCnt",
+                  chunk = snaputil.chunk(srcnt, chunk_size);
+
+            chunk.forEach(function(v, i) {
+                const send_data = snaputil.make_send_data_detail(store_username),
+                      callFunc = call_update_review_cnt.bind(null, src, send_data);
+                send_data['srcnt'] = v;
+                setTimeout(callFunc, delay_time * i);
+            });
+        }
+
+        /**
+         * snap_draw_writeable_review_cnt
+         * 
+         * 작성 가능한 리뷰 개수 그리기
+         * 
+         * @param {*} wrcnt 작성 가능한 리뷰 개수
+         */
+        this.snap_draw_writeable_review_cnt = function(wrcnt){
+            var snap_writeable_review_countlist = document.querySelectorAll('.snap_writeable_review_count');
+            var countlength = snap_writeable_review_countlist.length;
+            for (var i = 0; i < countlength; i++) {
+                var cntframedata = snap_writeable_review_countlist[i];
+                cntframedata.textContent = wrcnt || 0;
+            }
+        }
+        /**
+         * drawSnapWritedReviewCnt
+         * 
+         * 작성한 리뷰 개수 그리기
+         * 
+         * @param {string|int} cnt 작성한 리뷰 개수
+         */
+        this.drawSnapWritedReviewCnt = function(cnt){
+            const SNAP_WRITED_REVIEW_CNT_AREA_LIST = document.querySelectorAll(".snap_writed_review_count");
+
+            SNAP_WRITED_REVIEW_CNT_AREA_LIST && SNAP_WRITED_REVIEW_CNT_AREA_LIST.forEach(ele => ele.textContent = cnt || 0);
+        }
+        /**
+         * snap_draw_review_cnt
+         * 
+         * 상품에 속한 리뷰 개수 그리기
+         * 
+         * @param {*} srcnt 리뷰 개수
+         */
+        this.snap_draw_review_cnt = function (srcnt) {
+            var removeclasslist = new Array();
+            var snap_review_countlist = document.querySelectorAll('.snap_review_count.noset[snap_item_id]');
+            var countlength = snap_review_countlist.length;
+            for (var i = 0; i < countlength; i++) {
+                var cntframedata = snap_review_countlist[i],
+                    itemid = cntframedata.getAttribute('snap_item_id');
+    
+                if(!(srcnt[itemid] || this.set_review_cnt)) continue;
+    
+                var cnt = srcnt[itemid]?.count || 0,
+                    avg_score = srcnt[itemid]?.avg_score || 0;
+    
+                if (this.review_count_zero || cnt > 0) {
+                    var set_review_count = this.review_count_text.replace('{$review_count}', snaputil.addCommaForPrice(cnt));
+                    removeclasslist.push(cntframedata);
+                    cntframedata.textContent = (set_review_count);
+                    cntframedata.style.display = "block";
+                }
+    
+                if (this.avg_setting && (avg_score || this.avg_score_zero)) {
+                    var show_type = this.avg_setting.show_type;
+
+                    if (snaputil.snap_draw_avg_score(cntframedata, avg_score, this.avg_setting, show_type)) {
+                        cntframedata.style.display = "block";
+                    }
+                }
+            }
+    
+            if(removeclasslist && removeclasslist.length > 0){
+                for(var j = 0; j<removeclasslist.length; ++j) {
+                    removeclasslist[j].classList.remove("noset");
+                }
+            }
+        }
+        this.snap_update_review_cnt = function (obj) {
+            if (!obj || typeof (obj) == 'undefined' || obj.length <= 0)
+                return null;
+    
+            var isexissuccess = 'success' in obj;
+            var isexistdata = 'data' in obj;
+            if (isexissuccess == true && obj['success'] == 1 && isexistdata == true) {
+                obj = obj['data'];
+
+                if (('review' in obj) === false) return false;
+
+                var reviewObj = obj['review'];
+    
+                this.review_count_text  = reviewObj?.review_count_text   || this.review_count_text;
+                this.avg_setting        = reviewObj?.avg_setting         || this.avg_setting;
+
+                this.review_count_zero  = Number(reviewObj?.review_count_zero || this.review_count_zero);
+                this.avg_score_zero     = Number(reviewObj?.avg_score_zero || this.avg_score_zero);
+                this.set_review_cnt     = (this.review_count_zero || this.avg_score_zero);
+    
+                (reviewObj?.srcnt || this.set_review_cnt) && this.snap_draw_review_cnt(reviewObj?.srcnt || {});
+            }
+        }
+    
+        this.success_draw_init = function (obj) {
+            if (!obj || typeof (obj) == 'undefined' || obj.length <= 0)
+                return null;
+
+            const COMMON_DATAS = obj?.data?.widgetCommonDatas ?? {};
+
+            // 작성 가능한 리뷰 개수 요청
+            snapinstanceindependent.requestSnapWritableReviewCnt(COMMON_DATAS);
+
+            // 작성한 리뷰 개수 요청
+            snapinstanceindependent.requestSnapWritedReviewCnt(COMMON_DATAS);
+    
+            var isexissuccess = 'success' in obj;
+            var isexistdata = 'data' in obj;
+            if (isexissuccess == true && obj['success'] == 1 && isexistdata == true) {
+                obj = obj['data'];
+                if(!obj) return false;
+    
+                var isexistwidgets = 'use_widget_list' in obj;
+    
+                this.snap_update_review_cnt(obj);
+                
+                if (isexistwidgets == true) {
+                    var widgetinfo = obj['use_widget_list'];
+                    for (var widgetid in widgetinfo) {
+                        var param = {
+                            ...COMMON_DATAS,
+                            ...widgetinfo[widgetid]
+                        };
+                        if(widgetid == snaputil.WIDGET_TYPE.WRITE_REVIEW) {
+                            if('state' in param) {
+                                var notify = Number(param['notify']);
+                                var notifyId = param['notify_id'];
+                                delete param['state'];
+                                delete param['notify'];
+                                delete param['notify_id'];
+                                
+                                snaputil.updateReviewWriteButtons(param);
+                                snaputil.updateItemReviewWriteButtons();
+                                notify && snaputil.updateWriteNotify(param, notifyId);
+    
+                                // 리뷰 상세보기 팝업
+                                snaputil.updateDetailPopup(param);
+                            }
+                        } else if(widgetid == snaputil.WIDGET_TYPE.NOTIFICATION) {
+                            snaputil.initNotificationWidget(param);
+                        } else {
+                            var controller;
+    
+                            if (widgetid == snaputil.WIDGET_TYPE.MYPAGE) {
+                                controller = 'draw_mypage';
+                            }
+                            else if (widgetid == snaputil.WIDGET_TYPE.NOTICE) {
+                                controller = 'draw_notice';
+                            }
+                            else if (widgetid == snaputil.WIDGET_TYPE.NOTICE_POPUP) {
+                                //너무크면 get url잘림
+                                var tmphref = encodeURIComponent(location.href);
+                                if( tmphref.length < 400) {
+                                    param['ba'] = tmphref;
+                                }
+                                controller = 'draw_review_independent';
+                            }
+                            else {
+                                controller = 'draw_review_independent_v2';
+                            }
+                            
+                            snaputil.draw_iframe_default_add_paramurl(param, widgetid, sfMakeIframeIdG(widgetid), sfMakeIframeNameG(widgetid), "100%", "0px", snaputil.fit_base_domain + "/Draw/" + controller, 'review', null);
+                        }
+                    }
+                }
+    
+            }
+    
+            snapinstanceindependent.isInit = true;
+        }
+    };
+    
+    if(typeof window.snapinstanceindependent == 'undefined') {
+        window.snapinstanceindependent = new snapreviewfit();
+        window.snapinstanceindependent.init();
+    }
+})();
