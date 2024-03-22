@@ -243,8 +243,710 @@ body {
   width: 100%;
 }
 
-#asdie {
+#aside {
+  caret-color: transparent;
+  height: 3000px;
+}
+#aside .aside-hidden {
+  display: none;
+  width: 350px;
+  height: 600px;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 0.75rem;
+  gap: 14px;
+  position: fixed;
+  right: 20px;
+  bottom: 25px;
+  overflow: hidden;
+  overflow-y: visible;
+}
+#aside .aside-hidden .aside-header {
+  width: 350px;
+  height: 140px;
+  position: absolute;
+  z-index: 1;
+  background: #83a2c1;
+}
+#aside .aside-hidden .aside-header .aside-header-text {
+  width: 311.2px;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 14px;
+  gap: 14px;
+  margin-left: 15px;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left {
+  display: flex;
+  align-items: center;
+  font: bold 20px/1 "Noto Sans KR";
+  letter-spacing: 1.5px;
+  color: #fff;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left span img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left p {
+  padding-left: 10px;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-right .aside-header-x i {
+  text-align: center;
+  padding: 7px;
+  font-size: 15px;
+  color: #000;
+  cursor: pointer;
+}
+#aside .aside-hidden .aside-header .aside-header-text .aside-header-text02 {
+  font: normal 15px/1 "Noto Sans KR";
+  letter-spacing: 1px;
+  padding: 7px;
+  margin-top: 5px;
+  color: #fff;
+}
+#aside .aside-hidden .aside-section {
+  position: absolute;
+  top: 112px;
+  z-index: 2;
+  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#aside .aside-hidden .aside-section .aside-image {
+  width: 311.2px;
+  height: 219.075px;
+  background: url("./image/aside-image.png") center/cover no-repeat;
+  border-radius: 10px;
+}
+#aside .aside-hidden .aside-section .aside-benefit {
+  width: 311px;
+  height: 197px;
+  border-radius: 0.75rem;
+  box-shadow: 0px 0px 14px 0px #e6e6e6;
+  border-radius: 0.75em;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit01 {
+  color: rgb(48, 49, 60);
+  font-size: 14px;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 {
   width: 100%;
+  display: flex;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 span:nth-child(2) {
+  font-size: 0.875rem;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 .aside-benefit02-01-left {
+  width: 56px;
+  height: 21px;
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 .aside-benefit02-01-left span div {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background: #83a2c1;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 {
+  display: flex;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 span:nth-child(2) {
+  font-size: 0.875rem;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 .aside-benefit02-02-left {
+  display: flex;
+  align-items: center;
+  width: 56px;
+  height: 21px;
+  gap: 0.5rem;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 .aside-benefit02-02-left span div {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background: #83a2c1;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-01 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 31px;
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  position: relative;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-01 img {
+  position: absolute;
+  left: 6px;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-02 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 31px;
+  border-radius: 1rem;
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-size: 0.75rem;
+  position: relative;
+}
+#aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-02 img {
+  position: absolute;
+  left: 6px;
+}
+#aside .aside-hidden .aside-section .aside-my {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-coupon {
+  width: 309px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 14px;
+  font-size: 14px;
+  border-radius: 0.75rem;
+  box-shadow: 0px 0px 14px 0px #e6e6e6;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-left img {
+  padding-right: 1px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-point {
+  width: 309px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 14px;
+  font-size: 14px;
+  border-radius: 0.75rem;
+  box-shadow: 0px 0px 14px 0px #e6e6e6;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-left img {
+  padding-right: 1px;
+}
+#aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#aside .aside-hidden .aside-section .aside-add-explanantion {
+  width: 311px;
+  height: 128px;
+  text-align: left;
+  margin: 0 12px;
+  padding: 14px;
+  font: 13px/1.6 "Noto Sans KR";
+  color: rgba(0, 0, 0, 0.6);
+}
+#aside .aside-hidden .aside-section .aside-incento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  height: 70px;
+  font-size: 0.75rem;
+  color: rgb(114, 115, 146);
+}
+#aside .aside-hidden .aside-section .aside-incento img {
+  width: 18px;
+  height: 11px;
+}
+#aside .aside-logo {
+  position: fixed;
+  bottom: 60px;
+  right: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+#aside .aside-logo .aside-logo-login img {
+  width: 40px;
+  height: 60px;
+}
+#aside .aside-logo .aside-logo-chevron-up img {
+  opacity: 0;
+}
+#aside .aside-logo .aside-logo-chevron-up.show img {
+  opacity: 1;
+}
+#aside .aside-logo .aside-logo-chevron-down .scroll-to-down {
+  transition: transform 0.4s ease;
+}
+#aside .aside-popup {
+  width: 231px;
+  height: 313px;
+  position: fixed;
+  bottom: 60px;
+  right: 70px;
+  margin: 10px;
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  animation: aside-popup-right-show 2s 1;
+}
+#aside .aside-popup .aside-popup-image {
+  width: 693px;
+  height: 253px;
+  display: flex;
+}
+#aside .aside-popup .aside-popup-image img {
+  width: 100%;
+  height: 100%;
+}
+#aside .aside-popup .aside-popup-button {
+  width: 231px;
+  height: 10px;
+  position: absolute;
+  bottom: 80px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#aside .aside-popup .aside-popup-button div {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #404040;
+}
+#aside .aside-popup .aside-popup-text {
+  display: flex;
+  font: normal 12px/1 "Noto Sans KR";
+  background: #fff;
+  color: #1e1e1e;
+}
+#aside .aside-popup .aside-popup-text p:nth-child(1) {
+  width: 115.5px;
+  height: 60px;
+  border: 1px solid #cdd2d7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+#aside .aside-popup .aside-popup-text p:nth-child(2) {
+  width: 115.5px;
+  height: 60px;
+  border: 1px solid #cdd2d7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+@keyframes aside-popup-right-show {
+  from {
+    right: -400px;
+  }
+  to {
+    right: 70px;
+  }
+}
+@media screen and (max-width: 768px) {
+  #aside .aside-hidden {
+    display: none;
+    width: 95%;
+    height: 25%;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 0.75rem;
+    gap: 14px;
+    position: fixed;
+    right: 20px;
+    bottom: 25px;
+    overflow: hidden;
+    overflow-y: visible;
+  }
+  #aside .aside-hidden .aside-header {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    background: #83a2c1;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text {
+    width: 88%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 16px;
+    gap: 14px;
+    margin: 0 auto;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left {
+    display: flex;
+    align-items: center;
+    font: bold 20px/1 "Noto Sans KR";
+    letter-spacing: 1.5px;
+    color: #fff;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left span img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-left p {
+    padding-left: 10px;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text01 .aside-header-text01-right .aside-header-x i {
+    text-align: center;
+    padding: 7px;
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+  }
+  #aside .aside-hidden .aside-header .aside-header-text .aside-header-text02 {
+    font: normal 15px/1 "Noto Sans KR";
+    letter-spacing: 1px;
+    padding: 7px;
+    margin-top: 5px;
+    color: #fff;
+  }
+  #aside .aside-hidden .aside-section {
+    width: 100%;
+    position: absolute;
+    top: 112px;
+    z-index: 2;
+    gap: 14px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+  }
+  #aside .aside-hidden .aside-section .aside-image {
+    width: 88%;
+    height: 280px;
+    background: url("./image/aside-image.png") center/cover no-repeat;
+    border-radius: 10px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit {
+    width: 88%;
+    height: 197px;
+    border-radius: 0.75rem;
+    box-shadow: 0px 0px 14px 0px #e6e6e6;
+    border-radius: 0.75em;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit01 {
+    color: rgb(48, 49, 60);
+    font-size: 14px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 {
+    width: 100%;
+    display: flex;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 span:nth-child(2) {
+    font-size: 0.875rem;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 .aside-benefit02-01-left {
+    width: 56px;
+    height: 21px;
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-01 .aside-benefit02-01-left span div {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background: #83a2c1;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 {
+    display: flex;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 span:nth-child(2) {
+    font-size: 0.875rem;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 .aside-benefit02-02-left {
+    display: flex;
+    align-items: center;
+    width: 56px;
+    height: 21px;
+    gap: 0.5rem;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit02 .aside-benefit02-02 .aside-benefit02-02-left span div {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background: #83a2c1;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-01 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 31px;
+    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    position: relative;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-01 img {
+    position: absolute;
+    left: 6px;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-02 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 31px;
+    border-radius: 1rem;
+    box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.75rem;
+    position: relative;
+  }
+  #aside .aside-hidden .aside-section .aside-benefit .aside-benefit03 .aside-benefit03-02 img {
+    position: absolute;
+    left: 6px;
+  }
+  #aside .aside-hidden .aside-section .aside-my {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 88%;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-coupon {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 14px;
+    font-size: 14px;
+    border-radius: 0.75rem;
+    box-shadow: 0px 0px 14px 0px #e6e6e6;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-left img {
+    padding-right: 1px;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-coupon .aside-my-coupon-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-point {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 14px;
+    font-size: 14px;
+    border-radius: 0.75rem;
+    box-shadow: 0px 0px 14px 0px #e6e6e6;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-left img {
+    padding-right: 1px;
+  }
+  #aside .aside-hidden .aside-section .aside-my .aside-my-point .aside-my-point-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #aside .aside-hidden .aside-section .aside-add-explanantion {
+    width: 88%;
+    height: 110px;
+    text-align: left;
+    margin: 0 10px;
+    padding: 14px;
+    font: 13px/1.6 "Noto Sans KR";
+    color: rgba(0, 0, 0, 0.6);
+  }
+  #aside .aside-hidden .aside-section .aside-incento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    height: 20px;
+    font-size: 0.75rem;
+    color: rgb(114, 115, 146);
+  }
+  #aside .aside-hidden .aside-section .aside-incento img {
+    width: 18px;
+    height: 11px;
+  }
+  #aside .aside-logo {
+    position: fixed;
+    bottom: 60px;
+    right: 25px;
+    text-align: center;
+    cursor: pointer;
+  }
+  #aside .aside-logo .aside-logo-login img {
+    width: 30px;
+    height: 45px;
+  }
+  #aside .aside-logo .aside-logo-chevron-up img {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+  }
+  #aside .aside-logo .aside-logo-kakao img {
+    width: 30px;
+    height: 30px;
+  }
+  #aside .aside-logo .aside-logo-chevron-up.show img {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+  #aside .aside-logo .aside-logo-chevron-down img {
+    width: 20px;
+    height: 20px;
+  }
+  #aside .aside-popup {
+    width: 231px;
+    height: 282px;
+    position: fixed;
+    bottom: 60px;
+    left: 20px;
+    margin: 10px;
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    animation: aside-popup-left-show 2s 1;
+  }
+  #aside .aside-popup .aside-popup-image {
+    width: 693px;
+    height: 251px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    display: flex;
+  }
+  #aside .aside-popup .aside-popup-image img {
+    width: 100%;
+    height: 100%;
+  }
+  #aside .aside-popup .aside-popup-button {
+    width: 231px;
+    height: 30px;
+    position: absolute;
+    bottom: 40px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #aside .aside-popup .aside-popup-button div {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    color: #fff;
+    opacity: 0.4;
+  }
+  #aside .aside-popup .aside-popup-button div .active {
+    color: #404040;
+  }
+  #aside .aside-popup .aside-popup-text {
+    display: flex;
+    font: normal 10px/1 "Noto Sans KR";
+    background: #fff;
+    color: #1e1e1e;
+  }
+  #aside .aside-popup .aside-popup-text p:nth-child(1) {
+    width: 115.5px;
+    height: 31px;
+    border: 1px solid #cdd2d7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  #aside .aside-popup .aside-popup-text p:nth-child(2) {
+    width: 115.5px;
+    height: 31px;
+    border: 1px solid #cdd2d7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  @keyframes aside-popup-left-show {
+    from {
+      left: -260px;
+    }
+    to {
+      left: 20px;
+    }
+  }
 }
 
 #footer {
