@@ -5,7 +5,7 @@
   width: 100%;
   margin: 0 auto;
   /* border: 1px solid red; */
-  #container {
+  #stocklist_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,6 +65,7 @@
           text-decoration: underline;
           cursor: pointer;
           margin-bottom: 9px;
+          transition: all 0.5s;
         }
         .stockcont_ananti_inner,
         .stockcont_chicor_inner {
@@ -106,7 +107,7 @@
 //==========Tablet==========//
 @media screen and (max-width: 1200px) {
   .wrap {
-    #container {
+    #stocklist_container {
       width: 100%;
     }
   }
@@ -116,7 +117,7 @@
 @media screen and (max-width: 768px) {
   .wrap {
     min-width: 390px;
-    #container {
+    #stocklist_container {
       gap: 0px;
       #stocklist_online,
       #stocklist_offline {
