@@ -1,3 +1,5 @@
+//section2
+
 //section5 parallax
 
 const parallax = document.querySelector(".index-section05");
