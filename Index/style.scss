@@ -447,8 +447,7 @@
         margin: 150px 0 35px;
       }
       .product_list {
-        display: grid;
-        grid-template-columns: repeat(4, 25%);
+        display: flex;
       }
       .product {
         width: 100%;
@@ -456,6 +455,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-right: 60px;
 
         .productImgs {
           width: 100%;
@@ -491,7 +491,7 @@
           margin: 30px 0;
         }
         .button_pc_nobg {
-          width: 80%;
+          width: 185px;
           height: 45px;
           background: none;
           font: 14px;
@@ -578,6 +578,7 @@
       width: 100vw;
       height: 900px;
       display: flex;
+      flex-direction: column;
 
       .index-section02-text {
         width: 50vw;
@@ -620,8 +621,8 @@
       }
 
       .index-section02-image {
-        width: 50vw;
-        height: 900px;
+        width: 150px;
+        height: 500px;
         display: flex;
         justify-content: center;
         align-items: center;

@@ -74,3 +74,9 @@ buttons.forEach((button, index) => {
 });
 
 //오늘 하루 열지 않기
+// 새 창을 열고 현재 날짜를 표시
+// var newWindow = window.open("", "_blank");
+// var currentDate = new Date();
+// newWindow.document.write(
+//   "<h1>현재 날짜: " + currentDate.toDateString() + "</h1>"
+// );
