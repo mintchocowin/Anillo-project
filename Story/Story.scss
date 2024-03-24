@@ -4,7 +4,6 @@
 .story-container {
   display: grid;
   overflow: hidden;
-
   .story-section1 {
     width: 100vw;
     height: 100vh;
@@ -16,6 +15,9 @@
 
       &:nth-child(1) {
         z-index: 1;
+        .zoomed {
+          transform: scale(1.5);
+        }
       }
       &:nth-child(2) {
         z-index: 2;
@@ -89,29 +91,32 @@
       width: 100vw;
       height: 770px;
     }
-    .story-section3-text {
-      border: 1px solid #f00;
+    .story-section3-text-hidden {
       width: 300px;
       height: 200px;
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      // align-items: center;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       position: absolute;
       top: calc(100% / 2);
       left: calc(100% / 2);
       transform: translate(-50%, -50%);
-      animation: story3fadeout 1s 1;
-      &.hidden {
-        opacity: 0;
-      }
-      &.visible {
+      opacity: 0;
+      &.active {
+        width: 300px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        justify-content: center;
+        top: calc(100% / 2);
+        left: calc(100% / 2);
+        transform: translate(-50%, -50%);
+        transition: all 0.8s;
         opacity: 1;
       }
+
       img {
-        // display: block;
         &:nth-child(1) {
           width: 34px;
           height: 52px;
@@ -120,14 +125,6 @@
           width: 250px;
           height: 91px;
         }
-      }
-    }
-    @keyframes story3fadeout {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
       }
     }
   }
@@ -144,6 +141,11 @@
         top: calc(100% / 2);
         left: calc(100% / 2);
         transform: translate(-50%, -50%);
+        opacity: 0;
+        &.active {
+          transition: all 0.8s;
+          opacity: 1;
+        }
       }
     }
   }
@@ -152,9 +154,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     .story-section5-image {
-      width: 100vw;
+      width: 100%;
       display: flex;
       justify-content: center;
       img {
@@ -197,6 +199,7 @@
     .story-section6-mainimage {
       display: flex;
       justify-content: center;
+      border: 1px solid #00f;
       img {
         width: 1080px;
         margin: 200px auto;
@@ -269,27 +272,30 @@
   }
   .story-section7 {
     width: 100vw;
-    height: 600px;
+    height: 770px;
     border: 1px solid #f00;
     position: relative;
+    display: flex;
+    justify-content: center;
     div {
+      width: 100vw;
+      height: 770px;
       img {
-        width: 100vw;
-        height: 600px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: 0 80%;
       }
     }
-    h4 {
+    p {
       color: #fcfcf2;
-      font-size: 16px;
+      font-family: "Playfair Display";
+      font-size: 35px;
       font-weight: 300;
       line-height: 1.15;
       text-align: center;
       position: absolute;
-      top: calc(100% / 2);
-      left: calc(100% / 2);
-      transform: translate(-50%, -50%);
+      bottom: 32px;
     }
   }
   .story-section8 {
@@ -307,12 +313,246 @@
     }
   }
 }
+
 //==========Tablet==========//
 @media screen and (max-width: 1200px) {
- 
+  .story-container {
+    .story-section5 {
+      border: 1px solid #f00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .story-section5-image {
+        display: flex;
+        justify-content: center;
+        img {
+          width: 100%;
+        }
+      }
+      .story-section5-productpolicy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 130px 0;
+        h2 {
+          color: #1e1e1e;
+          font-size: 36px;
+        }
+        .story-section5-logo {
+          border: 1px solid #00f;
+          width: 814px;
+          height: 132px;
+          margin: 56px 0 auto;
+          display: grid;
+          grid-template-columns: repeat(4, 25%);
+
+          div {
+            width: 100%;
+            height: 132px;
+            border: 1px solid #000;
+          }
+        }
+      }
+    }
+    .story-section7 {
+      width: 100vw;
+      height: 600px;
+      border: 1px solid #f00;
+      position: relative;
+      div {
+        img {
+          width: 100vw;
+          height: 600px;
+          object-fit: cover;
+          object-position: 0 80%;
+        }
+      }
+      h4 {
+        color: #fcfcf2;
+        font-family: "Playfair Display";
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.15;
+        text-align: center;
+        position: absolute;
+        bottom: 32px;
+      }
+    }
+  }
 }
 
 //==========Mobile==========//
 @media screen and (max-width: 768px) {
+  .story-container {
+    .story-section4 {
+      div {
+        position: relative;
+        width: 100vw;
+        height: 620px;
+        border: 1px solid #f00;
+        img {
+          position: absolute;
+          width: 244px;
+          height: 192px;
+          top: calc(100% / 2);
+          left: calc(100% / 2);
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          &.active {
+            transition: all 0.8s;
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .story-section5 {
+      border: 1px solid #f00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      .story-section5-image {
+        display: flex;
+        justify-content: center;
+        img {
+          width: 100%;
+        }
+      }
+      .story-section5-productpolicy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 130px 0;
+        h2 {
+          color: #1e1e1e;
+          font-size: 36px;
+        }
+        .story-section5-logo {
+          border: 1px solid #00f;
+          width: 814px;
+          height: 132px;
+          margin: 56px 0 auto;
+          display: grid;
+          grid-template-columns: repeat(4, 25%);
 
+          div {
+            width: 100%;
+            height: 132px;
+            border: 1px solid #000;
+          }
+        }
+      }
+    }
+    .story-section6 {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .story-section6-mainimage {
+        display: flex;
+        justify-content: center;
+        border: 1px solid #00f;
+        img {
+          width: 100%;
+          margin: 200px auto;
+        }
+      }
+
+      .story-section6-animalpolicy {
+        width: 100vw;
+        height: 522px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .story-section6-animalpolicy-title {
+          position: relative;
+          width: 100vw;
+          height: 98px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 140px;
+          img {
+            width: 164px;
+            height: 49px;
+            border: 1px solid #f00;
+          }
+        }
+        .story-section6-animalpolicy-section {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          display: grid;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+
+          div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            // height: 700px;
+            // width: 300px;
+
+            img {
+              position: absolute;
+
+              top: 0;
+              height: 327px;
+            }
+
+            span {
+              position: absolute;
+              top: 387px;
+              position: 327px;
+              margin-bottom: 100px;
+              h4 {
+                font-size: 27px;
+                line-height: 1.1;
+                text-align: center;
+              }
+              p {
+                margin-top: 20px;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    }
+    .story-section7 {
+      width: 100vw;
+      height: 600px;
+      border: 1px solid #f00;
+      position: relative;
+
+      div {
+        img {
+          width: 100vw;
+          height: 600px;
+          object-fit: cover;
+          object-position: 0 80%;
+        }
+      }
+      p {
+        color: #fcfcf2;
+        font-family: "Playfair Display";
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.15;
+        text-align: center;
+        position: absolute;
+        bottom: 32px;
+      }
+    }
+  }
 }

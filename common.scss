@@ -158,8 +158,8 @@ body {
       width: 100%;
       min-width: 390px;
       height: 70px;
-      border: 1px solid red;
       padding: 20px;
+
       .header_menu {
         display: none;
       }
@@ -247,6 +247,7 @@ body {
 
 #aside {
   caret-color: transparent;
+  position: absolute;
   height: 3000px;
   .aside-hidden {
     display: none;
@@ -260,8 +261,13 @@ body {
     position: fixed;
     right: 20px;
     bottom: 25px;
-    overflow: hidden;
-    overflow-y: visible;
+    overflow-y: scroll;
+    z-index: 2;
+    border: 1px solid black;
+    &::-webkit-scrollbar {
+      border-radius: 0.75rem;
+    }
+
     .aside-header {
       width: 350px;
       height: 140px;
@@ -552,7 +558,7 @@ body {
     bottom: 60px;
     right: 70px;
     margin: 10px;
-
+    z-index: 1;
     box-shadow: 0px 5px 30px rgb(0 0 0 / 35%);
     overflow: hidden;
     animation: aside-popup-right-show 2s 1;
@@ -566,6 +572,7 @@ body {
       img {
         width: 100%;
         height: 100%;
+        transition: 0.5s;
       }
     }
     .aside-popup-button {
@@ -586,7 +593,7 @@ body {
         opacity: 0.4;
         cursor: pointer;
         .active {
-          background: #404040;
+          background: #fff;
         }
       }
     }
@@ -629,14 +636,21 @@ body {
       }
     }
   }
+}
+#footer {
+  width: 100%;
+}
 
-  @media screen and (max-width: 768px) {
+/*mobile*/
+@media screen and (max-width: 768px) {
+  #aside {
+    position: absolute;
     .aside-hidden {
       display: none;
       width: 95%;
       height: 25%;
       flex-direction: column;
-
+      z-index: 2;
       align-items: center;
       background: #fff;
       border-radius: 0.75rem;
@@ -719,7 +733,6 @@ body {
 
         .aside-image {
           width: 88%;
-
           height: 280px;
           background: url("./image/aside-image.png") center/cover no-repeat;
           border-radius: 10px;
@@ -953,13 +966,14 @@ body {
       box-shadow: 0px 5px 30px rgb(0 0 0 / 35%);
       overflow: hidden;
       animation: aside-popup-left-show 2s 1;
+      z-index: 1;
       .aside-popup-image {
         width: 693px;
         height: 251px;
         object-fit: cover;
         display: flex;
         img {
-          width: 100%;
+          width: 231px;
           height: 100%;
         }
       }
@@ -1024,7 +1038,4 @@ body {
       }
     }
   }
-}
-#footer {
-  width: 100%;
 }

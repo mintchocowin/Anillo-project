@@ -159,7 +159,6 @@ body {
     width: 100%;
     min-width: 390px;
     height: 70px;
-    border: 1px solid red;
     padding: 20px;
   }
   #header #header_contents .header_menu {
@@ -245,6 +244,7 @@ body {
 
 #aside {
   caret-color: transparent;
+  position: absolute;
   height: 3000px;
 }
 #aside .aside-hidden {
@@ -259,8 +259,12 @@ body {
   position: fixed;
   right: 20px;
   bottom: 25px;
-  overflow: hidden;
-  overflow-y: visible;
+  overflow-y: scroll;
+  z-index: 2;
+  border: 1px solid black;
+}
+#aside .aside-hidden::-webkit-scrollbar {
+  border-radius: 0.75rem;
 }
 #aside .aside-hidden .aside-header {
   width: 350px;
@@ -525,6 +529,7 @@ body {
   bottom: 60px;
   right: 70px;
   margin: 10px;
+  z-index: 1;
   box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   animation: aside-popup-right-show 2s 1;
@@ -540,6 +545,7 @@ body {
 #aside .aside-popup .aside-popup-image img {
   width: 100%;
   height: 100%;
+  transition: 0.5s;
 }
 #aside .aside-popup .aside-popup-button {
   width: 231px;
@@ -560,7 +566,7 @@ body {
   cursor: pointer;
 }
 #aside .aside-popup .aside-popup-button div .active {
-  background: #404040;
+  background: #fff;
 }
 #aside .aside-popup .aside-popup-text {
   display: flex;
@@ -598,12 +604,22 @@ body {
     right: 70px;
   }
 }
+
+#footer {
+  width: 100%;
+}
+
+/*mobile*/
 @media screen and (max-width: 768px) {
+  #aside {
+    position: absolute;
+  }
   #aside .aside-hidden {
     display: none;
     width: 95%;
     height: 25%;
     flex-direction: column;
+    z-index: 2;
     align-items: center;
     background: #fff;
     border-radius: 0.75rem;
@@ -891,6 +907,7 @@ body {
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.35);
     overflow: hidden;
     animation: aside-popup-left-show 2s 1;
+    z-index: 1;
   }
   #aside .aside-popup .aside-popup-image {
     width: 693px;
@@ -900,7 +917,7 @@ body {
     display: flex;
   }
   #aside .aside-popup .aside-popup-image img {
-    width: 100%;
+    width: 231px;
     height: 100%;
   }
   #aside .aside-popup .aside-popup-button {
@@ -956,18 +973,13 @@ body {
     }
   }
 }
-
-#footer {
-  width: 100%;
-}
-
 .index-container {
   overflow: hidden;
   width: 100%;
 }
 .index-container .index-section01 {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 .index-container .index-section01 .index-section01-image {
@@ -976,6 +988,8 @@ body {
   height: 100vh;
   overflow: hidden;
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
 }
 .index-container .index-section01 .index-section01-image img {
@@ -984,6 +998,9 @@ body {
   height: 100vh;
   -o-object-fit: cover;
      object-fit: cover;
+}
+.index-container .index-section01 .index-section01-image img .animated {
+  transition: 0.5s ease-out;
 }
 .index-container .index-section01 .arrows {
   position: absolute;
@@ -996,7 +1013,21 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 44px;
-  opacity: 0.3;
+  color: #a0a0a0;
+}
+.index-container .index-section01 .arrows #section1prev {
+  transition: all 0.3s;
+}
+.index-container .index-section01 .arrows #section1prev:hover {
+  cursor: pointer;
+  color: #1e1e1e;
+}
+.index-container .index-section01 .arrows #section1next {
+  transition: all 0.3s;
+}
+.index-container .index-section01 .arrows #section1next:hover {
+  cursor: pointer;
+  color: #1e1e1e;
 }
 .index-container .index-section02 {
   width: 100vw;
@@ -1010,6 +1041,7 @@ body {
   text-align: center;
 }
 .index-container .index-section02 .index-section02-text .index-section02-text-title {
+  font-family: "Playfair Display";
   font-size: 36px;
   margin: 160px 0;
 }
@@ -1022,6 +1054,20 @@ body {
   height: 200px;
   margin-bottom: 180px;
 }
+.index-container .index-section02 .index-section02-text .index-section02-product-info p {
+  color: #1e1e1e;
+}
+.index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(1) {
+  font-size: 18px;
+}
+.index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(2) {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin: 20px 0 40px 0;
+}
+.index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(3) {
+  font-size: 14px;
+}
 .index-container .index-section02 .index-section02-text .index-section02-arrows {
   width: 50vw;
   position: absolute;
@@ -1030,6 +1076,26 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 0 5%;
+}
+.index-container .index-section02 .index-section02-text .index-section02-arrows i:nth-child(1) {
+  color: #a0a0a0;
+  opacity: 0.1;
+  transition: all 0.8s;
+}
+.index-container .index-section02 .index-section02-text .index-section02-arrows i:nth-child(1):hover {
+  cursor: pointer;
+  color: #a0a0a0;
+  opacity: 0.3;
+}
+.index-container .index-section02 .index-section02-text .index-section02-arrows i:nth-child(2) {
+  color: #a0a0a0;
+  opacity: 0.5;
+}
+.index-container .index-section02 .index-section02-text .index-section02-arrows i:nth-child(2):hover {
+  cursor: pointer;
+  transition: all 0.8s;
+  color: #a0a0a0;
+  opacity: 0.9;
 }
 .index-container .index-section02 .index-section02-text button {
   border: none;
@@ -1074,7 +1140,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 3s ease;
 }
 .index-container .index-section03 .index-section03-part div {
   width: 100%;
@@ -1083,11 +1148,12 @@ body {
 .index-container .index-section03 .index-section03-part div img {
   width: 100%;
   height: 100%;
+  transition: all 0.5s;
   -o-object-fit: cover;
      object-fit: cover;
 }
 .index-container .index-section03 .index-section03-part div:hover img {
-  transform: scale(1.02);
+  transform: scale(1.04);
 }
 .index-container .index-section03 .index-section03-part .index-section03-inner {
   position: absolute;
@@ -1101,12 +1167,17 @@ body {
   text-align: center;
 }
 .index-container .index-section03 .index-section03-part .index-section03-inner .index-section03-text p:nth-child(1) {
+  font-family: "Playfair Display";
   font-size: 36px;
 }
 .index-container .index-section03 .index-section03-part .index-section03-inner .index-section03-text p:nth-child(2) {
   font-size: 14px;
+  font-weight: 500;
 }
 .index-container .index-section03 .index-section03-part .index-section03-inner button {
+  font-style: "Futura PT";
+  font-weight: 500;
+  font-size: 11px;
   border: 1px solid #fff;
   color: #fff;
   background: transparent;
@@ -1119,12 +1190,14 @@ body {
   width: 75%;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: 150px;
+  margin-bottom: 210px;
 }
 .index-container .index-section04 > p {
+  font-weight: normal;
+  font-family: "Playfair Display";
   font-size: 36px;
   line-height: 1;
-  margin: 150px 0 35px;
+  margin: 150px 0 35px 0;
 }
 .index-container .index-section04 .product_list {
   display: grid;
@@ -1151,31 +1224,39 @@ body {
   top: 0;
   left: 0;
   opacity: 0;
+  transition: all 0.3s;
 }
 .index-container .index-section04 .product .product-hover:hover {
   opacity: 1;
 }
 .index-container .index-section04 .product .product-info .p {
+  font-family: "Playfair Display";
   font-size: 18px;
   color: #1e1e1e;
 }
 .index-container .index-section04 .product .product-info .product_name {
+  font-family: "Futura PT";
+  margin-top: 10px;
   font-size: 14px;
   color: #a0a0a0;
+  line-height: 1;
 }
 .index-container .index-section04 .product .product_price {
   font-size: 14px;
+  font-weight: 300;
   color: #1e1e1e;
   line-height: 1;
-  margin: 30px 0;
+  margin: 27px 0 30px 0;
 }
 .index-container .index-section04 .product .button_pc_nobg {
+  text-align: center;
   width: 185px;
-  height: 45px;
+  font-weight: bold;
   background: none;
-  font: 14px;
+  font-size: 12px;
   cursor: pointer;
-  border: 1px solid #000;
+  color: #1e1e1e;
+  border: 1px solid #1e1e1e;
   padding: 15px 0;
 }
 .index-container .index-section05 {
@@ -1361,12 +1442,12 @@ body {
     width: 75%;
     margin: 0 auto;
     text-align: center;
-    margin-bottom: 150px;
+    margin-bottom: 210px;
   }
   .index-container .index-section04 > p {
     font-size: 36px;
     line-height: 1;
-    margin: 150px 0 35px;
+    margin: 150px 0 35px 0;
   }
   .index-container .index-section04 .product_list {
     display: flex;
@@ -1408,7 +1489,7 @@ body {
     font-size: 14px;
     color: #1e1e1e;
     line-height: 1;
-    margin: 30px 0;
+    margin: 27px 0 30px 0;
   }
   .index-container .index-section04 .product .button_pc_nobg {
     width: 185px;
@@ -1486,28 +1567,46 @@ body {
     height: 900px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
   }
   .index-container .index-section02 .index-section02-text {
-    width: 50vw;
+    width: 100vw;
     height: 900px;
     position: relative;
     text-align: center;
   }
   .index-container .index-section02 .index-section02-text .index-section02-text-title {
     font-size: 36px;
-    margin: 160px 0;
+    margin: 100px 0;
   }
   .index-container .index-section02 .index-section02-text .index-section02-product-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50vw;
+    width: 100vw;
     height: 200px;
-    margin-bottom: 180px;
+    margin-top: 450px;
+    margin-bottom: 1px;
+  }
+  .index-container .index-section02 .index-section02-text .index-section02-product-info p {
+    color: #1e1e1e;
+  }
+  .index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(1) {
+    font-size: 15px;
+  }
+  .index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(2) {
+    font-size: 11px;
+    color: #a0a0a0;
+    margin: 10px 0 20px 0;
+  }
+  .index-container .index-section02 .index-section02-text .index-section02-product-info p:nth-child(3) {
+    font-size: 11px;
   }
   .index-container .index-section02 .index-section02-text .index-section02-arrows {
-    width: 50vw;
+    width: 100vw;
     position: absolute;
     top: 50%;
     font-size: 44px;
@@ -1517,22 +1616,24 @@ body {
   }
   .index-container .index-section02 .index-section02-text button {
     border: none;
-    font-size: 11px;
+    font-size: 10px;
     height: 46px;
     width: 185px;
     border: 1px solid #1e1e1e;
     color: #1e1e1e;
     background: none;
-    margin-bottom: 300px;
     padding: 15px 0;
   }
   .index-container .index-section02 .index-section02-image {
-    width: 150px;
-    height: 500px;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f7f7ef;
+    background: transparent;
   }
   .index-container .index-section02 .index-section02-image div {
     display: flex;
@@ -1542,8 +1643,8 @@ body {
     height: 100%;
   }
   .index-container .index-section02 .index-section02-image div img {
-    width: 650px;
-    height: 650px;
+    width: 300px;
+    height: 300px;
   }
   .index-container .index-section03 {
     color: #fff;
@@ -1613,7 +1714,7 @@ body {
   .index-container .index-section04 > p {
     font-size: 36px;
     line-height: 1;
-    margin: 150px 0 35px;
+    margin: 150px 0 35px 0;
   }
   .index-container .index-section04 .product_list {
     display: flex;
@@ -1647,6 +1748,7 @@ body {
     color: #1e1e1e;
   }
   .index-container .index-section04 .product .product-info .product_name {
+    margin: 10px 0;
     font-size: 14px;
     color: #a0a0a0;
   }
@@ -1654,7 +1756,7 @@ body {
     font-size: 14px;
     color: #1e1e1e;
     line-height: 1;
-    margin: 30px 0;
+    margin: 27px 0 30px 0;
   }
   .index-container .index-section04 .product .button_pc_nobg {
     width: 185px;
