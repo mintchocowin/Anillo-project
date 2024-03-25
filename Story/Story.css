@@ -517,6 +517,7 @@ body {
   opacity: 0;
 }
 #aside .aside-logo .aside-logo-chevron-up.show img {
+  transition: all 0.5s;
   opacity: 1;
 }
 #aside .aside-logo .aside-logo-chevron-down .scroll-to-down {
@@ -580,6 +581,7 @@ body {
   width: 115.5px;
   height: 60px;
   border: 1px solid #cdd2d7;
+  border-right: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -884,16 +886,20 @@ body {
     height: 20px;
     opacity: 0;
   }
-  #aside .aside-logo .aside-logo-kakao img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
+    transition: all 0.5s;
+    opacity: 1;
+  }
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-kakao img {
     width: 30px;
     height: 30px;
   }
-  #aside .aside-logo .aside-logo-chevron-up.show img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
     width: 20px;
     height: 20px;
     opacity: 1;
   }
-  #aside .aside-logo .aside-logo-chevron-down img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-down img {
     width: 20px;
     height: 20px;
   }
@@ -948,6 +954,7 @@ body {
     width: 115.5px;
     height: 31px;
     border: 1px solid #cdd2d7;
+    border-right: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1163,6 +1170,7 @@ body {
 }
 .story-container .story-section6 {
   width: 100vw;
+  border: 1px solid #00f;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1170,7 +1178,6 @@ body {
 .story-container .story-section6 .story-section6-mainimage {
   display: flex;
   justify-content: center;
-  border: 1px solid #00f;
 }
 .story-container .story-section6 .story-section6-mainimage img {
   width: 1080px;
@@ -1199,8 +1206,8 @@ body {
   border: 1px solid #f00;
 }
 .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   display: grid;
+  grid-template-columns: repeat(4, 25%);
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -1227,10 +1234,14 @@ body {
   font-size: 27px;
   line-height: 1.1;
   text-align: center;
+  font-family: "Playfair Display";
 }
 .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div span p {
   margin-top: 20px;
   text-align: center;
+  font-size: 14px;
+  color: #1e1e1e;
+  font-family: "Noto Sans KR";
 }
 .story-container .story-section7 {
   width: 100vw;
@@ -1325,6 +1336,81 @@ body {
     font-size: 14px;
     line-height: 1;
     padding-top: 10px;
+  }
+  .story-container .story-section6 {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .story-container .story-section6 .story-section6-mainimage {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #00f;
+  }
+  .story-container .story-section6 .story-section6-mainimage img {
+    width: 1080px;
+    margin: 200px auto;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy {
+    width: 100vw;
+    height: 522px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-title {
+    position: relative;
+    width: 100vw;
+    height: 98px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 140px;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-title img {
+    width: 164px;
+    height: 49px;
+    border: 1px solid #f00;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div img {
+    position: absolute;
+    top: 0;
+    height: 327px;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div span {
+    position: absolute;
+    top: 387px;
+    position: 327px;
+    margin-bottom: 100px;
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div span h4 {
+    font-size: 27px;
+    line-height: 1.1;
+    text-align: center;
+    font-family: "Playfair Display";
+  }
+  .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div span p {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #1e1e1e;
+    font-family: "Noto Sans KR";
   }
   .story-container .story-section7 {
     width: 100vw;
@@ -1433,7 +1519,7 @@ body {
     border: 1px solid #00f;
   }
   .story-container .story-section6 .story-section6-mainimage img {
-    width: 100%;
+    width: 1080px;
     margin: 200px auto;
   }
   .story-container .story-section6 .story-section6-animalpolicy {
@@ -1459,8 +1545,8 @@ body {
     border: 1px solid #f00;
   }
   .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     display: grid;
+    grid-template-columns: repeat(2, 50%);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -1487,10 +1573,14 @@ body {
     font-size: 27px;
     line-height: 1.1;
     text-align: center;
+    font-family: "Playfair Display";
   }
   .story-container .story-section6 .story-section6-animalpolicy .story-section6-animalpolicy-section div span p {
     margin-top: 20px;
     text-align: center;
+    font-size: 14px;
+    color: #1e1e1e;
+    font-family: "Noto Sans KR";
   }
   .story-container .story-section7 {
     width: 100vw;

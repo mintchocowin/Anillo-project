@@ -202,6 +202,8 @@
 
   .story-section6 {
     width: 100vw;
+
+    border: 1px solid #00f;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -209,7 +211,7 @@
     .story-section6-mainimage {
       display: flex;
       justify-content: center;
-      border: 1px solid #00f;
+
       img {
         width: 1080px;
         margin: 200px auto;
@@ -239,8 +241,8 @@
         }
       }
       .story-section6-animalpolicy-section {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         display: grid;
+        grid-template-columns: repeat(4, 25%);
         justify-content: center;
         align-items: center;
         width: 100%;
@@ -270,10 +272,14 @@
               font-size: 27px;
               line-height: 1.1;
               text-align: center;
+              font-family: "Playfair Display";
             }
             p {
               margin-top: 20px;
               text-align: center;
+              font-size: 14px;
+              color: #1e1e1e;
+              font-family: "Noto Sans KR";
             }
           }
         }
@@ -374,6 +380,91 @@
               font-size: 14px;
               line-height: 1;
               padding-top: 10px;
+            }
+          }
+        }
+      }
+    }
+    .story-section6 {
+      width: 100vw;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .story-section6-mainimage {
+        display: flex;
+        justify-content: center;
+        border: 1px solid #00f;
+        img {
+          width: 1080px;
+          margin: 200px auto;
+        }
+      }
+
+      .story-section6-animalpolicy {
+        width: 100vw;
+        height: 522px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .story-section6-animalpolicy-title {
+          position: relative;
+          width: 100vw;
+          height: 98px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 140px;
+          img {
+            width: 164px;
+            height: 49px;
+            border: 1px solid #f00;
+          }
+        }
+        .story-section6-animalpolicy-section {
+          display: grid;
+          grid-template-columns: repeat(2, 50%);
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+
+          div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            // height: 700px;
+            // width: 300px;
+
+            img {
+              position: absolute;
+
+              top: 0;
+              height: 327px;
+            }
+
+            span {
+              position: absolute;
+              top: 387px;
+              position: 327px;
+              margin-bottom: 100px;
+              h4 {
+                font-size: 27px;
+                line-height: 1.1;
+                text-align: center;
+                font-family: "Playfair Display";
+              }
+              p {
+                margin-top: 20px;
+                text-align: center;
+                font-size: 14px;
+                color: #1e1e1e;
+                font-family: "Noto Sans KR";
+              }
             }
           }
         }
@@ -484,6 +575,7 @@
     }
     .story-section6 {
       width: 100vw;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -493,7 +585,7 @@
         justify-content: center;
         border: 1px solid #00f;
         img {
-          width: 100%;
+          width: 1080px;
           margin: 200px auto;
         }
       }
@@ -521,8 +613,8 @@
           }
         }
         .story-section6-animalpolicy-section {
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
           display: grid;
+          grid-template-columns: repeat(2, 50%);
           justify-content: center;
           align-items: center;
           width: 100%;
@@ -552,10 +644,14 @@
                 font-size: 27px;
                 line-height: 1.1;
                 text-align: center;
+                font-family: "Playfair Display";
               }
               p {
                 margin-top: 20px;
                 text-align: center;
+                font-size: 14px;
+                color: #1e1e1e;
+                font-family: "Noto Sans KR";
               }
             }
           }
