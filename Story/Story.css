@@ -1003,21 +1003,27 @@ body {
   transform: translate(-50%, -50%);
 }
 .story-container .story-section2 {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  border: 1px solid #f00;
 }
 .story-container .story-section2 .story-section2-text {
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+  border: 1px solid #00f;
   width: 50vw;
   height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .story-container .story-section2 .story-section2-text div {
+  border: 1px solid #000;
   width: 50vw;
   height: 100vh;
-  display: grid;
+  display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -1029,8 +1035,10 @@ body {
 .story-container .story-section2 .story-section2-image {
   width: 50vw;
   height: 100vh;
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 50vw;
 }
 .story-container .story-section2 .story-section2-image div {
   width: 50vw;
@@ -1056,6 +1064,7 @@ body {
   height: 200px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   position: absolute;
   top: 50%;
@@ -1104,9 +1113,9 @@ body {
   opacity: 1;
 }
 .story-container .story-section5 {
-  border: 1px solid #f00;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
 }
@@ -1128,10 +1137,10 @@ body {
 }
 .story-container .story-section5 .story-section5-productpolicy h2 {
   color: #1e1e1e;
+  font-family: "Playfair Display";
   font-size: 36px;
 }
 .story-container .story-section5 .story-section5-productpolicy .story-section5-logo {
-  border: 1px solid #00f;
   width: 814px;
   height: 132px;
   margin: 56px 0 auto;
@@ -1141,7 +1150,16 @@ body {
 .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div {
   width: 100%;
   height: 132px;
-  border: 1px solid #000;
+}
+.story-container .story-section5 .story-section5-productpolicy .story-section5-logo div img {
+  width: 80%;
+  margin: 0 auto;
+}
+.story-container .story-section5 .story-section5-productpolicy .story-section5-logo div p {
+  color: #a0a0a0;
+  font-size: 16px;
+  line-height: 1;
+  padding-top: 10px;
 }
 .story-container .story-section6 {
   width: 100vw;
@@ -1259,12 +1277,14 @@ body {
 
 @media screen and (max-width: 1200px) {
   .story-container .story-section5 {
-    border: 1px solid #f00;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 100%;
   }
   .story-container .story-section5 .story-section5-image {
+    width: 100%;
     display: flex;
     justify-content: center;
   }
@@ -1281,20 +1301,30 @@ body {
   }
   .story-container .story-section5 .story-section5-productpolicy h2 {
     color: #1e1e1e;
+    font-family: "Playfair Display";
     font-size: 36px;
   }
   .story-container .story-section5 .story-section5-productpolicy .story-section5-logo {
-    border: 1px solid #00f;
     width: 814px;
     height: 132px;
     margin: 56px 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(2, 50%);
   }
   .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div {
-    width: 100%;
+    width: 80%;
     height: 132px;
-    border: 1px solid #000;
+    margin-bottom: 10px;
+  }
+  .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div img {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div p {
+    color: #a0a0a0;
+    font-size: 14px;
+    line-height: 1;
+    padding-top: 10px;
   }
   .story-container .story-section7 {
     width: 100vw;
@@ -1342,14 +1372,14 @@ body {
     opacity: 1;
   }
   .story-container .story-section5 {
-    border: 1px solid #f00;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 100vw;
+    align-items: center;
+    width: 100%;
   }
   .story-container .story-section5 .story-section5-image {
+    width: 100%;
     display: flex;
     justify-content: center;
   }
@@ -1366,20 +1396,30 @@ body {
   }
   .story-container .story-section5 .story-section5-productpolicy h2 {
     color: #1e1e1e;
+    font-family: "Playfair Display";
     font-size: 36px;
   }
   .story-container .story-section5 .story-section5-productpolicy .story-section5-logo {
-    border: 1px solid #00f;
-    width: 814px;
+    width: 100%;
     height: 132px;
     margin: 56px 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(2, 50%);
   }
   .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div {
-    width: 100%;
-    height: 132px;
-    border: 1px solid #000;
+    width: 80%;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div img {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .story-container .story-section5 .story-section5-productpolicy .story-section5-logo div p {
+    color: #a0a0a0;
+    font-size: 14px;
+    line-height: 1;
+    padding-top: 10px;
   }
   .story-container .story-section6 {
     width: 100vw;

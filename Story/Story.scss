@@ -32,40 +32,43 @@
   }
 
   .story-section2 {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    border: 1px solid #f00;
+
     .story-section2-text {
-      display: grid;
-      grid-auto-flow: column;
+      display: flex;
+      border: 1px solid #00f;
       width: 50vw;
       height: 100vh;
-
+      position: absolute;
+      top: 0;
+      left: 0;
       div {
+        border: 1px solid #000;
         width: 50vw;
         height: 100vh;
-        display: grid;
+        display: flex;
         justify-content: center;
         align-items: center;
         overflow: hidden;
         img {
           width: 525px;
           height: 85px;
-          &:nth-child(1) {
-          }
-          &:nth-child(2) {
-          }
-          &:nth-child(3) {
-          }
         }
       }
     }
     .story-section2-image {
       width: 50vw;
       height: 100vh;
-      display: grid;
-      grid-auto-flow: column;
+      display: flex;
+
+      position: absolute;
+      top: 0;
+      left: 50vw;
       div {
         width: 50vw;
         height: 100vh;
@@ -73,12 +76,6 @@
           width: 50vw;
           height: 100vh;
           object-fit: cover;
-          &:nth-child(1) {
-          }
-          &:nth-child(2) {
-          }
-          &:nth-child(3) {
-          }
         }
       }
     }
@@ -96,6 +93,8 @@
       height: 200px;
       display: flex;
       flex-direction: column;
+
+      align-items: center;
       justify-content: center;
       position: absolute;
       top: calc(100% / 2);
@@ -150,9 +149,9 @@
     }
   }
   .story-section5 {
-    border: 1px solid #f00;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
     .story-section5-image {
@@ -172,10 +171,10 @@
       padding: 130px 0;
       h2 {
         color: #1e1e1e;
+        font-family: "Playfair Display";
         font-size: 36px;
       }
       .story-section5-logo {
-        border: 1px solid #00f;
         width: 814px;
         height: 132px;
         margin: 56px 0 auto;
@@ -185,11 +184,22 @@
         div {
           width: 100%;
           height: 132px;
-          border: 1px solid #000;
+
+          img {
+            width: 80%;
+            margin: 0 auto;
+          }
+          p {
+            color: #a0a0a0;
+            font-size: 16px;
+            line-height: 1;
+            padding-top: 10px;
+          }
         }
       }
     }
   }
+
   .story-section6 {
     width: 100vw;
     display: flex;
@@ -318,12 +328,13 @@
 @media screen and (max-width: 1200px) {
   .story-container {
     .story-section5 {
-      border: 1px solid #f00;
       display: flex;
       flex-direction: column;
       align-items: center;
-
+      justify-content: center;
+      width: 100%;
       .story-section5-image {
+        width: 100%;
         display: flex;
         justify-content: center;
         img {
@@ -339,20 +350,31 @@
         padding: 130px 0;
         h2 {
           color: #1e1e1e;
+          font-family: "Playfair Display";
           font-size: 36px;
         }
         .story-section5-logo {
-          border: 1px solid #00f;
           width: 814px;
           height: 132px;
           margin: 56px 0 auto;
           display: grid;
-          grid-template-columns: repeat(4, 25%);
+          grid-template-columns: repeat(2, 50%);
 
           div {
-            width: 100%;
+            width: 80%;
             height: 132px;
-            border: 1px solid #000;
+            margin-bottom: 10px;
+
+            img {
+              width: 50%;
+              margin: 0 auto;
+            }
+            p {
+              color: #a0a0a0;
+              font-size: 14px;
+              line-height: 1;
+              padding-top: 10px;
+            }
           }
         }
       }
@@ -409,13 +431,13 @@
       }
     }
     .story-section5 {
-      border: 1px solid #f00;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      width: 100vw;
+      align-items: center;
+      width: 100%;
       .story-section5-image {
+        width: 100%;
         display: flex;
         justify-content: center;
         img {
@@ -431,20 +453,31 @@
         padding: 130px 0;
         h2 {
           color: #1e1e1e;
+          font-family: "Playfair Display";
           font-size: 36px;
         }
         .story-section5-logo {
-          border: 1px solid #00f;
-          width: 814px;
+          width: 100%;
           height: 132px;
           margin: 56px 0 auto;
           display: grid;
-          grid-template-columns: repeat(4, 25%);
+          grid-template-columns: repeat(2, 50%);
 
           div {
-            width: 100%;
-            height: 132px;
-            border: 1px solid #000;
+            width: 80%;
+            height: 100px;
+            margin-bottom: 10px;
+
+            img {
+              width: 50%;
+              margin: 0 auto;
+            }
+            p {
+              color: #a0a0a0;
+              font-size: 14px;
+              line-height: 1;
+              padding-top: 10px;
+            }
           }
         }
       }
