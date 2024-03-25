@@ -517,6 +517,7 @@ body {
   opacity: 0;
 }
 #aside .aside-logo .aside-logo-chevron-up.show img {
+  transition: all 0.5s;
   opacity: 1;
 }
 #aside .aside-logo .aside-logo-chevron-down .scroll-to-down {
@@ -580,6 +581,7 @@ body {
   width: 115.5px;
   height: 60px;
   border: 1px solid #cdd2d7;
+  border-right: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -884,16 +886,20 @@ body {
     height: 20px;
     opacity: 0;
   }
-  #aside .aside-logo .aside-logo-kakao img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
+    transition: all 0.5s;
+    opacity: 1;
+  }
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-kakao img {
     width: 30px;
     height: 30px;
   }
-  #aside .aside-logo .aside-logo-chevron-up.show img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
     width: 20px;
     height: 20px;
     opacity: 1;
   }
-  #aside .aside-logo .aside-logo-chevron-down img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-down img {
     width: 20px;
     height: 20px;
   }
@@ -948,6 +954,7 @@ body {
     width: 115.5px;
     height: 31px;
     border: 1px solid #cdd2d7;
+    border-right: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1564,7 +1571,7 @@ body {
   }
   .index-container .index-section02 {
     width: 100vw;
-    height: 900px;
+    height: 850px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1576,10 +1583,13 @@ body {
     height: 900px;
     position: relative;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .index-container .index-section02 .index-section02-text .index-section02-text-title {
     font-size: 36px;
-    margin: 100px 0;
+    margin: 140px 0;
   }
   .index-container .index-section02 .index-section02-text .index-section02-product-info {
     display: flex;
@@ -1590,6 +1600,8 @@ body {
     height: 200px;
     margin-top: 450px;
     margin-bottom: 1px;
+    position: absolute;
+    top: 12%;
   }
   .index-container .index-section02 .index-section02-text .index-section02-product-info p {
     color: #1e1e1e;
@@ -1615,6 +1627,8 @@ body {
     padding: 0 5%;
   }
   .index-container .index-section02 .index-section02-text button {
+    position: absolute;
+    top: 85%;
     border: none;
     font-size: 10px;
     height: 46px;

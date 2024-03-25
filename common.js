@@ -88,14 +88,6 @@ asidechevrondown.addEventListener("click", scrollToDown);
 //   });
 // });
 
-//오늘 하루 열지 않기
-// 새 창을 열고 현재 날짜를 표시
-// var newWindow = window.open("", "_blank");
-// var currentDate = new Date();
-// newWindow.document.write(
-//   "<h1>현재 날짜: " + currentDate.toDateString() + "</h1>"
-// );
-
 //팝업 슬라이드
 
 const images = document.querySelectorAll(".aside-popup-image img");
@@ -127,37 +119,28 @@ buttons.forEach((button, index) => {
 });
 
 // 자동 슬라이드 설정
-// setInterval(nextSlide, 5000); // 3초마다 슬라이드 전환
 
-//오늘 하루 열지 않기
-const popup = document.querySelector("aside-popup");
-const popupCloseaday = document.querySelectorAll(
-  ".aside-popup-text-todayclose"
-);
+let popupCloseDate = localStorage.getItem("CloseDate");
+const asidetodayclose = document.querySelector(".aside-popup-text-todayclose");
 
-popupCloseaday.addEventListener("click", function () {
-  var today = new Date();
-  var expirationDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + 1
-  ); // 내일 날짜 생성
-  sessionStorage.setItem("popupClosed", expirationDate.toDateString()); // 오늘 날짜 저장
-  window.close(); // 팝업 창 닫기
+asidetodayclose.addEventListener("click", function () {
+  const today = new Date().toLocaleDateString();
+  popupCloseDate = today;
+  localStorage.setItem("CloseDate", popupCloseDate); //
+  checkPopupStatus();
 });
 
-// 페이지가 로드될 때 sessionStorage를 확인하여 팝업을 열거나 닫음
-// window.onload = function () {
-//   var popupClosedDate = sessionStorage.getItem("popupClosed");
-//   if (
-//     popupClosedDate === null ||
-//     popupClosedDate !== new Date().toDateString()
-//   ) {
-//     // 팝업을 닫은 적이 없거나, 오늘 날짜와 다른 경우에만 팝업을 열기
-//     // 여기에 팝업 표시 로직을 추가할 수 있음
-//     alert("팝업을 엽니다.");
-//   } else {
-//     // 오늘 하루 동안 열지 않기 버튼을 클릭한 경우
-//     console.log("오늘은 팝업을 열지 않습니다.");
-//   }
-// };
+function checkPopupStatus() {
+  const today = new Date().toLocaleDateString();
+  const asidepopup = document.querySelector(".aside-popup");
+
+  if (asidepopup) {
+    if (popupCloseDate !== today) {
+      asidepopup.style.display = "block";
+    } else {
+      asidepopup.style.display = "none";
+    }
+  }
+}
+
+checkPopupStatus();

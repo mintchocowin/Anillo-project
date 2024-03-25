@@ -647,7 +647,7 @@
     }
     .index-section02 {
       width: 100vw;
-      height: 900px;
+      height: 850px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -659,9 +659,12 @@
         height: 900px;
         position: relative;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         .index-section02-text-title {
           font-size: 36px;
-          margin: 100px 0;
+          margin: 140px 0;
         }
         .index-section02-product-info {
           display: flex;
@@ -672,6 +675,8 @@
           height: 200px;
           margin-top: 450px;
           margin-bottom: 1px;
+          position: absolute;
+          top: 12%;
 
           p {
             color: #1e1e1e;
@@ -698,6 +703,8 @@
           padding: 0 5%;
         }
         button {
+          position: absolute;
+          top: 85%;
           border: none;
           font-size: 10px;
           height: 46px;
@@ -705,7 +712,6 @@
           border: 1px solid #1e1e1e;
           color: #1e1e1e;
           background: none;
-
           padding: 15px 0;
         }
       }

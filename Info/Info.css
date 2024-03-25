@@ -517,6 +517,7 @@ body {
   opacity: 0;
 }
 #aside .aside-logo .aside-logo-chevron-up.show img {
+  transition: all 0.5s;
   opacity: 1;
 }
 #aside .aside-logo .aside-logo-chevron-down .scroll-to-down {
@@ -580,6 +581,7 @@ body {
   width: 115.5px;
   height: 60px;
   border: 1px solid #cdd2d7;
+  border-right: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -884,16 +886,20 @@ body {
     height: 20px;
     opacity: 0;
   }
-  #aside .aside-logo .aside-logo-kakao img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
+    transition: all 0.5s;
+    opacity: 1;
+  }
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-kakao img {
     width: 30px;
     height: 30px;
   }
-  #aside .aside-logo .aside-logo-chevron-up.show img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-up.show img {
     width: 20px;
     height: 20px;
     opacity: 1;
   }
-  #aside .aside-logo .aside-logo-chevron-down img {
+  #aside .aside-logo .aside-logo-chevron-up .aside-logo-chevron-down img {
     width: 20px;
     height: 20px;
   }
@@ -948,6 +954,7 @@ body {
     width: 115.5px;
     height: 31px;
     border: 1px solid #cdd2d7;
+    border-right: none;
     display: flex;
     align-items: center;
     justify-content: center;
