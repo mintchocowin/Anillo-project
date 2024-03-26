@@ -4,6 +4,7 @@
 .story-container {
   display: grid;
   overflow: hidden;
+  caret-color: transparent;
   .story-section1 {
     width: 100vw;
     height: 100vh;
@@ -41,20 +42,19 @@
 
     .story-section2-text {
       display: flex;
-      border: 1px solid #00f;
-      width: 50vw;
+      width: 150%;
       height: 100vh;
       position: absolute;
       top: 0;
       left: 0;
       div {
         border: 1px solid #000;
-        width: 50vw;
+        width: 100vw;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
+
         img {
           width: 525px;
           height: 85px;
@@ -65,7 +65,6 @@
       width: 50vw;
       height: 100vh;
       display: flex;
-
       position: absolute;
       top: 0;
       left: 50vw;
@@ -135,8 +134,8 @@
       border: 1px solid #f00;
       img {
         position: absolute;
-        width: 244px;
-        height: 192px;
+        width: 494px;
+
         top: calc(100% / 2);
         left: calc(100% / 2);
         transform: translate(-50%, -50%);
@@ -202,7 +201,7 @@
 
   .story-section6 {
     width: 100vw;
-
+    background: #f7f7ef;
     border: 1px solid #00f;
     display: flex;
     flex-direction: column;
@@ -214,7 +213,6 @@
 
       img {
         width: 1080px;
-        margin: 200px auto;
       }
     }
 
@@ -386,19 +384,19 @@
       }
     }
     .story-section6 {
-      width: 100vw;
+      width: 100%;
 
       display: flex;
       flex-direction: column;
       justify-content: center;
 
       .story-section6-mainimage {
+        width: 100%;
         display: flex;
         justify-content: center;
         border: 1px solid #00f;
         img {
-          width: 1080px;
-          margin: 200px auto;
+          width: 100%;
         }
       }
 
@@ -574,7 +572,7 @@
       }
     }
     .story-section6 {
-      width: 100vw;
+      width: 100%;
 
       display: flex;
       flex-direction: column;
@@ -585,8 +583,7 @@
         justify-content: center;
         border: 1px solid #00f;
         img {
-          width: 1080px;
-          margin: 200px auto;
+          width: 100%;
         }
       }
 
@@ -669,6 +666,7 @@
         img {
           width: 100%;
           height: 600px;
+          object-fit: cover;
         }
       }
       p {

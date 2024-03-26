@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "title": "Shower Time Scented Hand & Body Wash",
+      "description": "샤워타임 센티드 핸드&바디워시",
+      "price": "28,000원",
+      "imageSrc": "./image/index-section2-image1.png",
+      "shopLink": "https://anillo.co.kr/product/detail.html?product_no=134&cate_no=1&display_group=6"
+    },
+    {
+      "title": "Lime Sunday Refresh Hair Essence",
+      "description": "라임썬데이 리프레시 헤어 에센스",
+      "price": "20,000원",
+      "imageSrc": "./image/index-section2-image2.png",
+      "shopLink": "https://anillo.co.kr/product/detail.html?product_no=135&cate_no=1&display_group=6"
+    },
+    {
+      "title": "Rosy Night Repair Hair Essence",
+      "description": "로지나잇 리페어 헤어 에센스",
+      "price": "20,000원",
+      "imageSrc": "./image/index-section2-image3.png",
+      "shopLink": "https://anillo.co.kr/product/detail.html?product_no=136&cate_no=1&display_group=6"
+    },
+    {
+      "title": "Shower Time parfume Mist&Terry Tee",
+      "description": "샤워타임 퍼퓸 미스트&테리 티 세트",
+      "price": "75,000원",
+      "imageSrc": "./image/index-section2-image4.png",
+      "shopLink": "https://anillo.co.kr/product/detail.html?product_no=137&cate_no=1&display_group=6"
+    },
+    {
+      "title": "Shower Time parfume Mist&Half Zip up Sweater",
+      "description": "샤워타인 퍼퓸 미스트&하프 집업 스웨터 세트",
+      "price": "130,500원",
+      "imageSrc": "./image/index-section2-image5.png",
+      "shopLink": "https://anillo.co.kr/product/detail.html?product_no=138&cate_no=1&display_group=6"
+    }
+  ]
+}
