@@ -4,7 +4,108 @@
 .wrap {
   width: 100%;
   #container {
-    width: 75%;
+    width: 100%;
+    form {
+      display: block;
+    }
+    table {
+      width: 100%;
+      position: relative;
+      margin: 10px 0 0;
+      border: 1px solid #d7d5d5;
+      color: #777;
+      line-height: 1.5;
+    }
+    tbody {
+      border: none;
+    }
+    caption {
+      display: none;
+    }
+    colgroup {
+      display: table-column-group;
+    }
+    col {
+      display: table-column;
+    }
+    tr {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+    }
+    th {
+      display: table-cell;
+      border: none;
+      margin: 0;
+    }
+    img {
+      border: none;
+      vertical-align: top;
+    }
+    input {
+      font-size: 13px;
+      color: #353535;
+      vertical-align: middle;
+      font-family: "Noto Sans KR", sans-serif;
+    }
+    input[type="checkbox"] {
+      width: 13px;
+      height: 13px;
+      border: none;
+      display: none;
+    }
+    h3 {
+      display: none;
+    }
+    // thead {
+    //   display: table-header-group;
+    //   vertical-align: middle;
+    //   border-color: inherit;
+    // }
+    .address_list {
+      .address_list table {
+        border-top-color: $Color-stroke;
+      }
+      thead th {
+        padding: 11px 0 10px;
+        border-left: 1px solid $Color-stroke;
+        border-bottom: 1px solid $Color-stroke;
+        color: $Textcolor-black;
+        vertical-align: middle;
+        font-weight: normal;
+        background: #f7f7ef;
+        font-size: 13px;
+      }
+      .addbtn {
+        font-weight: bold;
+        padding: 12px;
+        font-size: 1rem;
+      }
+    }
+    thead th:first-child {
+      border-left: none;
+    }
+    .address_none {
+      padding: 50px 0;
+      text-align: center;
+      font-size: 13px;
+      color: $Textcolor-black;
+      border: none;
+      border-top: 1px solid $Color-stroke;
+    }
+    .adrs_btns {
+      padding: 10px 0;
+      text-align: center;
+      .letf_btn {
+        display: none;
+        float: left;
+        text-align: left;
+      }
+      .right_btn {
+        float: right;
+        text-align: right;
+      }
+    }
   }
 }
 
@@ -12,8 +113,8 @@
 @media screen and (max-width: 1200px) {
   .wrap {
     width: 100%;
-    #container {
-      width: 100%;
+    thead .address_Mo {
+      padding: 10px;
     }
   }
 }
@@ -25,6 +126,50 @@
     min-width: 390px;
     #container {
       width: 100%;
+      caption {
+        display: none;
+      }
+      th {
+        display: table-column;
+      }
+      h3 {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+      }
+      .address_list {
+        position: relative;
+        margin: 14px 7px 0;
+        padding: 0 0 29px;
+        h3 {
+          padding: 0 14px;
+          line-height: 43px;
+          font-size: 12px;
+          font-weight: bold;
+          color: $backgroundcolor-light;
+          background: $Textcolor-black;
+        }
+        .address_addbtn {
+          position: absolute;
+          top: 7px;
+          right: 14px;
+          z-index: 10;
+          a {
+            color: $backgroundcolor-light;
+            font-size: 11px;
+            font-weight: bold;
+          }
+        }
+      }
+      thead {
+        display: none;
+      }
+      .address_none {
+        border: none;
+      }
+      .right_btn {
+        display: none;
+      }
     }
   }
 }

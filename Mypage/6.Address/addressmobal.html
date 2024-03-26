@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./addressmodal.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="header">
+        <div id="header_popup">
+          <img
+            src="../../Index/0.image/inceto widget close icon.png"
+            alt="close"
+          />
+          <span>아닐로X아메스 샤워타임 리미티드 세트 25% 할인</span>
+          <img
+            src="../../Index/0.image/inceto widget close icon.png"
+            alt="close"
+          />
+        </div>
+        <div id="header_contents">
+          <button class="header_menu">
+            <div></div>
+            <div></div>
+            <div></div>
+          </button>
+          <a href="../index.htm" class="header_logo">
+            <img src="../../Index/0.image/logo.png" alt="logo" />
+          </a>
+          <div class="header_right">
+            <button class="header_search">
+              <img src="../../Index/0.image/ico-search-m01.png" alt="search" />
+            </button>
+            <a href="../Mypage/0.Login/Login.html" class="header_mypage">
+              <img src="../../Index/0.image/mo_ico-mypg-m01.png" alt="mypage" />
+            </a>
+            <a href="../Cart/Cart.html" class="header_cart">
+              <img src="../../Index/0.image/mo_cart.png" alt="" />
+            </a>
+            <button class="header_menu header_menu_mobile">
+              <div></div>
+              <div></div>
+              <div></div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="gnb">
+        <h1 class="gnb_container">Address</h1>
+      </div>
+      <div id="container">
+        <!-- 주소모달창 -->
+        <div class="address_registration">
+          <h3>배송지 등록</h3>
+          <div class="address_table_content">
+            <table border="1" summary>
+              <caption>
+                배송 주소록 등록
+              </caption>
+              <tbody>
+                <tr>
+                  <th class="address_im" scope="row">배송지명 <span>*</span></th>
+                  <td>
+                    <input class="address_title" type="text" />
+                  </td>
+                </tr>
+                <tr>
+                  <th class="address_im im_name" scope="row">성명 <span>*</span></th>
+                  <td>
+                    <input class="address_name" type="text" />
+                  </td>
+                </tr>
+                <tr>
+                  <th class="address_im im_address" scope="row">주소 <span>*</span></th>
+                  <td>
+                    <input
+                      class="address_number main"
+                      fw-label="우편번호"
+                      type="text"
+                    />
+                    <a class="btn_number btn" href="#">우편번호 <span>></span> </a>
+                    <br />
+                    <input class="address_adrs1" fw-label="주소" type="text" />
+                    <br />
+                    <input class="address_adrs2" fw-label="주소" type="text" />
+                    <br />
+                    <span class="address_add"
+                      >- 나머지주소는 선택입력이 가능합니다.</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">일반전화</th>
+                  <td class="line_contents">
+                    <select name="line_phone" id="line_phone">
+                      <option value="02">02</option>
+                      <option value="031">031</option>
+                      <option value="032">032</option>
+                      <option value="033">033</option>
+                      <option value="041">041</option>
+                      <option value="042">042</option>
+                      <option value="043">043</option>
+                      <option value="044">044</option>
+                      <option value="051">051</option>
+                      <option value="052">052</option>
+                      <option value="053">053</option>
+                      <option value="054">054</option>
+                      <option value="055">055</option>
+                      <option value="061">061</option>
+                      <option value="062">062</option>
+                      <option value="063">063</option>
+                      <option value="064">064</option>
+                      <option value="0502">0502</option>
+                      <option value="0503">0503</option>
+                      <option value="0504">0504</option>
+                      <option value="0505">0505</option>
+                      <option value="0506">0506</option>
+                      <option value="0507">0507</option>
+                      <option value="070">070</option>
+                      <option value="010">010</option>
+                      <option value="011">011</option>
+                      <option value="016">016</option>
+                      <option value="017">017</option>
+                      <option value="018">018</option>
+                      <option value="019">019</option>
+                      <option value="0508">0508</option>
+                    </select>
+                    -
+                    <input
+                      class="address_lphone1 lphone_text"
+                      fw-label="유선전화1"
+                      type="text"
+                    />
+                    -
+                    <input
+                      class="address_lphone2 lphone_text"
+                      fw-label="유선전화2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th class="address_im" scope="row">휴대전화 <span>*</span></th>
+                  <td>
+                    <select name="mobile_phone" id="line_phone">
+                      <option value="010">010</option>
+                      <option value="011">011</option>
+                      <option value="016">016</option>
+                      <option value="017">017</option>
+                      <option value="018">018</option>
+                      <option value="019">019</option>
+                    </select>
+                    -
+                    <input
+                      class="address_mphone1 lphone_text"
+                      fw-label="휴대전화1"
+                      type="text"
+                    />
+                    -
+                    <input
+                      class="address_mphone2 lphone_text"
+                      fw-label="휴대전화2"
+                      type="text"
+                    />
+                  </td>
+                </tr>
+                <tr class="address_basic">
+                  <td colspan="2">
+                    <input type="checkbox" fw-label="기본배송지" />
+                    <label for="address_basic_save">기본 배송지로 저장</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="address_btns">
+            <a href="#" class="address_button registration_btn">등록</a>
+            <a href="./address.html" class="em_btn address_button">취소</a>
+          </div>
+        </div>
+      </div>
+      <div id="footer"></div>
+      <div id="aside"></div>
+      <div id="menu"></div>
+    </div>
+  </body>
+</html>

@@ -281,35 +281,33 @@ body {
   border: 1px solid #ff0;
   text-align: center;
 }
-#menu .menu .menus_left .addplus::before,
-#menu .menu .menus_left .addplus::after {
+#menu .menu .menus_left .drop_icon::before,
+#menu .menu .menus_left .drop_icon::after {
   content: "";
-  width: 25px;
-  height: 1px;
+  right: 10%;
+  position: absolute;
   border-radius: 4px;
   background: #83a2c1;
+  transition: ease 0.3s all;
 }
-#menu .menu .shop.addplus::after {
-  position: absolute;
-  transform: rotate(-90deg);
-  top: 16%;
-  left: 84%;
+#menu .menu .menus_left .drop_s::before,
+#menu .menu .menus_left .drop_s::after {
+  top: 18.5%;
 }
-#menu .menu .shop.addplus::before {
-  position: absolute;
-  top: 16%;
-  left: 84%;
+#menu .menu .menus_left .drop_i::before,
+#menu .menu .menus_left .drop_i::after {
+  bottom: 25%;
 }
-#menu .menu .info.addplus::after {
-  position: absolute;
-  transform: rotate(-90deg);
-  top: 69%;
-  left: 84%;
+#menu .menu .menus_left .drop_icon::before {
+  width: 25px;
+  height: 1px;
 }
-#menu .menu .info.addplus::before {
-  position: absolute;
-  top: 69%;
-  left: 84%;
+#menu .menu .menus_left .drop_icon::after {
+  width: 25px;
+  height: 1px;
+}
+#menu .menu .menus_left .drop_icon::before {
+  transform: rotate(90deg);
 }
 #menu .menu .menus_left li a.menu_h2 {
   display: block;
@@ -341,13 +339,61 @@ body {
 }
 @media screen and (max-width: 768px) {
   #menu .menu {
-    display: flex;
+    position: absolute;
     width: 100vw;
-    height: 100%;
-    margin-top: 5%;
+    top: 70px;
+    height: calc(100vh - 70px);
+    left: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+    font: normal 32px/1 "Playfair Display";
+    color: #1e1e1e;
+    text-align: center;
+    background: #fcfcf2;
+    border: 1px solid #f00;
+    overflow: hidden;
   }
-  #menu .menu .menu_lf_cls {
-    display: none;
+  #menu .menu .menus_left {
+    width: 100vw;
+    height: 577px;
+    border: 1px solid #00f;
+    padding-top: 75px;
+    text-align: center;
+  }
+  #menu .menu .menus_left .menus_left > li {
+    width: 100vw;
+    position: relative;
+    padding: 0 0 15px;
+    border: 1px solid #ff0;
+    text-align: center;
+  }
+  #menu .menu .menus_left li a.menu_h2 {
+    display: block;
+    text-align: center;
+    border-top: 1px solid #e0ded9;
+    padding: 15px 0 0;
+  }
+  #menu .menu .menus_left > li {
+    padding: 0 0 15px;
+  }
+  #menu .sub_menu {
+    width: 100vw;
+    height: 38px;
+    font: normal 17px "Futura PT";
+    text-align: center;
+    padding-top: 16px;
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+  #menu a:hover {
+    color: #83a2c1;
+  }
+  #menu .side_menu_slogan {
+    position: absolute;
+    display: inline-block;
+    width: 166px;
+    bottom: 30px;
+    left: calc(50% - 83px);
   }
 }
 

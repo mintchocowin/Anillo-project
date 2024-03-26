@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.cdnfonts.com/css/futura-pt");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
@@ -281,35 +282,33 @@ body {
   border: 1px solid #ff0;
   text-align: center;
 }
-#menu .menu .menus_left .addplus::before,
-#menu .menu .menus_left .addplus::after {
+#menu .menu .menus_left .drop_icon::before,
+#menu .menu .menus_left .drop_icon::after {
   content: "";
-  width: 25px;
-  height: 1px;
+  right: 10%;
+  position: absolute;
   border-radius: 4px;
   background: #83a2c1;
+  transition: ease 0.3s all;
 }
-#menu .menu .shop.addplus::after {
-  position: absolute;
-  transform: rotate(-90deg);
-  top: 16%;
-  left: 84%;
+#menu .menu .menus_left .drop_s::before,
+#menu .menu .menus_left .drop_s::after {
+  top: 18.5%;
 }
-#menu .menu .shop.addplus::before {
-  position: absolute;
-  top: 16%;
-  left: 84%;
+#menu .menu .menus_left .drop_i::before,
+#menu .menu .menus_left .drop_i::after {
+  bottom: 25%;
 }
-#menu .menu .info.addplus::after {
-  position: absolute;
-  transform: rotate(-90deg);
-  top: 69%;
-  left: 84%;
+#menu .menu .menus_left .drop_icon::before {
+  width: 25px;
+  height: 1px;
 }
-#menu .menu .info.addplus::before {
-  position: absolute;
-  top: 69%;
-  left: 84%;
+#menu .menu .menus_left .drop_icon::after {
+  width: 25px;
+  height: 1px;
+}
+#menu .menu .menus_left .drop_icon::before {
+  transform: rotate(90deg);
 }
 #menu .menu .menus_left li a.menu_h2 {
   display: block;
@@ -341,13 +340,61 @@ body {
 }
 @media screen and (max-width: 768px) {
   #menu .menu {
-    display: flex;
+    position: absolute;
     width: 100vw;
-    height: 100%;
-    margin-top: 5%;
+    top: 70px;
+    height: calc(100vh - 70px);
+    left: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+    font: normal 32px/1 "Playfair Display";
+    color: #1e1e1e;
+    text-align: center;
+    background: #fcfcf2;
+    border: 1px solid #f00;
+    overflow: hidden;
   }
-  #menu .menu .menu_lf_cls {
-    display: none;
+  #menu .menu .menus_left {
+    width: 100vw;
+    height: 577px;
+    border: 1px solid #00f;
+    padding-top: 75px;
+    text-align: center;
+  }
+  #menu .menu .menus_left .menus_left > li {
+    width: 100vw;
+    position: relative;
+    padding: 0 0 15px;
+    border: 1px solid #ff0;
+    text-align: center;
+  }
+  #menu .menu .menus_left li a.menu_h2 {
+    display: block;
+    text-align: center;
+    border-top: 1px solid #e0ded9;
+    padding: 15px 0 0;
+  }
+  #menu .menu .menus_left > li {
+    padding: 0 0 15px;
+  }
+  #menu .sub_menu {
+    width: 100vw;
+    height: 38px;
+    font: normal 17px "Futura PT";
+    text-align: center;
+    padding-top: 16px;
+    text-transform: uppercase;
+    overflow: hidden;
+  }
+  #menu a:hover {
+    color: #83a2c1;
+  }
+  #menu .side_menu_slogan {
+    position: absolute;
+    display: inline-block;
+    width: 166px;
+    bottom: 30px;
+    left: calc(50% - 83px);
   }
 }
 
@@ -365,8 +412,196 @@ body {
   border: 1px solid red;
 }
 .wrap #container {
-  width: 75%;
-  border: 1px solid red;
+  width: 100%;
+}
+
+.notice_List {
+  display: block;
+  width: 100%;
+  margin: -1px 0 0;
+  font-size: 11px;
+  border-top: 1px solid #ececec;
+  padding: 90px 20px 0;
+}
+.notice_List .info_notice {
+  position: relative;
+}
+.notice_List .info_notice .notice_list {
+  display: block;
+  padding: 20px 0;
+  font-size: 13px;
+  color: #1e1e1e;
+  line-height: 1.46;
+  border-top: 1px solid #1e1e1e;
+}
+.notice_List .info_notice .notice_list strong {
+  display: inline-block;
+  width: 60px;
+  padding-right: 12px;
+  text-align: center;
+}
+.notice_List .info_notice .notice_info_contents {
+  height: auto;
+  overflow: hidden;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background: #fff;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content p {
+  font-size: 13px;
+  color: #1e1e1e;
+  justify-content: center;
+  align-items: center;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content table {
+  width: 100%;
+  table-layout: fixed;
+  border: 0 none;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content table tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border: inherit;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content table tbody tr {
+  display: table-row;
+  vertical-align: inherit;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content table tbody tr td {
+  border-color: #e0ded9;
+  padding: 8px 10px 7px;
+  font-size: 13px;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content .img_content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 369px;
+}
+.notice_List .info_notice .notice_info_contents .notice_info_content .img_content .imgs {
+  justify-content: center;
+  align-items: center;
+}
+.notice_List .info_notice .drop {
+  display: flex;
+}
+.notice_List .info_notice p.drop::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: 16px;
+  width: 15px;
+  height: 1px;
+  background: #1e1e1e;
+  transition: all 0.6s ease-in-out;
+}
+.notice_List .info_notice p.drop::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 30px;
+  right: 15px;
+  width: 15px;
+  height: 1px;
+  background: #1e1e1e;
+  transition: all 0.3s ease;
+  transform: rotate(90deg);
+}
+.notice_List .info_notice p.drop::after {
+  transform: rotate(1deg);
+}
+
+.review_List {
+  width: 100%;
+  height: 100%;
+}
+.review_List .main_review {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: normal 16px "Noto Sans KR";
+}
+.review_List .main_review .select_box {
+  border: none;
+  background: none;
+  border-radius: none;
+}
+.review_List .main_review .select_box .select_option {
+  font: normal 12px "Noto Sans KR";
+  border-radius: none;
+}
+.review_List .main_review .select_box .select_option .select_option:hover {
+  background-color: #83a2c1;
+}
+.review_List .main_review .review {
+  width: 100%;
+  margin: auto;
+  border: 1px solid #f00;
+}
+.review_List .main_review .review .review_search {
+  width: 80%;
+  height: auto;
+  margin: auto;
+  font-size: 12px;
+  color: #292929;
+  margin-top: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+.review_List .main_review .review .review_info_search {
+  margin-bottom: 15px;
+  display: flex;
+}
+.review_List .main_review .review .search {
+  border: none;
+  background: none;
+  border-bottom: 1px solid #e0ded9;
+  width: 80%;
+}
+.review_List .main_review .user_review_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.review_List .main_review .user_review_list .review_list {
+  width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  gap: 0;
+}
+.review_List .main_review .user_review_list .review_list .review_list_item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+.review_List .main_review .user_review_list .review_list .review_list_item .review_img {
+  width: 1000%;
+  height: 400px;
+  position: relative;
+}
+.review_List .main_review .user_review_list .review_list .review_list_item .review_img img {
+  height: 100%;
+}
+.review_List .main_review .user_review_list .review_list .review_list_t {
+  text-align: center;
+  margin: 17px;
+  position: relative;
+}
+.review_List .main_review .user_review_list .review_list .review_list_t .review_item_box {
+  -moz-text-align-last: left;
+       text-align-last: left;
+}
+.review_List .main_review .user_review_list .review_list .review_list_t .review_item_box ·star_color {
+  color: #83a2c1;
 }
 
 @media screen and (max-width: 1200px) {
@@ -375,11 +610,26 @@ body {
   }
 }
 @media screen and (max-width: 768px) {
+  .wrap #container .my-element {
+    padding: 10px;
+  }
   .wrap #gnb .gnb_container {
     padding: 0 50px;
   }
   .wrap #gnb .gnb_container:nth-child(2) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+  .wrap .notice_List .notice_list .notice_info_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .wrap .notice_List .notice_list .notice_info_content img {
+    display: flex;
+    width: 750px;
+    height: 1100px;
+    justify-content: center;
+    align-items: center;
   }
 }/*# sourceMappingURL=Info.css.map */
