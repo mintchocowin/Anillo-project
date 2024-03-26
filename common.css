@@ -546,10 +546,12 @@ body {
   height: 253px;
   display: flex;
 }
+#aside .aside-popup .aside-popup-image .aside-popoup-image-wrapper .animated {
+  transition: 0.5s;
+}
 #aside .aside-popup .aside-popup-image .aside-popoup-image-wrapper img {
   width: 231px;
   height: 253px;
-  transition: 0.5s;
 }
 #aside .aside-popup .aside-popup-button {
   width: 231px;

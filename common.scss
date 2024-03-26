@@ -574,11 +574,12 @@ body {
         width: 693px;
         height: 253px;
         display: flex;
-
+        .animated {
+          transition: 0.5s;
+        }
         img {
           width: 231px;
           height: 253px;
-          transition: 0.5s;
         }
       }
     }
