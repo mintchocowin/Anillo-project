@@ -566,16 +566,20 @@ body {
     overflow: hidden;
     animation: aside-popup-right-show 2s 1;
     .aside-popup-image {
-      width: 693px;
+      width: 231px;
       height: 253px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      img {
-        width: 100%;
-        height: 100%;
-        transition: 0.5s;
+
+      overflow: hidden;
+      .aside-popoup-image-wrapper {
+        width: 693px;
+        height: 253px;
+        display: flex;
+
+        img {
+          width: 231px;
+          height: 253px;
+          transition: 0.5s;
+        }
       }
     }
     .aside-popup-button {
@@ -983,14 +987,16 @@ body {
       overflow: hidden;
       animation: aside-popup-left-show 2s 1;
       z-index: 1;
-      .aside-popup-image {
-        width: 693px;
-        height: 251px;
-        object-fit: cover;
-        display: flex;
-        img {
-          width: 231px;
-          height: 100%;
+      .aside-popoup-image-wrapper {
+        .aside-popup-image {
+          width: 693px;
+          height: 251px;
+          object-fit: cover;
+          display: flex;
+          img {
+            width: 231px;
+            height: 100%;
+          }
         }
       }
       .aside-popup-button {
