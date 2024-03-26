@@ -5,7 +5,7 @@
   width: 100%;
   margin: 0 auto;
   /* border: 1px solid red; */
-  #container {
+  #stocklist_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,14 +13,14 @@
     gap: 65px;
     margin: 90px auto 100px;
     width: 75%;
-    /* border: 1px solid red; */
     position: relative;
     #stocklist_online,
     #stocklist_offline {
       #stocklist {
+        /* border: 1px solid #f00; */
         width: auto;
-        display: flex;
-        justify-content: center;
+          display: grid;
+          grid-template-columns:repeat(4, 1fr);
         .stockcont {
           width: 100%;
           text-align: center;
@@ -43,13 +43,6 @@
           }
         }
       }
-      #stocklist:last-child {
-        width: 100%;
-        justify-content: start;
-        .stockcont {
-          width: 25%;
-        }
-      }
     }
     #stocklist_offline {
       display: none;
@@ -65,6 +58,7 @@
           text-decoration: underline;
           cursor: pointer;
           margin-bottom: 9px;
+          transition: all 0.5s;
         }
         .stockcont_ananti_inner,
         .stockcont_chicor_inner {
@@ -106,7 +100,7 @@
 //==========Tablet==========//
 @media screen and (max-width: 1200px) {
   .wrap {
-    #container {
+    #stocklist_container {
       width: 100%;
     }
   }
@@ -116,14 +110,14 @@
 @media screen and (max-width: 768px) {
   .wrap {
     min-width: 390px;
-    #container {
+    #stocklist_container {
       gap: 0px;
       #stocklist_online,
       #stocklist_offline {
         #stocklist {
           width: auto;
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns:repeat(2, 1fr);
           .stockcont {
             width: 100%;
             text-align: center;
@@ -144,13 +138,6 @@
             h3 {
               font: 500 18px/1.8 "Noto Sans KR";
             }
-          }
-        }
-        #stocklist:last-child {
-          width: 100%;
-          justify-content: start;
-          .stockcont {
-            width: 100%;
           }
         }
       }

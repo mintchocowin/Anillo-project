@@ -45,40 +45,43 @@ const pageOn = (pageNumber) => {
   }
 };
 
-const arrows = document.querySelectorAll(".arrow");
-const pages = document.querySelectorAll(".event_page");
-const nextButton = document.querySelector("#right");
-const prevButton = document.querySelector("#left");
-let i = 0;
-const changePage = (direction) => {
-  if (direction === "next") {
-    i++;
-    if (i >= pages.length) {
-      i = 0;
-    }
-    reset();
-    buttons[i].classList.add("active");
-  } else if (direction === "prev") {
-    i--;
-    if (i < 0) {
-      i = pages.length - 1;
-    }
-    reset();
-    buttons[i].classList.add("active");
+const prevPageButton = document.getElementById("left");
+const nextPageButton = document.getElementById("right");
+const pageButtons = document.querySelectorAll(".page-button");
+let currentPage = 1;
+
+// 이전 페이지로 이동
+prevPageButton.addEventListener("click", function () {
+  if (currentPage > 1) {
+    currentPage--;
+    updatePageButtons();
   }
-};
+});
 
-/* arrows.forEach((arrow) => {
-  arrow.addEventListener("click", (e) => {
-    const direction = e.target.id === "left" ? "prev" : "next";
-    changePage(direction);
-  });
-}); */
+// 다음 페이지로 이동
+nextPageButton.addEventListener("click", function () {
+  if (currentPage < pageButtons.length) {
+    currentPage++;
+    updatePageButtons();
+  }
+});
 
-/* arrows.forEach((arrow) => {
-  arrow.addEventListener("click", function () {
-    const direction = e.target.id === "left" ? "prev" : "next";
-    changePage(direction);
+// 페이지 버튼 클릭 시 해당 페이지로 이동
+pageButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    currentPage = parseInt(button.textContent);
+    updatePageButtons();
   });
 });
- */
+
+// 페이지 버튼 활성화 상태 업데이트
+function updatePageButtons() {
+  pageButtons.forEach((button) => {
+    const pageNumber = parseInt(button.textContent);
+    if (pageNumber === currentPage) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  });
+}
