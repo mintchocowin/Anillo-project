@@ -1,15 +1,42 @@
 //section1 slide
-// document.addEventListener("DOMContentLoaded", function () {
-//   const arrows = document.querySelectorAll(".index-section02-arrows i");
-//   const images = document.querySelectorAll(".index-section02-image div");
-//   let currentImageIndex = 0;
-// });
+document.addEventListener("DOMContentLoaded", function () {
+  const images = document.querySelectorAll(".index-section01-image img");
+  const prevButton = document.getElementById("section1prev");
+  const nextButton = document.getElementById("section1next");
 
-//슬라이드
+  let currentIndex = 0;
+  const totalImages = images.length;
+
+  // 첫 번째 이미지를 보여줍니다.
+  showImage(currentIndex);
+
+  // 이전 버튼 클릭 시
+  prevButton.addEventListener("click", function () {
+    currentIndex = currentIndex === 0 ? totalImages - 1 : currentIndex - 1;
+    showImage(currentIndex);
+  });
+
+  // 다음 버튼 클릭 시
+  nextButton.addEventListener("click", function () {
+    currentIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
+    showImage(currentIndex);
+  });
+
+  // 이미지를 표시합니다.
+  function showImage(index) {
+    // 모든 이미지를 숨깁니다.
+    images.forEach((image) => {
+      image.style.display = "none";
+    });
+    // 현재 인덱스의 이미지를 표시합니다.
+    images[index].style.display = "block";
+  }
+});
+//section2 slide
 document.addEventListener("DOMContentLoaded", function () {
   const arrows = document.querySelectorAll(".index-section02-arrows i");
   const productTexts = document.querySelectorAll(
-    ".index-section02-product-info > div"
+    ".index-section02-product-info div"
   );
   const images = document.querySelectorAll(".index-section02-image div");
   let currentIndex = 0;
@@ -29,6 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
       showContent(currentIndex);
     });
   });
+  autoSlideInterval = setInterval(() => {
+    currentIndex =
+      currentIndex === productTexts.length - 1 ? 0 : currentIndex + 1;
+    showContent(currentIndex);
+  }, 5000); // 5초마다 슬라이드
 
   function showContent(index) {
     // 모든 텍스트와 이미지 숨김
@@ -44,88 +76,33 @@ document.addEventListener("DOMContentLoaded", function () {
     images[index].style.display = "block";
   }
 });
-//section2 문서 가져오기
-// document.addEventListener("DOMContentLoaded", function () {
-//   const arrows = document.querySelectorAll(".index-section02-arrows i");
-//   const productInfo = document.querySelector(".index-section02-product-info");
-//   const imageContainer = document.querySelector(".index-section02-image div");
-//   const shopButton = document.querySelector(".index-section02-text button a");
+//section4
 
-//   let currentIndex = 0;
+const wrapper = document.querySelector(".product_list");
+let pressed = false;
+let startX = 0;
 
-//   // JSON 파일 로드
-//   fetch("json.js")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       showProduct(data.products[currentIndex]);
-//     })
-//     .catch((error) => console.error("Error loading JSON:", error));
-
-//   arrows.forEach((arrow, index) => {
-//     arrow.addEventListener("click", function () {
-//       currentIndex = index === 0 ? currentIndex - 1 : currentIndex + 1;
-//       if (currentIndex < 0) {
-//         currentIndex = 4;
-//       } else if (currentIndex > 4) {
-//         currentIndex = 0;
-//       }
-//       fetch("json.js")
-//         .then((response) => response.json())
-//         .then((data) => {
-//           showProduct(data.products[currentIndex]);
-//         })
-//         .catch((error) => console.error("Error loading JSON:", error));
-//     });
-//   });
-
-//   function showProduct(product) {
-//     // 제품 정보 업데이트
-//     productInfo.innerHTML = `
-//       <div class="index-section02-text01">
-//         <p>${product.title}</p>
-//         <p>${product.description}</p>
-//         <p>${product.price}</p>
-//       </div>
-//     `;
-
-//     // 이미지 업데이트
-//     imageContainer.innerHTML = `<img src="${product.imageSrc}" alt="" />`;
-
-//     // 쇼핑 버튼 업데이트
-//     shopButton.href = product.shopLink;
-//   }
-// });
-
-document.addEventListener("DOMContentLoaded", function () {
-  // AJAX 요청을 통해 JSON 데이터 가져오기
-  fetch("json.js")
-    .then((response) => response.json())
-    .then((data) => {
-      // "index-section02-text01" 클래스에 속한 p 태그들에 제품 정보 채우기
-      const text01Elements = document.querySelectorAll(
-        ".index-section02-text01 p"
-      );
-      text01Elements.forEach((element, index) => {
-        element.textContent =
-          data.products[index].title + ": " + data.products[index].description;
-      });
-
-      // "index-section02-image" 클래스에 속한 img 태그에 이미지 소스 채우기
-      const imageContainer = document.querySelector(
-        ".index-section02-image div"
-      );
-      const imageElements = imageContainer.querySelectorAll("img");
-      imageElements.forEach((element, index) => {
-        element.src = data.products[index].imageSrc;
-        element.alt = data.products[index].title;
-      });
-
-      // "SHOP NOW" 버튼에 링크 채우기
-      const shopButton = document.querySelector(".index-section02-text button");
-      shopButton.parentElement.href = data.products[0].shopLink; // 여기서는 첫 번째 제품의 링크를 사용하겠습니다.
-    })
-    .catch((error) => console.error("Error loading JSON:", error));
+wrapper.addEventListener("mousedown", function (e) {
+  pressed = true;
+  startX = e.clientX;
+  console.log(startX);
+  //display화살표보임
 });
+wrapper.addEventListener("mouseleave", function (e) {
+  pressed = false;
+});
+
+window.addEventListener("mouseup", function (e) {
+  pressed = false;
+  //display 화살표 사라짐
+});
+wrapper.addEventListener("mousemove", function (e) {
+  if (!pressed) {
+    return;
+  }
+  this.scrollLeft += startX - e.clientX;
+});
+
 //section5 parallax
 
 const parallax = document.querySelector(".index-section05");

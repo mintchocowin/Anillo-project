@@ -12,7 +12,7 @@
     height: 100vh;
     .index-section01-image {
       display: flex;
-      width: 200%;
+      width: 100%;
       height: 100vh;
       overflow: hidden;
       position: absolute;
@@ -22,7 +22,7 @@
       img {
         overflow: hidden;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         object-fit: cover;
         .animated {
           transition: 0.5s ease-out;
@@ -66,7 +66,8 @@
 
     .index-section02-text {
       width: 50vw;
-      height: 900px;
+      // height: 900px;
+      height: 100%;
       position: relative;
       text-align: center;
       .index-section02-text-title {
@@ -79,8 +80,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 50vw;
-        height: 200px;
+        // width: 50vw;
+        // height: 200px;
+        width: 100%;
+        height: auto;
         margin-bottom: 180px;
         p {
           color: #1e1e1e;
@@ -95,6 +98,18 @@
           &:nth-child(3) {
             font-size: 14px;
           }
+        }
+        .button {
+          border: none;
+          font-size: 11px;
+          height: 46px;
+          width: 185px;
+          border: 1px solid #1e1e1e;
+          color: #1e1e1e;
+          background: none;
+          margin-bottom: 300px;
+          padding: 15px 0;
+          cursor: pointer;
         }
       }
       .index-section02-arrows {
@@ -128,18 +143,6 @@
           }
         }
       }
-      button {
-        border: none;
-        font-size: 11px;
-        height: 46px;
-        width: 185px;
-        border: 1px solid #1e1e1e;
-        color: #1e1e1e;
-        background: none;
-        margin-bottom: 300px;
-        padding: 15px 0;
-        cursor: pointer;
-      }
     }
 
     .index-section02-image {
@@ -159,8 +162,10 @@
         overflow: hidden;
 
         img {
-          width: 650px;
-          height: 650px;
+          // width: 650px;
+          // height: 650px;
+          width: 100%;
+          height: 100%;
         }
       }
     }
@@ -246,9 +251,14 @@
       margin: 150px 0 35px 0;
     }
     .product_list {
+      // overflow-x: scroll;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x;
       display: grid;
       grid-template-columns: repeat(4, 25%);
     }
+
     .product {
       width: 100%;
       display: flex;
@@ -256,6 +266,7 @@
       justify-content: center;
       align-items: center;
       margin-right: 30px;
+      scroll-snap-align: start;
 
       .productImgs {
         width: 100%;
@@ -440,8 +451,8 @@
           height: 100%;
 
           img {
-            width: 350px;
-            height: 350px;
+            width: 100%;
+            height: 100%;
           }
         }
       }
@@ -737,8 +748,8 @@
           height: 100%;
 
           img {
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 100%;
           }
         }
       }

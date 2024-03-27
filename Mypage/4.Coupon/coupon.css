@@ -537,21 +537,21 @@ body {
   animation: aside-popup-right-show 2s 1;
 }
 #aside .aside-popup .aside-popup-image {
-  border: 1px solid #00f;
   width: 231px;
   height: 253px;
-  display: flex;
   overflow: hidden;
 }
-#aside .aside-popup .aside-popup-image .aside-popup-image-wrapper {
+#aside .aside-popup .aside-popup-image .aside-popoup-image-wrapper {
   width: 693px;
   height: 253px;
-  border: 2px solid #f00;
+  display: flex;
 }
-#aside .aside-popup .aside-popup-image .aside-popup-image-wrapper img {
+#aside .aside-popup .aside-popup-image .aside-popoup-image-wrapper .animated {
+  transition: 0.5s;
+}
+#aside .aside-popup .aside-popup-image .aside-popoup-image-wrapper img {
   width: 231px;
   height: 253px;
-  transition: 0.5s;
 }
 #aside .aside-popup .aside-popup-button {
   width: 231px;
